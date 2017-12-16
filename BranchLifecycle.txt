@@ -4,8 +4,10 @@ git branch -b <local branch name>
 #Make changes and Commit to the new branch
 ...
 
-#Push the new branch and changes to the repository using the following command:
+#For the first push on the new branch: 
 git push -u origin <remote branch name>
+#Subsequent pushes can be simplified to 
+git push
 #Note: Pushing/merging to a branch other than 'develop' will not trigger the Jenkins pipeline!
 
 #When you are ready to run changes through the Jenkins pipeline:
