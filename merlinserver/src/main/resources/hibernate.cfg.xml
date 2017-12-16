@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-configuration SYSTEM "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+<hibernate-configuration> 
+	<session-factory>
+		<!-- Config database -->
+		<property name="hibernate.connectino.driver_class">
+			oracle.jdbc.OracleDriver
+		</property>
+		
+		<property name="hibernate.dialect">
+			org.hibernate.dialect.Oracle10gDialect
+		</property>
+		
+		<property name="hibernate.connection.url">
+			merlindb.crpbgiq3xioz.us-east-1.rds.amazonaws.com:1521
+		</property>
+		
+		<property name="hibernate.connection.username">
+			MerlinTheWizard
+		</property>
+		
+		<property name="hibernate.connection.password">
+			Muggle_5_Mug
+		</property>
+		
+		<property name="hibernate.connection.pool_size">10</property>
+		<property name="show_swl">true</property>
+		<property name="hibernate.hbm2ddl.auto">create</property>
+		
+		<!--  EXAMPLE  
+			<mapping class="com.revature.beans.Employee" />
+		-->
+
+	</session-factory>
+</hibernate-configuration>
