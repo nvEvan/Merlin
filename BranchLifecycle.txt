@@ -1,0 +1,19 @@
+#Create New Branch
+git branch -b <local branch name>
+
+#Make changes and Commit to the new branch
+...
+
+#Push the branch and changes to the repository using the following command:
+git push -u origin <remote branch name>
+#Note: Pushing/merging to a branch other than 'develop' will not trigger the Jenkins pipeline!
+
+#When you are ready to run changes through the Jenkins pipeline:
+git checkout develop
+git pull 
+git merge <local branch name> 
+git push
+
+#If you are done with the branch:
+git push -d origin <remote branch name>  	#Delete remote branch
+git branch -d <branch name>					#Delete local branch
