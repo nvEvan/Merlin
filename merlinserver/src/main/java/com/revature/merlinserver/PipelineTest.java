@@ -5,8 +5,6 @@ public class PipelineTest {
 		for(int i = 0; i < 10; i++) {
 			System.out.println("Hello World! " + i);
 		}
-		System.out.println("Another Change!");
-		System.out.println("Yet Another Change!");
 	}
 }
 
