@@ -22,6 +22,8 @@
 **/.springBeans
 
 **/pom.properties
+**/logs/**
+
 
 #IDEA
 **/.idea/
