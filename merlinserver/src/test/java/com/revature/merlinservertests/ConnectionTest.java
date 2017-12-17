@@ -1,8 +1,11 @@
 package com.revature.merlinservertests;
 
-import static org.junit.Assert.fail;
+import static org.junit.Assert.assertNotNull;
 
+import org.hibernate.Session;
 import org.junit.Test;
+
+import com.revature.util.HibernateUtil;
 
 /**
  * Determines if Hibernate can get connection from remote database
@@ -12,6 +15,15 @@ public class ConnectionTest {
 
 	@Test
 	public void shouldGetNonNullHibernateSession() {
-		fail("Not yet implemented");
+		Session session = null;
+		
+		try {
+			session = HibernateUtil.getSession();	
+		} finally {
+			if (session != null)
+				session.close();
+			
+			assertNotNull(session);
+		}
 	}
 }

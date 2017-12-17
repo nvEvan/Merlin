@@ -14,11 +14,11 @@ public class HibernateUtil {
 	 * Grabs configuration file and create our session factory.
 	 */
 	@SuppressWarnings("deprecation")
-	private static SessionFactory sessionFactory =
-			new Configuration().configure().
-			buildSessionFactory();
+	private static SessionFactory sessionFactory = new Configuration().configure().buildSessionFactory();
 
-	/**@return a session to communicate with the DB*/
+	/**
+	 * @return a session to communicate with the DB
+	 */
 	public static Session getSession(){
 		return sessionFactory.openSession();
 	}
