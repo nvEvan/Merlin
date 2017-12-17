@@ -10,7 +10,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name="User")
-public class User {
+public class MagicalUser {
 	@Id
 	@Column(name="USER_ID")
 	@SequenceGenerator(sequenceName="USER_SEQ", name="USER_SEQ")
@@ -26,7 +26,7 @@ public class User {
 	/**
 	 * No - Args Constructor
 	 */
-	public User() {
+	public MagicalUser() {
 		super();
 	}
 	
@@ -35,7 +35,7 @@ public class User {
 	 * @param username - name for user (must be unique)
 	 * @param password - used to ensure user is user
 	 */
-	public User(String username, String password) {
+	public MagicalUser(String username, String password) {
 		super();
 		this.username = username;
 		this.password = password;
@@ -47,7 +47,7 @@ public class User {
 	 * @param username - name for user (must be unique)
 	 * @param password - used to ensure user is user
 	 */
-	public User(Integer userId, String username, String password) {
+	public MagicalUser(Integer userId, String username, String password) {
 		super();
 		this.userId = userId;
 		this.username = username;
