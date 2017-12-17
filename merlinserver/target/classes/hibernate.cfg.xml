@@ -29,5 +29,6 @@
 		
 		<!--  CLASS MAPPING  -->
 		<mapping class="com.revature.merlinserver.beans.MagicalUser" />
+		<mapping class="com.revature.merlinserver.beans.CodeList" />
 	</session-factory>
 </hibernate-configuration>
