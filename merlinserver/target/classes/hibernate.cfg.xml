@@ -12,24 +12,22 @@
 		</property>
 		
 		<property name="hibernate.connection.url">
-			merlindb.crpbgiq3xioz.us-east-1.rds.amazonaws.com:1521
+			jdbc:oracle:thin:@merlinsbook.cpnvho6a0hnt.us-east-1.rds.amazonaws.com:1521:ORCL
 		</property>
 		
 		<property name="hibernate.connection.username">
-			MerlinTheWizard
+			merlinsbeard
 		</property>
 		
 		<property name="hibernate.connection.password">
-			Muggle_5_Mug
+			diagon_alley
 		</property>
 		
 		<property name="hibernate.connection.pool_size">10</property>
 		<property name="show_swl">true</property>
 		<property name="hibernate.hbm2ddl.auto">create</property>
 		
-		<!--  EXAMPLE  
-			<mapping class="com.revature.beans.Employee" />
-		-->
-
+		<!--  CLASS MAPPING  -->
+		<mapping class="com.revature.merlinserver.beans.MagicalUser" />
 	</session-factory>
 </hibernate-configuration>
