@@ -28,11 +28,11 @@ public class Receipt {
 	private Integer receiptId;
 	
 	@OneToOne
-	@JoinColumn(name="user_id")
+	@JoinColumn(name="APPRENTICE_ID")
 	private MagicalUser apprentice;
 	
 	@OneToOne
-	@JoinColumn(name="user_id")
+	@JoinColumn(name="ADEPT_ID")
 	private MagicalUser adept;
 	
 	@Column(nullable = false)
