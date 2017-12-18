@@ -33,6 +33,7 @@
 		<mapping class="com.revature.merlinserver.beans.PrivateUserInfo" />
 		<mapping class="com.revature.merlinserver.beans.Receipt" />
 		<mapping class="com.revature.merlinserver.beans.Appointment" />
+		<mapping class="com.revature.merlinserver.beans.SessionAvailability" />
 		
 	</session-factory>
 </hibernate-configuration>

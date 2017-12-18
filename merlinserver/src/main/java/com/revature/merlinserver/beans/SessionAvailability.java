@@ -4,7 +4,6 @@ import java.sql.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -16,86 +15,80 @@ import javax.persistence.Table;
 import org.hibernate.annotations.Check;
 
 /**
- * Provides a way to keep track of adept and apprentice appointments 
+ * 
  * @author Luie
  */
 @Entity
-@Table(name="Appointment")
+@Table(name="SessionAvailability")
 @Check(constraints="start_datetime < end_datetime")
-public class Appointment {
+public class SessionAvailability {
 	@Id
-	@SequenceGenerator(sequenceName="APPOINTMENT_SEQ", name="APPOINTMENT_SEQ")
-	@GeneratedValue(generator="APPOINTMENT_SEQ", strategy=GenerationType.SEQUENCE)
-	private Integer id;
-	
-	@OneToOne(fetch=FetchType.EAGER)
-	@JoinColumn(name="ADEPT_ID")
-	private MagicalUser adept;
-	
-	@OneToOne(fetch=FetchType.EAGER)
-	@JoinColumn(name="APPENTICE_ID")
-	private MagicalUser apprentice;
+	@Column(name="session_availability_id")
+	@SequenceGenerator(sequenceName="SESSION_AVA_SEQ", name="SESSION_AVA_SEQ")
+	@GeneratedValue(generator="SESSION_AVA_SEQ", strategy=GenerationType.SEQUENCE)
+	private Integer sessionAvailabiltyId;
 	
 	@OneToOne
-	@JoinColumn(name="APPOINTMENT_STATE")
-	private CodeList state;
+	@JoinColumn(name="ADEPT_ID")
+	private MagicalUser adept;
 	
 	@Column(name="start_datetime", nullable=false)
 	private Date startDateTime;
 	
 	@Column(name="end_datetime", nullable=false)
 	private Date endDateTime;
-
+	
+	@Column(name="recurring_time")
+	private Boolean recurringTime;
+	
 	/**
 	 * No-args constructor
 	 */
-	public Appointment() {
+	public SessionAvailability() {
 		// do nothing
 	}
+
+	/**
+	 * Constructor
+	 * @param sessionAvailabiltyId
+	 * @param adept
+	 * @param startDateTime
+	 * @param endDateTime
+	 * @param recurringTime
+	 */
+	public SessionAvailability(MagicalUser adept, Date startDateTime, Date endDateTime,
+			Boolean recurringTime) {
+		super();
+		this.adept = adept;
+		this.startDateTime = startDateTime;
+		this.endDateTime = endDateTime;
+		this.recurringTime = recurringTime;
+	}
 	
 	/**
 	 * Constructor
-	 * @param id
+	 * @param sessionAvailabiltyId
 	 * @param adept
-	 * @param apprentice
-	 * @param state
 	 * @param startDateTime
 	 * @param endDateTime
+	 * @param recurringTime
 	 */
-	public Appointment(Integer id, MagicalUser adept, MagicalUser apprentice, CodeList state, Date startDateTime,
-			Date endDateTime) {
+	public SessionAvailability(Integer sessionAvailabiltyId, MagicalUser adept, Date startDateTime, Date endDateTime,
+			Boolean recurringTime) {
 		super();
+		this.sessionAvailabiltyId = sessionAvailabiltyId;
 		this.adept = adept;
-		this.apprentice = apprentice;
-		this.state = state;
 		this.startDateTime = startDateTime;
 		this.endDateTime = endDateTime;
-	}
-	
-	/**
-	 * Constructor
-	 * @param adept
-	 * @param apprentice
-	 * @param state
-	 * @param startDateTime
-	 * @param endDateTime
-	 */
-	public Appointment(MagicalUser adept, MagicalUser apprentice, CodeList state, Date startDateTime,
-			Date endDateTime) {
-		super();
-		this.adept = adept;
-		this.apprentice = apprentice;
-		this.state = state;
-		this.startDateTime = startDateTime;
-		this.endDateTime = endDateTime;
+		this.recurringTime = recurringTime;
 	}
 
-	public Integer getId() {
-		return id;
+	public Integer getSessionAvailabiltyId() {
+		return sessionAvailabiltyId;
 	}
 
-	public void setId(Integer id) {
-		this.id = id;
+	public void setSessionAvailabiltyId(Integer sessionAvailabiltyId) {
+		this.sessionAvailabiltyId = sessionAvailabiltyId;
 	}
 
 	public MagicalUser getAdept() {
@@ -104,22 +97,6 @@ public class Appointment {
 
 	public void setAdept(MagicalUser adept) {
 		this.adept = adept;
-	}
-
-	public MagicalUser getApprentice() {
-		return apprentice;
-	}
-
-	public void setApprentice(MagicalUser apprentice) {
-		this.apprentice = apprentice;
-	}
-
-	public CodeList getState() {
-		return state;
-	}
-
-	public void setState(CodeList state) {
-		this.state = state;
 	}
 
 	public Date getStartDateTime() {
@@ -136,5 +113,13 @@ public class Appointment {
 
 	public void setEndDateTime(Date endDateTime) {
 		this.endDateTime = endDateTime;
+	}
+
+	public Boolean getRecurringTime() {
+		return recurringTime;
+	}
+
+	public void setRecurringTime(Boolean recurringTime) {
+		this.recurringTime = recurringTime;
 	}
 }
