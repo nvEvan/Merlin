@@ -2,6 +2,7 @@ package com.revature.merlinservertests;
 
 import static org.junit.Assert.assertNotNull;
 
+import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.junit.Test;
 
@@ -19,7 +20,10 @@ public class ConnectionTest {
 		
 		try {
 			session = HibernateUtil.getSession();	
+		} catch (HibernateException e) {
+			e.printStackTrace();
 		} finally {
+		
 			if (session != null)
 				session.close();
 			

@@ -1,6 +1,14 @@
 package com.revature.merlinserver.beans;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 /**
@@ -10,15 +18,42 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "PrivateUserInfo")
 public class PrivateUserInfo {
+	
+	@Id
+	@Column(name = "privateuserinfo_id")
+	@SequenceGenerator(sequenceName = "PRVT_USER_INFO_SEQ", name = "PRVT_USER_INFO_SEQ")
+	@GeneratedValue(generator = "PRVT_USER_INFO_SEQ", strategy = GenerationType.SEQUENCE)
 	private Integer privateUserId;
-	private Integer userId;
-	private Integer roleId;
-	private Integer stateCityId;
-	private Integer statusId;
+	
+	@OneToOne(fetch=FetchType.EAGER)
+	@JoinColumn(name="MAGICAL_USER")
+	private MagicalUser user;
+	
+	@OneToOne(fetch=FetchType.LAZY)
+	@JoinColumn(name="ROLE_COLUMN")
+	private CodeList role;
+	
+	@OneToOne(fetch=FetchType.LAZY)
+	@JoinColumn(name="STATE_CITY_COLUMN")
+	private CodeList stateCity;
+	
+	@OneToOne(fetch=FetchType.LAZY)
+	@JoinColumn(name="STATUS_COLUMN")
+	private CodeList status;
+	
+	@Column(name="first_name", nullable=false)
 	private String firstName;
+	
+	@Column(name="last_name", nullable=false)
 	private String lastname;
+	
+	@Column(nullable=false)
 	private String email;
+	
+	@Column(nullable=false)
 	private String phoneNumber;
+	
+	@Column(nullable=false)
 	private String address;
 	
 	/**
@@ -27,27 +62,14 @@ public class PrivateUserInfo {
 	public PrivateUserInfo() {
 		// do nothing
 	}
-	
-	/**
-	 * Constructor
-	 * @param userId - MagicalUser id
-	 * @param roleId - What are they (wizard/adept/apprentice)
-	 * @param stateCityId - What state/city they from
-	 * @param statusId - what is their account status (active/paused/banned)
-	 * @param firstName
-	 * @param lastname
-	 * @param email
-	 * @param phoneNumber
-	 * @param address
-	 */
-	public PrivateUserInfo(Integer userId, Integer roleId, Integer stateCityId, Integer statusId,
+
+	public PrivateUserInfo(MagicalUser user, CodeList role, CodeList stateCity, CodeList status,
 			String firstName, String lastname, String email, String phoneNumber, String address) {
 		super();
-		this.privateUserId = privateUserId;
-		this.userId = userId;
-		this.roleId = roleId;
-		this.stateCityId = stateCityId;
-		this.statusId = statusId;
+		this.user = user;
+		this.role = role;
+		this.stateCity = stateCity;
+		this.status = status;
 		this.firstName = firstName;
 		this.lastname = lastname;
 		this.email = email;
@@ -55,27 +77,14 @@ public class PrivateUserInfo {
 		this.address = address;
 	}
 	
-	/**
-	 * Constructor
-	 * @param privateUserId
-	 * @param userId - MagicalUser id
-	 * @param roleId - What are they (wizard/adept/apprentice)
-	 * @param stateCityId - What state/city they from
-	 * @param statusId - what is their account status (active/paused/banned)
-	 * @param firstName
-	 * @param lastname
-	 * @param email
-	 * @param phoneNumber
-	 * @param address
-	 */
-	public PrivateUserInfo(Integer privateUserId, Integer userId, Integer roleId, Integer stateCityId, Integer statusId,
+	public PrivateUserInfo(Integer privateUserId, MagicalUser user, CodeList role, CodeList stateCity, CodeList status,
 			String firstName, String lastname, String email, String phoneNumber, String address) {
 		super();
 		this.privateUserId = privateUserId;
-		this.userId = userId;
-		this.roleId = roleId;
-		this.stateCityId = stateCityId;
-		this.statusId = statusId;
+		this.user = user;
+		this.role = role;
+		this.stateCity = stateCity;
+		this.status = status;
 		this.firstName = firstName;
 		this.lastname = lastname;
 		this.email = email;
@@ -91,36 +100,36 @@ public class PrivateUserInfo {
 		this.privateUserId = privateUserId;
 	}
 
-	public Integer getUserId() {
-		return userId;
+	public MagicalUser getUser() {
+		return user;
 	}
 
-	public void setUserId(Integer userId) {
-		this.userId = userId;
+	public void setUser(MagicalUser user) {
+		this.user = user;
 	}
 
-	public Integer getRoleId() {
-		return roleId;
+	public CodeList getRole() {
+		return role;
 	}
 
-	public void setRoleId(Integer roleId) {
-		this.roleId = roleId;
+	public void setRole(CodeList role) {
+		this.role = role;
 	}
 
-	public Integer getStateCityId() {
-		return stateCityId;
+	public CodeList getStateCity() {
+		return stateCity;
 	}
 
-	public void setStateCityId(Integer stateCityId) {
-		this.stateCityId = stateCityId;
+	public void setStateCity(CodeList stateCity) {
+		this.stateCity = stateCity;
 	}
 
-	public Integer getStatusId() {
-		return statusId;
+	public CodeList getStatus() {
+		return status;
 	}
 
-	public void setStatusId(Integer statusId) {
-		this.statusId = statusId;
+	public void setStatus(CodeList status) {
+		this.status = status;
 	}
 
 	public String getFirstName() {

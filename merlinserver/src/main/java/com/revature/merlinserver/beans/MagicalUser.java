@@ -8,6 +8,9 @@ import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
+/**
+ * @author Luie
+ */
 @Entity
 @Table(name="MagicalUser")
 public class MagicalUser {

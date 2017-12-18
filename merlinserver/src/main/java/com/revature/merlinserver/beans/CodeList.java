@@ -27,6 +27,7 @@ import javax.persistence.UniqueConstraint;
 public class CodeList {
 	
 	@Id
+	@Column(name="ID")
 	@SequenceGenerator(sequenceName = "CODELIST_SEQ", name = "CODELIST_SEQ")
 	@GeneratedValue(generator = "CODELIST_SEQ", strategy = GenerationType.SEQUENCE)
 	private Integer id;
