@@ -31,6 +31,8 @@
 		<mapping class="com.revature.merlinserver.beans.MagicalUser" />
 		<mapping class="com.revature.merlinserver.beans.CodeList" />
 		<mapping class="com.revature.merlinserver.beans.PrivateUserInfo" />
+		<mapping class="com.revature.merlinserver.beans.Receipt" />
+		<mapping class="com.revature.merlinserver.beans.Appointment" />
 		
 	</session-factory>
 </hibernate-configuration>
