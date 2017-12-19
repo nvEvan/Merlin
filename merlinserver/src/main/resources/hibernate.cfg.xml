@@ -31,10 +31,14 @@
 		<mapping class="com.revature.merlinserver.beans.MagicalUser" />
 		<mapping class="com.revature.merlinserver.beans.CodeList" />
 		<mapping class="com.revature.merlinserver.beans.PrivateUserInfo" />
-		<mapping class="com.revature.merlinserver.beans.Receipt" />
 		<mapping class="com.revature.merlinserver.beans.Appointment" />
 		<mapping class="com.revature.merlinserver.beans.SessionAvailability" />
-		<mapping class="com.revature.merlinserver.beans.PublicUserInfop" />
+		<mapping class="com.revature.merlinserver.beans.Receipt" />
+		<mapping class="com.revature.merlinserver.beans.PublicUserInfo" />
+		<mapping class="com.revature.merlinserver.beans.AdeptInfo" />
+		<mapping class="com.revature.merlinserver.beans.AdeptSkill" />
+		<mapping class="com.revature.merlinserver.beans.Badge" />
 		<mapping class="com.revature.merlinserver.beans.Review" />
+		<mapping class="com.revature.merlinserver.beans.UserBadge" />
 	</session-factory>
 </hibernate-configuration>

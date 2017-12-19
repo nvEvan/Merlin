@@ -16,27 +16,36 @@ import javax.persistence.Table;
  * @author Alex
  */
 @Entity
-@Table(name="BADGE")
+@Table(name="Badge")
 public class Badge {
-	
 	@Id
 	@Column(name = "badge_id")
-	@SequenceGenerator(sequenceName = "badge_SEQ", name = "badge_SEQ")
-	@GeneratedValue(generator = "badge_SEQ", strategy = GenerationType.SEQUENCE)
+	@SequenceGenerator(sequenceName = "BADGE_SEQ", name = "BADGE_SEQ")
+	@GeneratedValue(generator = "BADGE_SEQ", strategy = GenerationType.SEQUENCE)
 	private Integer badgeId;
 	
 	@Column(nullable = false)
 	private Blob image;
 	
-	@Column(name="min_score", nullable = false)
+	@Column(name="MIN_SCORE", nullable = false)
 	private int minScore;
 	
 	@Column(nullable = false)
 	private String description;
 	
+	/**
+	 * No-args constructor
+	 */
+	public Badge(){
+		// do nothing
+	}
 	
-	public Badge(){}
-	
+	/**
+	 * Constructor
+	 * @param image
+	 * @param minScore
+	 * @param description
+	 */
 	public Badge(Blob image, int minScore, String description) {
 		super();
 		this.image = image;

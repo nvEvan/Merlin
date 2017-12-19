@@ -5,6 +5,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
@@ -14,22 +15,22 @@ import javax.persistence.Table;
  * @author Alex
  */
 @Entity
-@Table(name="ADEPT_INFO")
+@Table(name="AdeptInfo")
 public class AdeptInfo {
 	/**
 	 * Added required field member
 	 */
 	@Id
-	@SequenceGenerator(sequenceName="ADEPT_INFO_SEQ", name="ADEPT_INFO_NAME")
+	@SequenceGenerator(sequenceName="ADEPT_INFO_SEQ", name="ADEPT_INFO_SEQ")
 	@GeneratedValue(generator="ADEPT_INFO_SEQ", strategy=GenerationType.SEQUENCE)
 	private Integer id;
 	
 	@OneToOne
-	@Column(name="ADEPT_ID")
+	@JoinColumn(name="ADEPT_ID")
 	private MagicalUser adept;
 
 	@OneToOne
-	@Column(name="PAYMENT_INFO")
+	@JoinColumn(name="PAYMENT_INFO")
 	private CodeList paymentInfo;
 
 	@Column(precision=2, scale=8)

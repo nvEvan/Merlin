@@ -20,9 +20,7 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "PublicUserInfo")
 public class PublicUserInfo {
-	
 	@Id
-	@Column(name = "publicuserinfo_id")
 	@SequenceGenerator(sequenceName = "PUBLIC_USER_INFO_SEQ", name = "PUBLIC_USER_INFO_SEQ")
 	@GeneratedValue(generator = "PUBLIC_USER_INFO_SEQ", strategy = GenerationType.SEQUENCE)
 	private Integer publicUserId;
@@ -32,7 +30,6 @@ public class PublicUserInfo {
 	private MagicalUser user;
 	
 	@OneToOne
-	@Column(name="role_id")
 	@JoinColumn(name="ROLE_COLUMN")
 	private CodeList role;
 	
@@ -52,9 +49,11 @@ public class PublicUserInfo {
 	
 	private Blob image;
 	
-	
+	/**
+	 * No-args constructor
+	 */
 	public PublicUserInfo() {
-		
+		// do nothing
 	}
 	
 	/**
