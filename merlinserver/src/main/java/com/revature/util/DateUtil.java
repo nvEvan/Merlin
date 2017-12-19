@@ -64,35 +64,7 @@ public class DateUtil {
 	 * @return string if converted else null
 	 */
 	public static String toDateString(Date sqlDate) {
-		String date = null;
-		
-		// log date conversion attempt
-		logger.debug("attempting to convert date=['" + sqlDate + "']");
-
-		// Attempt to find method
-		for (Method method : dateUtil.getClass().getDeclaredMethods()) {
-			// Only use private helper methods && those who begin with predefined prefix
-			if (!method.isAccessible() && method.getName().contains(CONVERT_DATE)) {
-				try {
-					method.setAccessible(true);
-					date = (String)method.invoke(dateUtil, sqlDate);
-				} catch (ClassCastException | IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
-					e.printStackTrace();
-					logger.warn("issue invoking conversion method, message=['" + e.getMessage() + "']");
-				}
-				
-				method.setAccessible(false);
-				
-				// If found
-				if (date != null)
-					break;
-			}
-		}
-		
-		// log result
-		logger.debug(date == null ? "failed to convert sql date to string" : "converted to string");
-		
-		return date;
+		return toDateString(sqlDate, SLASH_DELIMITER);
 	}
 	
 	/**
