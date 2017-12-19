@@ -2,7 +2,11 @@ package com.revature.merlinserver.beans;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.persistence.OneToOne;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 /**
@@ -12,7 +16,14 @@ import javax.persistence.Table;
 @Entity
 @Table(name="ADEPT_INFO")
 public class AdeptInfo {
-
+	/**
+	 * Added required field member
+	 */
+	@Id
+	@SequenceGenerator(sequenceName="ADEPT_INFO_SEQ", name="ADEPT_INFO_NAME")
+	@GeneratedValue(generator="ADEPT_INFO_SEQ", strategy=GenerationType.SEQUENCE)
+	private Integer id;
+	
 	@OneToOne
 	@Column(name="ADEPT_ID")
 	private MagicalUser adept;
@@ -24,15 +35,47 @@ public class AdeptInfo {
 	@Column(precision=2, scale=8)
 	private Double price;
 
+	/**
+	 * No-args constructor
+	 */
 	public AdeptInfo() {
-
+		// do nothing
 	}
-
+	
+	/**
+	 * Constructor
+	 * @param id
+	 * @param adept
+	 * @param paymentInfo
+	 * @param price
+	 */
+	public AdeptInfo(Integer id, MagicalUser adept, CodeList paymentInfo, Double price) {
+		super();
+		this.id = id;
+		this.adept = adept;
+		this.paymentInfo = paymentInfo;
+		this.price = price;
+	}
+	
+	/**
+	 * Constructor
+	 * @param adept
+	 * @param paymentInfo
+	 * @param price
+	 */
 	public AdeptInfo(MagicalUser adept, CodeList paymentInfo, Double price) {
 		super();
 		this.adept = adept;
 		this.paymentInfo = paymentInfo;
 		this.price = price;
+	}
+
+	public Integer getId() {
+		return id;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
 	}
 
 	public MagicalUser getAdept() {
