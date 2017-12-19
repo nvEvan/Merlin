@@ -1,0 +1,93 @@
+package com.revature.merlinserver.beans;
+
+import java.sql.Blob;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
+
+/**
+ * Bean used to hold information about badges.
+ * Badges being rewards for adepts and apprentices.
+ * @author Alex
+ */
+@Entity
+@Table(name="BADGE")
+public class Badge {
+	
+	@Id
+	@Column(name = "badge_id")
+	@SequenceGenerator(sequenceName = "badge_SEQ", name = "badge_SEQ")
+	@GeneratedValue(generator = "badge_SEQ", strategy = GenerationType.SEQUENCE)
+	private Integer badgeId;
+	
+	@Column(nullable = false)
+	private Blob image;
+	
+	@Column(name="min_score", nullable = false)
+	private int minScore;
+	
+	@Column(nullable = false)
+	private String description;
+	
+	
+	public Badge(){}
+	
+	public Badge(Blob image, int minScore, String description) {
+		super();
+		this.image = image;
+		this.minScore = minScore;
+		this.description = description;
+	}
+
+	/**
+	 * Constructor used when pulling a badge from the DB.
+	 * @param badgeId
+	 * @param image
+	 * @param minScore
+	 * @param description
+	 */
+	public Badge(Integer badgeId, Blob image, int minScore, String description) {
+		super();
+		this.badgeId = badgeId;
+		this.image = image;
+		this.minScore = minScore;
+		this.description = description;
+	}
+
+	public Integer getBadgeId() {
+		return badgeId;
+	}
+
+	public void setBadgeId(Integer badgeId) {
+		this.badgeId = badgeId;
+	}
+
+	public Blob getImage() {
+		return image;
+	}
+
+	public void setImage(Blob image) {
+		this.image = image;
+	}
+
+	public int getMinScore() {
+		return minScore;
+	}
+
+	public void setMinScore(int minScore) {
+		this.minScore = minScore;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+}
