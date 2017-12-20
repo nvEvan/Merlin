@@ -1,0 +1,17 @@
+th{
+    padding: 15px;
+    background-color: rgb(132, 11, 245);
+    color: yellow;
+}
+
+table{
+    border: yellow;
+}
+
+a:visited{
+    color: yellow;
+}
+
+a:link{
+    color: yellow;
+}
