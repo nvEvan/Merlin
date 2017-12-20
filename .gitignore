@@ -26,6 +26,7 @@
 **/logs/**
 **/test-output
 **/hibernate.cfg.xml
+**/web.xml
 
 #IDEA
 **/.idea/
