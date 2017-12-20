@@ -4,6 +4,8 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.sql.Date;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.apache.log4j.Logger;
 
@@ -14,13 +16,16 @@ import org.apache.log4j.Logger;
  */
 @SuppressWarnings("all")
 public class DateUtil {
-	public static final int SLASH_DELIMITER = 1;
-	public static final int DASH_DELIMITER = 2;
-	public static final int SPACE_DELIMITER = 3;
-	private static final String CONVERT_STRING = "convertStringFormat";
-	private static final String CONVERT_DATE = "convertDateFormat";
 	private static DateUtil dateUtil = new DateUtil();
 	private static Logger logger = Logger.getLogger(DateUtil.class);
+	private static List<String> formats;
+	
+	/**
+	 * Ensure formats initialized once 
+	 */
+	static {
+		initFormats();
+	}
 	
 	/**
 	 * Attempts to convert date in string format to SQL Date instance 
@@ -37,23 +42,12 @@ public class DateUtil {
 		logger.debug("attempting to convert date=['" + date + "']");
 		
 		// Attempt to find method
-		for (Method method : dateUtil.getClass().getDeclaredMethods()) {
-			// Only use private helper methods && those who begin with predefined prefix
-			if (!method.isAccessible() && method.getName().contains(CONVERT_STRING)) {
-				try {
-					method.setAccessible(true);
-					sqlDate = (Date)method.invoke(dateUtil, date);
-				} catch (ClassCastException | IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
-					e.printStackTrace();
-					logger.warn("issue invoking conversion method, message=['" + e.getMessage() + "']");
-				}
-				
-				method.setAccessible(false);
-				
-				// If found
-				if (sqlDate != null)
-					break;
-			}
+		for (String format : formats) {
+			sqlDate = convertStringFormat(date, format);
+			
+			// If found
+			if (sqlDate != null)
+				break;
 		}
 		
 		// log result
@@ -68,7 +62,7 @@ public class DateUtil {
 	 * @return string if converted else null
 	 */
 	public static String toDateString(Date sqlDate) {
-		return toDateString(sqlDate, SLASH_DELIMITER);
+		return toDateString(sqlDate, formats.get(0));
 	}
 	
 	/**
@@ -77,34 +71,15 @@ public class DateUtil {
 	 * @param delimiter - what seperates date values (use DASH_DELIMITER for '-' and SLASH_DELIMITER for '/')
 	 * @return string if converted else null
 	 */
-	public static String toDateString(Date sqlDate, int delimiter) {
+	public static String toDateString(Date sqlDate, String format) {
 		String date = null;
 		String name;
 		
 		// log date conversion attempt
 		logger.debug("attempting to convert date=['" + sqlDate + "']");
 
-		// Attempt to find method
-		for (Method method : dateUtil.getClass().getDeclaredMethods()) {
-			name = method.getName();
-			
-			// Only use private helper methods && those who begin with predefined prefix and delimiter
-			if (!method.isAccessible() && name.contains(CONVERT_DATE) && validateNameByDelimiter(name, delimiter)) {
-				try {
-					method.setAccessible(true);
-					date = (String)method.invoke(dateUtil, sqlDate);
-				} catch (ClassCastException | IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
-					e.printStackTrace();
-					logger.warn("issue invoking conversion method, message=['" + e.getMessage() + "']");
-				}
-				
-				method.setAccessible(false);
-				
-				// If found
-				if (date != null)
-					break;
-			}
-		}
+		// Convert
+		date = convertDateFormat(sqlDate, format);
 		
 		// log result
 		logger.debug(date == null ? "failed to convert sql date to string" : "converted to string");
@@ -117,133 +92,46 @@ public class DateUtil {
 	///
 	
 	/**
-	 * Determines conversion type by delimiter value
-	 * @param name
-	 * @param delimiter
-	 * @return true is has delimiter else false
+	 * Initialize predefined date formats 
 	 */
-	private static boolean validateNameByDelimiter(String name, int delimiter) {
-		switch (delimiter) {
-		case SPACE_DELIMITER:
-			return name.contains("_sp_");
-		case DASH_DELIMITER:
-			return name.contains("_d_");
-		case SLASH_DELIMITER:
-		default:
-				return name.contains("_s_");
-		}
-	}
-	
-	/**
-	 * Converts string of format dd/MM/yyyy to sql date
-	 * @param date - string to convert
-	 * @return SQL Date on success else null
-	 */
-	private static Date convertStringFormatdd_s_MM_s_yyyy(String date) {
-		SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
-		Date sqlDate = null;
+	private static void initFormats() {
+		formats =  new ArrayList<>();
 		
-		try {
-			sqlDate = new Date(format.parse(date).getTime());
-		} finally {
-			return sqlDate;
-		}
+		for (Object[] row : IOUtil.loadSpreadSheet(IOUtil.MAIN_RESOURCE + "data.xlsx", "dateformats", String.class)) 
+			formats.add((String)row[0]);
 	}
 	
 	/**
-	 * Converts date of format dd/MM/yyyy to string
+	 * Converts date of specified forma to string
 	 * @param date - sql date
+	 * @param format - format to convert to
 	 * @return string on success else null
 	 */
-	private static String convertDateFormatdd_s_MM_s_yyyy(Date sqlDate) {
-		SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
+	private static String convertDateFormat(Date sqlDate, String format) {
+		SimpleDateFormat sdf = new SimpleDateFormat(format);
 		String date = null;
 		
 		try {
-			date =  format.format(sqlDate);
+			date =  sdf.format(sqlDate);
 		} finally {
 			return date;
 		}
 	}
 	
 	/**
-	 * Converts string of format dd-MM-yyyy to sql date
+	 * Converts string of specified format to sql date
 	 * @param date - string to convert
+	 * @param format - format to convert to
 	 * @return SQL Date on success else null
 	 */
-	private static Date convertStringFormatdd_d_MM_d_yyyy(String date) {
-		SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy");
+	private static Date convertStringFormat(String date, String format) {
+		SimpleDateFormat sdf = new SimpleDateFormat(format);
 		Date sqlDate = null;
 		
 		try {
-			sqlDate = new Date(format.parse(date).getTime());
+			sqlDate = new Date(sdf.parse(date).getTime());
 		} finally {
 			return sqlDate;
 		}
 	}
-	
-	/**
-	 * Converts date of format dd-MM-yyyy to string
-	 * @param date - sql date
-	 * @return string on success else null
-	 */
-	private static String convertDateFormatdd_d_MM_d_yyyy(Date sqlDate) {
-		SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy");
-		String date = null;
-		
-		try {
-			date =  format.format(sqlDate);
-		} finally {
-			return date;
-		}
-	}
-	
-	/**
-	 * Converts string of format dd-MMM-yyyy to sql date
-	 * @param date - string to convert
-	 * @return SQL Date on success else null
-	 */
-	private static Date convertStringFormatdd_d_MMM_d_yyyy(String date) {
-		SimpleDateFormat format = new SimpleDateFormat("dd-MMM-yyyy");
-		Date sqlDate = null;
-		
-		try {
-			sqlDate = new Date(format.parse(date).getTime());
-		} finally {
-			return sqlDate;
-		}
-	}
-	
-	/**
-	 * Converts string of format dd MMM yyyy to sql date
-	 * @param date - string to convert
-	 * @return SQL Date on success else null
-	 */
-	private static Date convertStringFormatdd_sp_MMM_sp_yyyy(String date) {
-		SimpleDateFormat format = new SimpleDateFormat("dd MMM yyyy");
-		Date sqlDate = null;
-		
-		try {
-			sqlDate = new Date(format.parse(date).getTime());
-		} finally {
-			return sqlDate;
-		}
-	}
-	
-	/**
-	 * Converts date of format dd MMM yyyy to string
-	 * @param date - sql date
-	 * @return string on success else null
-	 */
-	private static String convertDateFormatdd_sp_MMM_sp_yyyy(Date sqlDate) {
-		SimpleDateFormat format = new SimpleDateFormat("dd MMM yyyy");
-		String date = null;
-		
-		try {
-			date =  format.format(sqlDate);
-		} finally {
-			return date;
-		}
-	}
-	
 }

@@ -31,28 +31,16 @@ public class DateUtilTest {
   @Test(groups="smoke", dataProvider = "loadDatesFromDataProvider")
   public void convertToStringFrom(String format, Date date, String output) {
 	  java.sql.Date sqlDate = new java.sql.Date(date.getTime());
-	  
-	  switch (format) {
-	  case "dash":
-		  Assert.assertEquals(DateUtil.toDateString(sqlDate, DateUtil.DASH_DELIMITER), output.trim());
-		  break;
-	  case "slash":
-		  Assert.assertEquals(DateUtil.toDateString(sqlDate, DateUtil.SLASH_DELIMITER), output.trim());
-		  Assert.assertEquals(DateUtil.toDateString(sqlDate), output.trim());
-		  break;
-	  case "space":
-		  Assert.assertEquals(DateUtil.toDateString(sqlDate, DateUtil.SPACE_DELIMITER), output.trim());
-		  break;
-	  }
+	  Assert.assertEquals(DateUtil.toDateString(sqlDate, format), output.trim());
   }
 
   @DataProvider
   public Object[][] loadDatesAsStringsFromDataProvider() {
-	  return IOUtil.loadSpreadSheet("./src/test/resources/datesdata.xlsx", "datestrings", String.class, String.class);
+	  return IOUtil.loadSpreadSheet(IOUtil.TEST_RESOURCE + "datesdata.xlsx", "datestrings", String.class, String.class);
   }
   
   @DataProvider
   public Object[][] loadDatesFromDataProvider() {
-	  return IOUtil.loadSpreadSheet("./src/test/resources/datesdata.xlsx", "dates", String.class, Date.class, String.class);
+	  return IOUtil.loadSpreadSheet(IOUtil.TEST_RESOURCE + "datesdata.xlsx", "dates", String.class, Date.class, String.class);
   }
 }

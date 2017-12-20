@@ -18,6 +18,8 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
  * @author Luie
  */
 public class IOUtil {
+	public static final String MAIN_RESOURCE = "./src/main/resources/";
+	public static final String TEST_RESOURCE = "./src/test/resources/";
 	private static Logger logger = Logger.getLogger(IOUtil.class);
 	
 	/**
