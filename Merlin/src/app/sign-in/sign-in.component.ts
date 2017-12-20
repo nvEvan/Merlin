@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { LoginService } from '../services/login.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-sign-in',
@@ -7,9 +9,21 @@ import { Component, OnInit } from '@angular/core';
 })
 export class SignInComponent implements OnInit {
 
-  constructor() { }
+  username:string;
+  password:string;
+
+  constructor(private router: Router) { }
 
   ngOnInit() {
+  }
+
+  userLogin(){
+    if(this.username === "GreyBeard" && this.password === "wizard"){
+      this.router.navigateByUrl("profile");
+    }
+    else{
+      window.alert("You just took an arrow to the knee!");
+    }
   }
 
 }

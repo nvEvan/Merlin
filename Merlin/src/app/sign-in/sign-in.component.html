@@ -1,5 +1,10 @@
 <div>
-  <p><input type="text" placeholder="Username"></p>
-  <p><input type="password" placeholder="Password"></p>
-  <input type="button" value="Login" ><!-- remember to make into a form div and change to button to submit -->
+  <form>
+    <table>
+      <tr><td><input [(ngModel)]="username" name="username" type="text" placeholder="Username"></td></tr>
+      <tr><td><input [(ngModel)]="password" name="password" type="password" placeholder="Password"></td></tr>  
+    </table>
+      <input type="button" value="Login" (click)=userLogin()>
+  </form>
 </div>
+<p><a href="home">Back</a></p>

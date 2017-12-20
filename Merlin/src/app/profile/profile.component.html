@@ -1,15 +1,32 @@
+<app-navbar></app-navbar>
 <div>
   <!-- The value showin for the values are just dummy values I may create a model for user
     (adept/apprentice/wizard) in the mean time  -->
+  
   <div>
-      <p>Username: {{userPublic.username}}</p>
-      <p>First Name: {{userPublic.fname}}</p>
-      <p>Last Name: {{userPublic.lname}}</p>
-      <p>Phone: {{userPrivate.phone}}</p>
-      <p>Email: {{userPrivate.email}}</p>
-      <p>Address: {{userPrivate.address}}</p>
-      <p>City: {{userPrivate.city}}</p>
-      <p>State: {{userPrivate.state}}</p>
-      
+    <input type="button" value="Show Public Information" (click)=viewPublic()>
+    <span *ngIf="publicInfo">
+        <p><b>Public Information</b></p>
+        <p>Username: {{userPublic.username}}</p>
+        <p>First Name: {{userPublic.fname}}</p>
+        <p>Last Name: {{userPublic.lname}}</p>
+    </span>
   </div>
+
+  <div>
+    <input type="button" value="Show Private Information" (click)=viewPrivate()>
+    <span *ngIf="privateInfo">
+        <p><b>Private Information</b></p>
+        <p>Username: {{userPublic.username}}</p>
+        <p>Phone: {{userPrivate.phone}}</p>
+        <p>E-mail: {{userPrivate.email}}</p>
+        <p>Address: {{userPrivate.address}}</p>
+        <p>City: {{userPrivate.city}}</p>
+        <p>State: {{userPrivate.state}}</p>
+    </span>
+    
+  </div>
+
+  
+
 </div>

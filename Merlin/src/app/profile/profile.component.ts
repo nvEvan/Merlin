@@ -11,6 +11,8 @@ import { userPirvateInfo } from '../models/user-private-info';
 export class ProfileComponent implements OnInit {
   userPublic: userPublicInfo;
   userPrivate: userPirvateInfo;
+  publicInfo: boolean;
+  privateInfo: boolean;
   // username:string;
   // userId:string;
   // fname:string;
@@ -21,7 +23,10 @@ export class ProfileComponent implements OnInit {
   // email: string;
   // phone: string;
 
-  constructor() { }
+  constructor() { 
+    this.publicInfo = true;
+    this.privateInfo = false;
+  }
 
   ngOnInit(userPublic= new userPublicInfo, userPrivate = new userPirvateInfo) {
     this.userPublic = new userPublicInfo();
@@ -39,6 +44,24 @@ export class ProfileComponent implements OnInit {
     this.userPrivate.userId="GreyBeard";
     this.userPrivate.username="GB101";
 
+  }
+// new code below...
+  viewPublic(){
+    if(this.publicInfo){
+      this.publicInfo = false;
+    }
+    else{
+      this.publicInfo= true;
+    }
+  }
+
+  viewPrivate(){
+    if(this.privateInfo){
+      this.privateInfo = false;
+    }
+    else{
+      this.privateInfo= true;
+    }
   }
 
 }
