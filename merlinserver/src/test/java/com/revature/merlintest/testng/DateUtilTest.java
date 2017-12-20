@@ -10,6 +10,11 @@ import org.testng.annotations.Test;
 import com.revature.util.DateUtil;
 import com.revature.util.IOUtil;
 
+/**
+ * 
+ * @author Luie
+ *
+ */
 public class DateUtilTest {
   @BeforeSuite(groups="smoke")
   public void beforeSuite() {

@@ -21,7 +21,7 @@ import org.hibernate.annotations.Check;
 @Entity
 @Table(name="SessionAvailability")
 @Check(constraints="start_datetime < end_datetime")
-public class SessionAvailability {
+public class SessionAvailability implements BusinessObject {
 	@Id
 	@Column(name="session_availability_id")
 	@SequenceGenerator(sequenceName="SESSION_AVA_SEQ", name="SESSION_AVA_SEQ")

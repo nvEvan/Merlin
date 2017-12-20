@@ -19,7 +19,7 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name="Receipt")
-public class Receipt {
+public class Receipt implements BusinessObject {
 	
 	@Id
 	@Column(name="receipt_id")

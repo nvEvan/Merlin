@@ -19,7 +19,7 @@ import org.hibernate.annotations.Check;
 @Entity
 @Table(name="Review")
 @Check(constraints="score < 6 <> score > 0")
-public class Review {
+public class Review implements BusinessObject {
 	/**
 	 * Added required field member
 	 */

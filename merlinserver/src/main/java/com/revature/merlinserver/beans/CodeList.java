@@ -24,7 +24,7 @@ import javax.persistence.UniqueConstraint;
 			   @Index(columnList = "description", name = "codelist_description_idx")
 	   }
 )
-public class CodeList {
+public class CodeList implements BusinessObject {
 	
 	@Id
 	@Column(name="ID")

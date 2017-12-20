@@ -11,7 +11,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name="UserBadge")
-public class UserBadge {
+public class UserBadge implements BusinessObject {
 	/**
 	 * Added required field member
 	 */

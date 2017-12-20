@@ -215,22 +215,6 @@ public class DateUtil {
 	}
 	
 	/**
-	 * Converts date of format dd-MM-yyyy to string
-	 * @param date - sql date
-	 * @return string on success else null
-	 */
-	private static String convertDateFormatdd_d_MMM_d_yyyy(Date sqlDate) {
-		SimpleDateFormat format = new SimpleDateFormat("dd-MMM-yyyy");
-		String date = null;
-		
-		try {
-			date =  format.format(sqlDate);
-		} finally {
-			return date;
-		}
-	}
-	
-	/**
 	 * Converts string of format dd MMM yyyy to sql date
 	 * @param date - string to convert
 	 * @return SQL Date on success else null

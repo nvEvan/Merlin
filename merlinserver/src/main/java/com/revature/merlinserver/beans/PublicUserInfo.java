@@ -19,7 +19,7 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "PublicUserInfo")
-public class PublicUserInfo {
+public class PublicUserInfo implements BusinessObject {
 	@Id
 	@SequenceGenerator(sequenceName = "PUBLIC_USER_INFO_SEQ", name = "PUBLIC_USER_INFO_SEQ")
 	@GeneratedValue(generator = "PUBLIC_USER_INFO_SEQ", strategy = GenerationType.SEQUENCE)

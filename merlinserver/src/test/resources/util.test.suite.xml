@@ -8,6 +8,7 @@
   	</groups>
     <classes>
       <class name="com.revature.merlintest.testng.DateUtilTest"/>
+      <class name="com.revature.merlintest.testng.ServiceUtilTest"/>
     </classes>
   </test> <!-- Test -->
 </suite> <!-- Suite -->

@@ -17,7 +17,7 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name="Badge")
-public class Badge {
+public class Badge implements BusinessObject {
 	@Id
 	@Column(name = "badge_id")
 	@SequenceGenerator(sequenceName = "BADGE_SEQ", name = "BADGE_SEQ")

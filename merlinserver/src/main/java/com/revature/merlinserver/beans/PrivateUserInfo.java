@@ -17,7 +17,7 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "PrivateUserInfo")
-public class PrivateUserInfo {
+public class PrivateUserInfo implements BusinessObject {
 	
 	@Id
 	@Column(name = "privateuserinfo_id")

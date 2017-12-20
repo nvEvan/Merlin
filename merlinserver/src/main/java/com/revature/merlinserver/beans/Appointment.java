@@ -22,7 +22,7 @@ import org.hibernate.annotations.Check;
 @Entity
 @Table(name="Appointment")
 @Check(constraints="start_datetime < end_datetime")
-public class Appointment {
+public class Appointment implements BusinessObject {
 	@Id
 	@SequenceGenerator(sequenceName="APPOINTMENT_SEQ", name="APPOINTMENT_SEQ")
 	@GeneratedValue(generator="APPOINTMENT_SEQ", strategy=GenerationType.SEQUENCE)

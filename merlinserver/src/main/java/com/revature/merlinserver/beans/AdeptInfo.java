@@ -16,7 +16,7 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name="AdeptInfo")
-public class AdeptInfo {
+public class AdeptInfo implements BusinessObject {
 	/**
 	 * Added required field member
 	 */

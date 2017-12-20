@@ -9,4 +9,20 @@
     <welcome-file>default.htm</welcome-file>
     <welcome-file>default.jsp</welcome-file>
   </welcome-file-list>
+  <servlet>
+    <description></description>
+    <display-name>FrontController</display-name>
+    <servlet-name>FrontController</servlet-name>
+    <servlet-class>com.revature.merlinserver.servlet.FrontController</servlet-class>
+    <init-param>
+      <param-name>LoginHome</param-name>
+      <param-value>loginHome</param-value>
+    </init-param>
+    
+    <load-on-startup>1</load-on-startup>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>FrontController</servlet-name>
+    <url-pattern>/FrontController</url-pattern>
+  </servlet-mapping>
 </web-app>

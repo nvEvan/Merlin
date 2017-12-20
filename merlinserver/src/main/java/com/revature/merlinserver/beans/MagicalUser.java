@@ -9,11 +9,12 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 /**
+ * Base user account 
  * @author Luie
  */
 @Entity
 @Table(name="MagicalUser")
-public class MagicalUser {
+public class MagicalUser implements BusinessObject {
 	@Id
 	@Column(name="USER_ID")
 	@SequenceGenerator(sequenceName="USER_SEQ", name="USER_SEQ")
