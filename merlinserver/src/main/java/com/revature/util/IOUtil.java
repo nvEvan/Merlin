@@ -3,6 +3,8 @@ package com.revature.util;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.apache.log4j.Logger;
 import org.apache.poi.ss.usermodel.Cell;
@@ -26,7 +28,8 @@ public class IOUtil {
 	 * @return Data contained in sheet on successful load else null
 	 */
 	public static Object[][] loadSpreadSheet(String source, String sheetName, Class<?>... classes) {
-		Object[][] data = null;
+		List<Object[]> data = new ArrayList<>();
+		Object[] dataRow = null;
 		FileInputStream fis;
 		File file;
 		Workbook book;
@@ -42,24 +45,44 @@ public class IOUtil {
 			sheet = book.getSheet(sheetName);
 			rowNum = sheet.getLastRowNum() - sheet.getFirstRowNum();
 
-			data = new Object[rowNum][classes.length];
-
+			// Build data list
 			for (int i = 1; i <= rowNum; i++) {
 				Row row = sheet.getRow(i);
-				data[i - 1] = extractDataFromRow(row, classes);
+				
+				// If non-empy row
+				if ((dataRow = extractDataFromRow(row, classes)) != null)
+					data.add(dataRow);
 			}
 		} catch (IOException e) {
 			logger.debug("failed to load spread sheet into memory, error message=" + e.getMessage());
 			e.printStackTrace();
 		}
 
-		return data;
+		// Convert all non-empty rows to 2d-array
+		return data.toArray(new Object[data.size()][]);
 	}
-	
 	
 	///
 	//	PRIVATE METHODS 
 	///
+	
+	/**
+	 * Determines if row is empty (if empty it is excluded 
+	 * @param row - what to check
+	 * @return true if all cells are null else false.
+	 */
+	private static boolean isEmptyRow(Object[] row) {
+		boolean isEmpty = true;
+		
+		for (Object item : row) {
+			if (item != null) {
+				isEmpty = false;
+				break;
+			}
+		}
+			
+		return isEmpty;
+	}
 	
 	/**
 	 * Extract data from row using class set for appropriate types
@@ -70,11 +93,11 @@ public class IOUtil {
 	private static Object[] extractDataFromRow(Row row, Class<?>[] classes) {
 		Object[] data = new Object[classes.length];
 		int size = classes.length;
-		
+	
 		for (int i = 0; i < size; i++)
 			data[i] = extractDataFromCell(row.getCell(i), classes[i]);
 		
-		return data;
+		return isEmptyRow(data) ? null : data;
 	}
 	
 	/**
@@ -89,7 +112,8 @@ public class IOUtil {
 		try {
 			switch (name) {
 				case "string":
-					return cell.getStringCellValue();
+					name = cell.getStringCellValue();
+					return name.length() > 0 ? name : null;
 				case "double":
 					return cell.getNumericCellValue();
 				case "date":
@@ -100,7 +124,8 @@ public class IOUtil {
 					return null;
 			}
 		} catch (Exception e) {
-			return cell.toString();
+			String str = cell == null ? "" : cell.toString();
+			return str.length() == 0 ? null : str;
 		}
 	}	
 }

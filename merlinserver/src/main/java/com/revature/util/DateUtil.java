@@ -30,6 +30,9 @@ public class DateUtil {
 	public static Date toDate(String date) {
 		Date sqlDate = null;
 		
+	    // Ensure string properly formatted 
+		date = date == null ? "" : date.trim();
+		
 		// log date conversion attempt
 		logger.debug("attempting to convert date=['" + date + "']");
 		
