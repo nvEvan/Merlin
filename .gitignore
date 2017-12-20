@@ -21,9 +21,11 @@
 **/Servers
 **/.springBeans
 
+#Other
 **/pom.properties
 **/logs/**
 **/test-output
+**/hibernate.cfg.xml
 
 #IDEA
 **/.idea/
