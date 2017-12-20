@@ -1,4 +1,4 @@
-package com.revature.merlinservertests;
+package com.revature.merlintest.junit;
 
 import static org.junit.Assert.assertNotNull;
 

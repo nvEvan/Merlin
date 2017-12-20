@@ -23,7 +23,7 @@
 
 **/pom.properties
 **/logs/**
-
+**/test-output
 
 #IDEA
 **/.idea/
