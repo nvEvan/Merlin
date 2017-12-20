@@ -9,47 +9,36 @@ import { userPirvateInfo } from '../models/user-private-info';
   styleUrls: ['./profile.component.css']
 })
 export class ProfileComponent implements OnInit {
+  userPublic: userPublicInfo;
+  userPrivate: userPirvateInfo;
+  // username:string;
+  // userId:string;
+  // fname:string;
+  // lname:string;
+  // address:string;
+  // city:string;
+  // state:string;
+  // email: string;
+  // phone: string;
 
-  username:string;
-  userId:string;
-  fname:string;
-  lname:string;
-  address:string;
-  city:string;
-  state:string;
-  email: string;
-  phone: string;
+  constructor() { }
 
-  constructor(private userPublic: userPublicInfo, private userPrivate: userPirvateInfo) {
-    userPublic = new userPublicInfo();
-    userPrivate = new userPirvateInfo();
-    userPublic.fname="Gandalf";
-    userPublic.lname="Grey";
-    userPublic.userId="GreyBeard";
-    userPublic.username="GB101";
+  ngOnInit(userPublic= new userPublicInfo, userPrivate = new userPirvateInfo) {
+    this.userPublic = new userPublicInfo();
+    this.userPrivate = new userPirvateInfo();
+    this.userPublic.fname="Gandalf";
+    this.userPublic.lname="Grey";
+    this.userPublic.userId="GreyBeard";
+    this.userPublic.username="GB101";
 
-    userPrivate.address = "Somewhere";
-    userPrivate.city = "Dont Remember";
-    userPrivate.email="greybeard@wizards.com";
-    userPrivate.phone="911";
-    userPrivate.state="No Clue";
-    userPrivate.userId="GreyBeard";
-    userPrivate.username="GB101";
+    this.userPrivate.address = "Somewhere";
+    this.userPrivate.city = "Dont Remember";
+    this.userPrivate.email="greybeard@wizards.com";
+    this.userPrivate.phone="911";
+    this.userPrivate.state="No Clue";
+    this.userPrivate.userId="GreyBeard";
+    this.userPrivate.username="GB101";
 
-    
-
-   }
-
-  ngOnInit() {
-    this.username = this.userPublic.username.toString();
-    this.userId = this.userPublic.userId.toString();
-    this.fname = this.userPublic.fname.toString();
-    this.lname = this.userPublic.lname.toString();
-    this.address = this.userPrivate.address.toString();
-    this.city = this.userPrivate.city.toString();
-    this.state = this.userPrivate.state.toString();
-    this.email = this.userPrivate.email.toString();
-    this.phone = this.userPrivate.phone.toString();
   }
 
 }
