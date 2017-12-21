@@ -103,4 +103,25 @@
 			<version>3.16</version>
 		</dependency>
 	</dependencies>
+
+
+	<build>
+		<pluginManagement>
+			<plugins>
+				<!-- Surefire plugin used to execute both TestNG and Junit tests my
+				running
+				'mvn test'. This is useful for running our tests on the Jenkins server -->
+
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-surefire-plugin</artifactId>
+					<version>2.20.1</version>
+					<configuration>
+						<reuseForks>false</reuseForks>
+						<forkCount>1</forkCount>
+					</configuration>
+				</plugin>
+			</plugins>
+		</pluginManagement>
+	</build>
 </project>
