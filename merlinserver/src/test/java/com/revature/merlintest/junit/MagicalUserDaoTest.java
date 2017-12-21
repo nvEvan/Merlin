@@ -11,14 +11,12 @@ public class MagicalUserDaoTest {
 
 	@Test
 	public void shouldLoadAllUsers() {
-//		MagicalUserDao dao = new MagicalUserDao();
-//		
-//		
-//		assertTrue(dao.open());
-//		assertNotNull(dao.loadAll());
-//		
-//		dao.close();
-		assertTrue(true);
+		MagicalUserDao dao = new MagicalUserDao();
+		
+		
+		assertTrue(dao.open());
+		assertNotNull(dao.loadAll());
+		
+		dao.close();
 	}
-
 }
