@@ -1,5 +1,7 @@
 package com.revature.merlinserver.service;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Properties;
 import java.util.UUID;
 
@@ -10,6 +12,8 @@ import javax.mail.Session;
 import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
+
+import com.firebase.security.token.TokenGenerator;
 
 /**
  * When a user creates an account this class will send that user a verification email.
@@ -23,9 +27,9 @@ public class UserVerificationService {
 	 * @param email
 	 * @return
 	 */
-	public static boolean sendVerification(String email) {
+	public static boolean sendVerification(String email, String username) {
+		String password =  System.getenv("MerlinEmail");
 		final String gmail = "xarxes.merlin@gmail.com";
-		final String password = "1merlin!";
 
 		Properties props = new Properties();
 		props.put("mail.smtp.auth", "true");
@@ -42,10 +46,13 @@ public class UserVerificationService {
 		});
 		
 		try {
-			UUID uuid = UUID.randomUUID();
-			String randomUUIDString = uuid.toString();
+			Map<String, Object> authPayload = new HashMap<String, Object>();
+			authPayload.put("username", username);
+
+			TokenGenerator tokenGenerator = new TokenGenerator("mkaZznqcW0IsRGFwXXAgOtW9rs1ahtjgFYeBRndH");
+			String token = tokenGenerator.createToken(authPayload);
 			
-			String link = "http://localhost:8085/merlinserver/register/" + randomUUIDString;
+			String link = "http://localhost:8085/merlinserver/register/" + token;
 			String body = "Welcome to Merlin!\nClick the following link to activate your account +" + link;
 			
 			//form the message details
