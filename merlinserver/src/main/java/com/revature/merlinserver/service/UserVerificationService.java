@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
 import java.util.UUID;
+import java.util.concurrent.ExecutionException;
 
 import javax.mail.Message;
 import javax.mail.MessagingException;
@@ -13,7 +14,7 @@ import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
-import com.firebase.security.token.TokenGenerator;
+import org.hibernate.id.UUIDGenerator;
 
 /**
  * When a user creates an account this class will send that user a verification email.
@@ -21,13 +22,15 @@ import com.firebase.security.token.TokenGenerator;
  * @author Alex
  */
 public class UserVerificationService {
-	
+
 	/**
 	 * Send the user a verification email.
 	 * @param email
 	 * @return
+	 * @throws ExecutionException 
+	 * @throws InterruptedException 
 	 */
-	public static boolean sendVerification(String email, String username) {
+	public static boolean sendVerification(String email, String username) throws InterruptedException, ExecutionException {
 		String password =  System.getenv("MerlinEmail");
 		final String gmail = "xarxes.merlin@gmail.com";
 
@@ -44,24 +47,22 @@ public class UserVerificationService {
 				return new PasswordAuthentication(gmail, password);
 			}
 		});
+
+		String token = UUID.randomUUID().toString();
 		
 		try {
-			Map<String, Object> authPayload = new HashMap<String, Object>();
-			authPayload.put("username", username);
+			String link = "http://localhost:8085/merlinserver/register/authenticate/" + token;
+			String body = "<h1>Welcome to Merlin!</h1>"
+					+ "<h3>Click the following link to activate your account:</h3> " 
+					+ "<a href=" + link +">"+link+"</a>";
 
-			TokenGenerator tokenGenerator = new TokenGenerator("mkaZznqcW0IsRGFwXXAgOtW9rs1ahtjgFYeBRndH");
-			String token = tokenGenerator.createToken(authPayload);
-			
-			String link = "http://localhost:8085/merlinserver/register/" + token;
-			String body = "Welcome to Merlin!\nClick the following link to activate your account +" + link;
-			
 			//form the message details
 			Message message = new MimeMessage(session);
 			message.setFrom(new InternetAddress("noreply@merlin-2a1ae.firebaseapp.com"));
 			message.setRecipients(Message.RecipientType.TO,
 					InternetAddress.parse(email));
 			message.setSubject("Merlin Account Verification");
-			message.setText(body);
+			message.setContent(body, "text/html");
 
 			Transport.send(message);
 
