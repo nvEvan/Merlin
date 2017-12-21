@@ -1,9 +1,12 @@
 package com.revature.merlinserver.dao;
 
+import org.apache.log4j.Logger;
+import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
 import com.revature.merlinserver.beans.BusinessObject;
+import com.revature.util.HibernateUtil;
 
 /**
  * Defines basic session and transaction creation and deletion methods
@@ -11,6 +14,7 @@ import com.revature.merlinserver.beans.BusinessObject;
  * @param <T>
  */
 public abstract class MerlinSessionDao<T extends BusinessObject> implements MerlinDao<T> {
+	protected static Logger logger = Logger.getLogger(MerlinSessionDao.class);
 	protected Session session;
 	protected Transaction transaction;
 	
@@ -42,8 +46,22 @@ public abstract class MerlinSessionDao<T extends BusinessObject> implements Merl
 	 */
 	@Override
 	public boolean openSession() {
-		// TODO Auto-generated method stub
-		return false;
+		try {
+			// Ensure to free resources
+			close();
+			
+			logger.debug("attempting to open session");
+			
+			// Attempt to open session
+			session = HibernateUtil.getSession();
+			logger.debug("open session successful");
+		} catch (HibernateException e) {
+			logger.fatal("failed to open session, message=" + e);
+			e.printStackTrace();
+			session = null;
+		}
+		
+		return session != null && session.isConnected();
 	}
 
 	/**
