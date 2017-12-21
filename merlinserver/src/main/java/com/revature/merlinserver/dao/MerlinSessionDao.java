@@ -61,7 +61,7 @@ public abstract class MerlinSessionDao<T extends BusinessObject> implements Merl
 			session = null;
 		}
 		
-		return session != null && session.isConnected();
+		return isSessionOpen();
 	}
 
 	/**
@@ -70,8 +70,13 @@ public abstract class MerlinSessionDao<T extends BusinessObject> implements Merl
 	 */
 	@Override
 	public boolean beginTransaction() {
-		// TODO Auto-generated method stub
-		return false;
+		endTransaction();
+		
+		// Ensure we have a valid session handle
+		if (isSessionOpen())
+			transaction = session.beginTransaction();
+		
+		return isTransactionActive();
 	}
 
 	/**
@@ -79,8 +84,10 @@ public abstract class MerlinSessionDao<T extends BusinessObject> implements Merl
 	 */
 	@Override
 	public void endTransaction() {
-		// TODO Auto-generated method stub
-		
+		if (isTransactionActive()) 
+			transaction.commit();
+			
+		transaction = null;
 	}
 
 	/**
@@ -88,8 +95,26 @@ public abstract class MerlinSessionDao<T extends BusinessObject> implements Merl
 	 */
 	@Override
 	public void closeSession() {
-		// TODO Auto-generated method stub
-		
+		if (isSessionOpen()) 
+			session.close();
+
+		session = null;
+	}
+	
+	/**
+	 * Determines if Dao has an open session
+	 * @return true if open else false
+	 */
+	public boolean isSessionOpen() {
+		return session != null && session.isConnected();
+	}
+	
+	/**
+	 * Determines if Dao has an open session
+	 * @return true if open else false
+	 */
+	public boolean isTransactionActive() {
+		return transaction != null && transaction.isActive();
 	}
 	
 	/**
