@@ -89,7 +89,7 @@ public abstract class MerlinSessionDao<T extends BusinessObject> implements Merl
 			
 		transaction = null;
 	}
-
+	
 	/**
 	 * Closes session if opened
 	 */
@@ -115,6 +115,14 @@ public abstract class MerlinSessionDao<T extends BusinessObject> implements Merl
 	 */
 	public boolean isTransactionActive() {
 		return transaction != null && transaction.isActive();
+	}
+	
+	/**
+	 * Determines if session and transaction is active
+	 * @return true is session open and transaction started else false
+	 */
+	public boolean isReady() {
+		return isSessionOpen() && isTransactionActive();
 	}
 	
 	/**
