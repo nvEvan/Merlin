@@ -5,11 +5,11 @@ import 'rxjs/add/operator/map';
 @Injectable()
 export class UserPrivateInfoService {
 
-  constructor(private http:Http) { }
+  constructor(private http: Http) { }
 
-  getPrivateInfo(username:string){
-    return this.http.get("http://localhost:8085/MerlinRestNasir/rest/user/get/private/" + username).
-    map((response: Response)=> response.json());
+  getPrivateInfo(username: string) {
+    return this.http.get('http://localhost:8085/MerlinRestNasir/rest/user/get/private/' + username).
+    map((response: Response) => response.json());
   }
 
 }

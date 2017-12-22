@@ -10,29 +10,41 @@ import { UserPrivateInfoService } from '../services/user-private-info.service';
   styleUrls: ['./profile.component.css']
 })
 export class ProfileComponent implements OnInit {
-  user = {};
-  stuff={};
-  publicInfo = true;
-  privateInfo = false;
-  username:string;
+  user = {
+    'username':  '',
+    'firstName': '',
+    'lastName': ''
+  };
+  
+  privateInfo = {
+    'email': '',
+    'phone': '',
+    'address': '',
+    'city': '',
+    'state': ''
+  };
+  
+  isPublicInfo = true;
+  isPrivateInfo = false;
+  
+  username: string;
   constructor(private getUserService: GetUserService, private getPrivateService: UserPrivateInfoService, private login: LoginService) { 
     
   }
 
   ngOnInit() {
     this.username = this.login.getUsername();
-    this.getUserService.getUser(this.username).subscribe(resUser => this.user= resUser);
-    this.getPrivateService.getPrivateInfo(this.username).subscribe(resPriv => this.stuff = resPriv);
+    this.getUserService.getUser(this.username).subscribe(resUser => this.user = resUser);
+    this.getPrivateService.getPrivateInfo(this.username).subscribe(resPriv => this.privateInfo = resPriv);
   }
 
-  viewPublicPrivate(){
-    if(this.publicInfo ){
-      this.publicInfo = false;
-      this.privateInfo = true;
-    }
-    else{
-      this.publicInfo = true;
-      this.privateInfo = false;
+  viewPublicPrivate() {
+    if (this.isPublicInfo) {
+      this.isPublicInfo = false;
+      this.isPrivateInfo = true;
+    } else {
+      this.isPublicInfo = true;
+      this.isPrivateInfo = false;
     }
   }
 }

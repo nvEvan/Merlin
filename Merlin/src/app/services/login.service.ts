@@ -7,15 +7,15 @@ export class LoginService {
   
   constructor() { }
 
-  login(username: string){
+  login(username: string) {
     this.username = username;
   }
 
-  getUsername(){
+  getUsername() {
     return this.username;
   }
 
-  setUsername(username:string){
+  setUsername(username: string) {
     this.username = username;
   }
 
