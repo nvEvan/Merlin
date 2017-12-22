@@ -20,7 +20,7 @@ import com.revature.merlinserver.service.UserVerificationService;
 
 @Path("/register")
 public class Register {
-	
+
 	/**
 	 * Rest call from angular to register a new user.
 	 * @param token
@@ -30,16 +30,20 @@ public class Register {
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.TEXT_PLAIN)
 	public void register(MagicalUser user, PrivateUserInfo userinfo) {
-		
-		
+
+
 		//register user
-		
-		
-		
-		
+
+
+
+
 		/*-----------Send email to user-------------*/
 		Token token = TokenService.createToken(user);
-		
+		TokenDao td = new TokenDao();
+		td.open();
+		td.insertToken(token);
+		td.close();
+
 		try {
 			UserVerificationService.sendVerification(userinfo.getEmail(), token);
 		} catch (InterruptedException e) {
@@ -48,7 +52,7 @@ public class Register {
 			e.printStackTrace();
 		}
 	}
-	
+
 	/**
 	 * When a user clicks on their email verification link.
 	 * @param token
@@ -57,13 +61,21 @@ public class Register {
 	@Path("/authenticate{token}")
 	@Produces(MediaType.TEXT_PLAIN)
 	public void authenticate(@PathParam("token") String token) {
-		
+
 		MagicalUserDao md = new MagicalUserDao();
 		TokenDao td = new TokenDao();
-		
-		
-		
-		
-		
+
+		if (td.tokenExistsAndIsNew(token)) {
+
+
+
+
+		} else {
+			//the user did not click the link in their email
+			//they are entering a phony token
+		}
+
+
+
 	}
 }

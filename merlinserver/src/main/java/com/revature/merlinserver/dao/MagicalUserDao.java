@@ -27,4 +27,6 @@ public class MagicalUserDao extends MerlinSessionDao<MagicalUser> {
 		
 		return users;
 	}
+	
+	
 }
