@@ -23,8 +23,9 @@ public class UserVerificationService {
 
 	/**
 	 * Send the user a verification email.
-	 * @param email
-	 * @return
+	 * @param email to send the verification email
+	 * @param token object
+	 * @return true if email sent successfully
 	 * @throws ExecutionException 
 	 * @throws InterruptedException 
 	 */
@@ -48,9 +49,10 @@ public class UserVerificationService {
 
 		try {
 			String link = "http://localhost:8085/merlinserver/register/authenticate/" + token.getToken();
-			String body = "<h3>Welcome to Merlin!</h3>"
-					+ "<h4>Click the following link to activate your account:</h4> " 
-					+ "<a href=" + link +">"+link+"</a>";
+			String body = 
+					  "<h3>Welcome to Merlin!</h3>"
+					+ "<h4>Click the following link to activate your account:</h4>" 
+					+ "<h4><a href=" + link +">"+link+"</a></h4>";
 
 			//form the message details
 			Message message = new MimeMessage(session);

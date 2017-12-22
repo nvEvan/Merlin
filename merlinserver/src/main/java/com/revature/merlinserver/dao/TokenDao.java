@@ -33,9 +33,9 @@ public class TokenDao extends MerlinSessionDao<MagicalUser> {
 	/**
 	 * 
 	 * @param tokenstr
-	 * @return
+	 * @return if this token is a unique token
 	 */
-	public boolean isTokenValid(MagicalUser user, String tokenstr) {
+	public boolean isTokenUnique(MagicalUser user, String tokenstr) {
 		
 		if (isReady()) {
 			

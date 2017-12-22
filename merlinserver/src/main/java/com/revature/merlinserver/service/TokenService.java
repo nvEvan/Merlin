@@ -18,7 +18,7 @@ public class TokenService {
 		String tokenstr = UUID.randomUUID().toString();
 		TokenDao td = new TokenDao();
 		
-		while (td.isTokenValid(user, tokenstr) == false) {
+		while (td.isTokenUnique(user, tokenstr) == false) {
 			tokenstr = UUID.randomUUID().toString();
 		}
 		

@@ -13,6 +13,7 @@ import javax.ws.rs.core.MediaType;
 import com.revature.merlinserver.beans.MagicalUser;
 import com.revature.merlinserver.beans.PrivateUserInfo;
 import com.revature.merlinserver.beans.Token;
+import com.revature.merlinserver.dao.MagicalUserDao;
 import com.revature.merlinserver.dao.TokenDao;
 import com.revature.merlinserver.service.TokenService;
 import com.revature.merlinserver.service.UserVerificationService;
@@ -25,7 +26,7 @@ public class Register {
 	 * @param token
 	 */
 	@POST
-	@Path("/register")
+	@Path("/create") //this the path we want to use?
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.TEXT_PLAIN)
 	public void register(MagicalUser user, PrivateUserInfo userinfo) {
@@ -57,7 +58,9 @@ public class Register {
 	@Produces(MediaType.TEXT_PLAIN)
 	public void authenticate(@PathParam("token") String token) {
 		
+		MagicalUserDao md = new MagicalUserDao();
 		TokenDao td = new TokenDao();
+		
 		
 		
 		
