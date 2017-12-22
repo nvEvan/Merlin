@@ -1,9 +1,6 @@
 package com.revature.merlinserver.service;
 
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Properties;
-import java.util.UUID;
 import java.util.concurrent.ExecutionException;
 
 import javax.mail.Message;
@@ -14,7 +11,8 @@ import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
-import org.hibernate.id.UUIDGenerator;
+
+import com.revature.merlinserver.beans.Token;
 
 /**
  * When a user creates an account this class will send that user a verification email.
@@ -30,7 +28,7 @@ public class UserVerificationService {
 	 * @throws ExecutionException 
 	 * @throws InterruptedException 
 	 */
-	public static boolean sendVerification(String email, String username) throws InterruptedException, ExecutionException {
+	public static boolean sendVerification(String email, Token token) throws InterruptedException, ExecutionException {
 		String password =  System.getenv("MerlinEmail");
 		final String gmail = "xarxes.merlin@gmail.com";
 
@@ -48,12 +46,10 @@ public class UserVerificationService {
 			}
 		});
 
-		String token = UUID.randomUUID().toString();
-		
 		try {
-			String link = "http://localhost:8085/merlinserver/register/authenticate/" + token;
-			String body = "<h1>Welcome to Merlin!</h1>"
-					+ "<h3>Click the following link to activate your account:</h3> " 
+			String link = "http://localhost:8085/merlinserver/register/authenticate/" + token.getToken();
+			String body = "<h3>Welcome to Merlin!</h3>"
+					+ "<h4>Click the following link to activate your account:</h4> " 
 					+ "<a href=" + link +">"+link+"</a>";
 
 			//form the message details
