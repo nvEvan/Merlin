@@ -1,6 +1,6 @@
 export class userPirvateInfo{
     username: string;
-    userId: string;
+    userId: string;//change to number or not
     phone: string;
     address: string;
     city: string;

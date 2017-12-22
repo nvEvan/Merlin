@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { userPublicInfo } from '../models/user-public-info';
-import { userPirvateInfo } from '../models/user-private-info';
+import { LoginService } from '../services/login.service';
+import { GetUserService } from '../services/get-user.service';
+import { UserPrivateInfoService } from '../services/user-private-info.service';
 
 
 @Component({
@@ -9,59 +10,29 @@ import { userPirvateInfo } from '../models/user-private-info';
   styleUrls: ['./profile.component.css']
 })
 export class ProfileComponent implements OnInit {
-  userPublic: userPublicInfo;
-  userPrivate: userPirvateInfo;
-  publicInfo: boolean;
-  privateInfo: boolean;
-  // username:string;
-  // userId:string;
-  // fname:string;
-  // lname:string;
-  // address:string;
-  // city:string;
-  // state:string;
-  // email: string;
-  // phone: string;
-
-  constructor() { 
-    this.publicInfo = true;
-    this.privateInfo = false;
+  user = {};
+  stuff={};
+  publicInfo = true;
+  privateInfo = false;
+  username:string;
+  constructor(private getUserService: GetUserService, private getPrivateService: UserPrivateInfoService, private login: LoginService) { 
+    
   }
 
-  ngOnInit(userPublic= new userPublicInfo, userPrivate = new userPirvateInfo) {
-    this.userPublic = new userPublicInfo();
-    this.userPrivate = new userPirvateInfo();
-    this.userPublic.fname="Gandalf";
-    this.userPublic.lname="Grey";
-    this.userPublic.userId="GreyBeard";
-    this.userPublic.username="GB101";
-
-    this.userPrivate.address = "Somewhere";
-    this.userPrivate.city = "Dont Remember";
-    this.userPrivate.email="greybeard@wizards.com";
-    this.userPrivate.phone="911";
-    this.userPrivate.state="No Clue";
-    this.userPrivate.userId="GreyBeard";
-    this.userPrivate.username="GB101";
-
+  ngOnInit() {
+    this.username = this.login.getUsername();
+    this.getUserService.getUser(this.username).subscribe(resUser => this.user= resUser);
+    this.getPrivateService.getPrivateInfo(this.username).subscribe(resPriv => this.stuff = resPriv);
   }
-// new code below...
-  viewPublic(){
-    if(this.publicInfo){
+
+  viewPublicPrivate(){
+    if(this.publicInfo ){
       this.publicInfo = false;
+      this.privateInfo = true;
     }
     else{
-      this.publicInfo= true;
-    }
-  }
-
-  viewPrivate(){
-    if(this.privateInfo){
+      this.publicInfo = true;
       this.privateInfo = false;
     }
-    else{
-      this.privateInfo= true;
-    }
   }
-
 }
