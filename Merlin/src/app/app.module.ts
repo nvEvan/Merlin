@@ -5,16 +5,16 @@ import { FormsModule } from '@angular/forms';
 import { HttpModule, JsonpModule } from '@angular/http';
 
 import { AppComponent } from './app.component';
-import { NavbarComponent } from './navbar/navbar.component';
-import { ProfileComponent } from './profile/profile.component';
-import { RegisterComponent } from './register/register.component';
-import { SignInComponent } from './sign-in/sign-in.component';
-import { HomeComponent } from './home/home.component';
+import { NavbarComponent } from './components/navbar/navbar.component';
+import { ProfileComponent } from './components/profile/profile.component';
+import { RegisterComponent } from './components/register/register.component';
+import { SignInComponent } from './components/sign-in/sign-in.component';
+import { HomeComponent } from './components/home/home.component';
 import { NgbModule} from '@ng-bootstrap/ng-bootstrap';
-import { BadgesComponent } from './badges/badges.component';
-import { GetUserService } from './services/get-user.service';
-import { LoginService } from './services/login.service';
-import { UserPrivateInfoService } from './services/user-private-info.service';
+import { BadgesComponent } from './components/badges/badges.component';
+import { GetUserService } from './components/services/get-user.service';
+import { LoginService } from './components/services/login.service';
+import { UserPrivateInfoService } from './components/services/user-private-info.service';
 
 @NgModule({
   declarations: [
