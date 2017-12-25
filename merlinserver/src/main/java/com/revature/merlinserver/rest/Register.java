@@ -18,6 +18,11 @@ import com.revature.merlinserver.dao.TokenDao;
 import com.revature.merlinserver.service.TokenService;
 import com.revature.merlinserver.service.UserVerificationService;
 
+/**
+ * 
+ * @author Alex
+ *
+ */
 @Path("/register")
 public class Register {
 

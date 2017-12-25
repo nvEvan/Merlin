@@ -6,6 +6,11 @@ import com.revature.merlinserver.beans.MagicalUser;
 import com.revature.merlinserver.beans.Token;
 import com.revature.merlinserver.dao.TokenDao;
 
+/**
+ * 
+ * @author Alex
+ *
+ */
 public class TokenService {
 
 	/**

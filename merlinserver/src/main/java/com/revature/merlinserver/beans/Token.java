@@ -8,6 +8,11 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+/**
+ * 
+ * @author Alex
+ *
+ */
 @Entity
 @Table(name="Token")
 public class Token {

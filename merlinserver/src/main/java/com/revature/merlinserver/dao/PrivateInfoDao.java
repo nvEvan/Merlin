@@ -11,9 +11,7 @@ import com.revature.merlinserver.beans.PrivateUserInfo;
 public class PrivateInfoDao extends MerlinSessionDao<PrivateUserInfo> {
 	
 	public void update(PrivateUserInfo info) {
-		
 		session.update(info);
-		
 	}
 	
 	public void insert(PrivateUserInfo info) {
@@ -25,5 +23,4 @@ public class PrivateInfoDao extends MerlinSessionDao<PrivateUserInfo> {
 		
 		return null;
 	}
-
 }

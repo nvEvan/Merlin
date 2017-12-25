@@ -27,10 +27,5 @@ public class PrivateInfoDaoTest {
 		pf.setFirstName("alex");
 		dao.update(pf);
 		dao.close();
-		
-		dao.open();
-		
-		
-		
 	}
 }
