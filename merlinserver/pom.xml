@@ -108,10 +108,11 @@
 	<build>
 		<pluginManagement>
 			<plugins>
-				<!-- Surefire plugin used to execute both TestNG and Junit tests my
-				running
-				'mvn test'. This is useful for running our tests on the Jenkins server -->
-
+				<!-- Surefire plugin used to execute both 
+						TestNG and Junit tests by running
+						'mvn test'. This is useful for running 
+						our tests on the Jenkins server 
+						-->
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-surefire-plugin</artifactId>
