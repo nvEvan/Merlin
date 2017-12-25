@@ -10,19 +10,16 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
+import com.revature.merlinserver.beans.CodeList;
 import com.revature.merlinserver.beans.MagicalUser;
 import com.revature.merlinserver.beans.PrivateUserInfo;
 import com.revature.merlinserver.beans.Token;
-import com.revature.merlinserver.dao.MagicalUserDao;
+import com.revature.merlinserver.dao.CodeListDao;
+import com.revature.merlinserver.dao.PrivateInfoDao;
 import com.revature.merlinserver.dao.TokenDao;
 import com.revature.merlinserver.service.TokenService;
 import com.revature.merlinserver.service.UserVerificationService;
 
-/**
- * 
- * @author Alex
- *
- */
 @Path("/register")
 public class Register {
 
@@ -50,7 +47,7 @@ public class Register {
 		td.close();
 
 		try {
-			UserVerificationService.sendVerification(userinfo.getEmail(), token.getToken());
+			UserVerificationService.sendVerification(userinfo.getEmail(), token);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		} catch (ExecutionException e) {
@@ -67,14 +64,29 @@ public class Register {
 	@Produces(MediaType.TEXT_PLAIN)
 	public void authenticate(@PathParam("token") String token) {
 
-		MagicalUserDao md = new MagicalUserDao();
 		TokenDao td = new TokenDao();
-
+		PrivateInfoDao pd = new PrivateInfoDao();
+		CodeListDao cd = new CodeListDao();
+		
+		td.open();
+		MagicalUser user = td.getUserByToken(token);
+		td.close();
+		
+		pd.open();
+		PrivateUserInfo userinfo = pd.getPrivateInfoByUser(user);
+		pd.close();
+		
+		//update the user's status to 'active' status
 		if (td.tokenExistsAndIsNew(token)) {
-				
+			cd.open();
+			CodeList status = cd.getCodeListById(425); //id 425 = active status
+			cd.close();
 			
-			//set user's status to active
-
+			userinfo.setStatus(status);
+			
+			pd.open();
+			pd.update(userinfo);
+			pd.close();
 
 
 		} else {
