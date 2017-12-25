@@ -6,6 +6,10 @@ import com.revature.merlinserver.beans.MagicalUser;
 import com.revature.merlinserver.beans.Token;
 import com.revature.util.DateUtil;
 
+/**
+ * 
+ * @author Alex
+ */
 public class TokenDao extends MerlinSessionDao<MagicalUser> {
 
 	public void insertToken(Token token) {
@@ -78,5 +82,24 @@ public class TokenDao extends MerlinSessionDao<MagicalUser> {
 		} else {
 			return false;
 		}
+	}
+
+	/**
+	 * Each user has a unique token.
+	 * @param token
+	 * @return the user associated with the given token
+	 */
+	public MagicalUser getUserByToken(String token) {
+		MagicalUser user = null;
+		
+		if (isReady()) {
+
+			Query q = session.createQuery("SELECT user FROM TOKEN WHERE token = ?");
+			q.setParameter(1, token);
+
+			user = (MagicalUser) q.uniqueResult();
+		} 
+
+		return user;
 	}
 }
