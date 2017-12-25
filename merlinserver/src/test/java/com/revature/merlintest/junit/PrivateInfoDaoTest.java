@@ -5,16 +5,32 @@ import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
+import com.revature.merlinserver.beans.PrivateUserInfo;
 import com.revature.merlinserver.dao.PrivateInfoDao;
 
+/**
+ * 
+ * @author Alex
+ *
+ */
 public class PrivateInfoDaoTest {
 	
 	@Test
-	public void shouldLoadAllUsers() {
+	public void updateInfoTest() {
 		PrivateInfoDao dao = new PrivateInfoDao();
-		
 		assertTrue(dao.open());
-//		assertNotNull(dao.update());
+		
+		PrivateUserInfo pf = new PrivateUserInfo();
+		pf.setFirstName("bobbert");
+		dao.insert(pf);
+		
+		pf.setFirstName("alex");
+		dao.update(pf);
 		dao.close();
+		
+		dao.open();
+		
+		
+		
 	}
 }

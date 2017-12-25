@@ -45,7 +45,7 @@ public class Register {
 		td.close();
 
 		try {
-			UserVerificationService.sendVerification(userinfo.getEmail(), token);
+			UserVerificationService.sendVerification(userinfo.getEmail(), token.getToken());
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		} catch (ExecutionException e) {
@@ -66,7 +66,9 @@ public class Register {
 		TokenDao td = new TokenDao();
 
 		if (td.tokenExistsAndIsNew(token)) {
-
+				
+			
+			//set user's status to active
 
 
 

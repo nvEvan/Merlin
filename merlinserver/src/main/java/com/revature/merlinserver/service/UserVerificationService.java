@@ -29,7 +29,7 @@ public class UserVerificationService {
 	 * @throws ExecutionException 
 	 * @throws InterruptedException 
 	 */
-	public static boolean sendVerification(String email, Token token) throws InterruptedException, ExecutionException {
+	public static boolean sendVerification(String email, String token) throws InterruptedException, ExecutionException {
 		String password =  System.getenv("MerlinEmail");
 		final String gmail = "xarxes.merlin@gmail.com";
 
@@ -48,11 +48,11 @@ public class UserVerificationService {
 		});
 
 		try {
-			String link = "http://localhost:8085/merlinserver/register/authenticate/" + token.getToken();
+			String link = "http://localhost:8085/merlinserver/register/authenticate/" + token;
 			String body = 
 					  "<h3>Welcome to Merlin!</h3>"
 					+ "<h4>Click the following link to activate your account:</h4>" 
-					+ "<h4><a href=" + link +">"+link+"</a></h4>";
+					+ "<h4><a href=" + link +">" + link + "</a></h4>";
 
 			//form the message details
 			Message message = new MimeMessage(session);
