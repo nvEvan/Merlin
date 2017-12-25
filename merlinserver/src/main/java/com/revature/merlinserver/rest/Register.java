@@ -47,7 +47,7 @@ public class Register {
 		td.close();
 
 		try {
-			UserVerificationService.sendVerification(userinfo.getEmail(), token);
+			UserVerificationService.sendVerification(userinfo.getEmail(), token.getToken());
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		} catch (ExecutionException e) {
@@ -64,30 +64,13 @@ public class Register {
 	@Produces(MediaType.TEXT_PLAIN)
 	public void authenticate(@PathParam("token") String token) {
 
-		TokenDao td = new TokenDao();
-		PrivateInfoDao pd = new PrivateInfoDao();
-		CodeListDao cd = new CodeListDao();
-		
-		td.open();
-		MagicalUser user = td.getUserByToken(token);
-		td.close();
-		
-		pd.open();
-		PrivateUserInfo userinfo = pd.getPrivateInfoByUser(user);
-		pd.close();
+		MagicalUser user = TokenService.getUserByToken(token);
 		
 		//update the user's status to 'active' status
-		if (td.tokenExistsAndIsNew(token)) {
-			cd.open();
-			CodeList status = cd.getCodeListById(425); //id 425 = active status
-			cd.close();
+		if (TokenService.tokenExistsAndIsNew(token)) {
 			
-			userinfo.setStatus(status);
+			UserVerificationService.updateStatus(user);
 			
-			pd.open();
-			pd.update(userinfo);
-			pd.close();
-
 
 		} else {
 			//the user did not click the link in their email
