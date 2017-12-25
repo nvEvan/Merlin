@@ -16,7 +16,8 @@ public class CodeListDao extends MerlinSessionDao<MagicalUser> {
 		
 		if (isReady()) {
 			
-			Query q = session.createQuery("FROM CodeList WHERE id = 425");
+			Query q = session.createQuery("FROM CodeList WHERE id = ?");
+			q.setParameter(0, id);
 			cl = (CodeList) q.uniqueResult();
 		}
 		
