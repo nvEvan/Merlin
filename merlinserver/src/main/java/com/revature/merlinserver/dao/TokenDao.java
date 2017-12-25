@@ -6,25 +6,22 @@ import com.revature.merlinserver.beans.MagicalUser;
 import com.revature.merlinserver.beans.Token;
 import com.revature.util.DateUtil;
 
+/**
+ * 
+ * @author Alex
+ */
 public class TokenDao extends MerlinSessionDao<MagicalUser> {
 
 	public void insertToken(Token token) {
-
 		if (isReady()) {
 			session.save(token);
 		}
 	}
 
 	public void updateToken(Token token) {
-
-
-
-	}
-
-	public Token getTokenById(int id) {
-
-
-		return null;
+		if (isReady()) {
+			session.update(token);
+		}
 	}
 
 	/**
@@ -37,12 +34,12 @@ public class TokenDao extends MerlinSessionDao<MagicalUser> {
 		if (isReady()) {
 
 			Query q = session.createQuery("FROM TOKEN WHERE token = ? AND expDate > ?");
-			q.setParameter(1, tokenstr);
+			q.setParameter(0, tokenstr);
 
 			java.util.Date date = new java.util.Date();
 			java.sql.Date sqlDate = DateUtil.toDate(date.toString());
 
-			q.setParameter(2, sqlDate);
+			q.setParameter(1, sqlDate);
 
 			Token token = (Token) q.uniqueResult();
 
@@ -78,5 +75,24 @@ public class TokenDao extends MerlinSessionDao<MagicalUser> {
 		} else {
 			return false;
 		}
+	}
+
+	/**
+	 * Each user has a unique token.
+	 * @param token
+	 * @return the user associated with the given token
+	 */
+	public MagicalUser getUserByToken(String token) {
+		MagicalUser user = null;
+		
+		if (isReady()) {
+
+			Query q = session.createQuery("SELECT user FROM TOKEN WHERE token = ?");
+			q.setParameter(1, token);
+
+			user = (MagicalUser) q.uniqueResult();
+		} 
+
+		return user;
 	}
 }
