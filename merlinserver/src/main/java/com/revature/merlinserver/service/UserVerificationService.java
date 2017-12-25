@@ -11,8 +11,13 @@ import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
-
+import com.revature.merlinserver.beans.CodeList;
+import com.revature.merlinserver.beans.MagicalUser;
+import com.revature.merlinserver.beans.PrivateUserInfo;
 import com.revature.merlinserver.beans.Token;
+import com.revature.merlinserver.dao.CodeListDao;
+import com.revature.merlinserver.dao.PrivateInfoDao;
+import com.revature.merlinserver.dao.TokenDao;
 
 /**
  * When a user creates an account this class will send that user a verification email.
@@ -69,5 +74,31 @@ public class UserVerificationService {
 			return false;
 		}
 		return true;
+	}
+
+	/**
+	 * Update the status of a magical user to active.
+	 * @param token
+	 * @param user
+	 */
+	public static void updateStatus(MagicalUser user) {
+		
+		PrivateInfoDao pd = new PrivateInfoDao();
+		CodeListDao cd = new CodeListDao();
+		
+		pd.open();
+		PrivateUserInfo userinfo = pd.getPrivateInfoByUser(user);
+		pd.close();
+		
+		cd.open();
+		CodeList status = cd.getCodeListById(425); //id 425 = active status
+		cd.close();
+		
+		userinfo.setStatus(status);
+		
+		pd.open();
+		pd.update(userinfo);
+		pd.close();
+		
 	}
 }

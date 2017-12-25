@@ -31,4 +31,21 @@ public class TokenService {
 		
 		return token;
 	}
+
+	public static MagicalUser getUserByToken(String token) {
+		TokenDao td = new TokenDao();
+		td.open();
+		MagicalUser user = td.getUserByToken(token);
+		td.close();
+		
+		return user;
+	}
+
+	public static boolean tokenExistsAndIsNew(String token) {
+		TokenDao td = new TokenDao();
+		td.open();
+		boolean unique = td.isTokenUnique(token);
+		td.close();
+		return unique;
+	}
 }
