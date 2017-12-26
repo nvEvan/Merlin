@@ -24,5 +24,6 @@
  		<mapping class="com.revature.merlinserver.beans.Badge" />
  		<mapping class="com.revature.merlinserver.beans.Review" />
  		<mapping class="com.revature.merlinserver.beans.UserBadge" />
+ 		<mapping class="com.revature.merlinserver.beans.FileUpload" />
  	</session-factory>
  </hibernate-configuration> 
