@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { LoginService } from '../../services/login.service';
-import { GetUserService } from '../../services/get-user.service';
-import { UserPrivateInfoService } from '../../services/user-private-info.service';
+import { LoginService } from '../../services/login/login.service';
+import { GetUserService } from '../../services/get-user/get-user.service';
+import { UserPrivateInfoService } from '../../services/user-private-info/user-private-info.service';
 
 
 @Component({
@@ -34,8 +34,6 @@ export class ProfileComponent implements OnInit {
 
   ngOnInit() {
     this.username = this.login.getUsername();
-    this.getUserService.getUser(this.username).subscribe(resUser => this.user = resUser);
-    this.getPrivateService.getPrivateInfo(this.username).subscribe(resPriv => this.privateInfo = resPriv);
   }
 
   viewPublicPrivate() {
