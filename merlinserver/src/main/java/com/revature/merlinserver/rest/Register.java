@@ -41,27 +41,6 @@ public class Register {
 	}
 
 	/**
-	 * This method sends the new user a verification email.
-	 * The email includes a brand new generated token used for verification.
-	 */
-	private void sendEmailToUser(MagicalUser user, PrivateUserInfo userinfo) {
-		Token token = TokenService.createToken(user);
-		TokenDao td = new TokenDao();
-		
-		td.open();
-		td.insertToken(token); //store the new token
-		td.close();
-
-		try {
-			UserVerificationService.sendVerification(userinfo.getEmail(), token.getToken()); //send the user the verification email
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		} catch (ExecutionException e) {
-			e.printStackTrace();
-		}
-	}
-
-	/**
 	 * When a user clicks on their email verification link, this method will find the user associated with the provided token.
 	 * The method checks that this token is new and unused token, and will assign the user the token and set the user's status to 'active'.
 	 * @param token provided in the url
@@ -79,6 +58,30 @@ public class Register {
 		if (UserVerificationService.userIsNew(user)) { //check the user is new
 			UserVerificationService.updateStatus(user); //update their status to 'active'
 			TokenService.updateToken(user); //update their token to the current time
+		}
+	}
+	
+	//
+	//PRIVATE METHODS
+	//
+	/**
+	 * This method sends the new user a verification email.
+	 * The email includes a brand new generated token used for verification.
+	 */
+	private void sendEmailToUser(MagicalUser user, PrivateUserInfo userinfo) {
+		Token token = TokenService.createToken(user);
+		TokenDao td = new TokenDao();
+		
+		td.open();
+		td.insertToken(token); //store the new token
+		td.close();
+
+		try {
+			UserVerificationService.sendVerification(userinfo.getEmail(), token.getToken()); //send the user the verification email
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		} catch (ExecutionException e) {
+			e.printStackTrace();
 		}
 	}
 }
