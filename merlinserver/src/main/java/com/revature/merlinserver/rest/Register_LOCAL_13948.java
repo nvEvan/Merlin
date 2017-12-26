@@ -28,11 +28,16 @@ public class Register {
 	@Path("/create") //this the path we want to use?
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.TEXT_PLAIN)
-	public void register(MagicalUser user, PrivateUserInfo userInfo) {
+	public void register(MagicalUser user, PrivateUserInfo userinfo) {
+
+
 		//register user
 
+
+
+
 		//Send email to user
-		sendEmailToUser(user, userInfo);
+		sendEmailToUser(user, userinfo);
 	}
 
 	/**

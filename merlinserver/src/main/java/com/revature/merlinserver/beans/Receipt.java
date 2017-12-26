@@ -42,7 +42,7 @@ public class Receipt implements BusinessObject {
 	private String description;
 	
 	@Column(nullable = false)
-	private Double amount;
+	private Float amount;
 	
 	public Receipt() {
 		
@@ -58,7 +58,7 @@ public class Receipt implements BusinessObject {
 	 * @param amount
 	 */
 	public Receipt(Integer receiptId, MagicalUser apprentice, MagicalUser adept, Date timestamp, String description,
-			Double amount) {
+			Float amount) {
 		super();
 		this.receiptId = receiptId;
 		this.apprentice = apprentice;
@@ -76,7 +76,7 @@ public class Receipt implements BusinessObject {
 	 * @param description
 	 * @param amount
 	 */
-	public Receipt(MagicalUser apprentice, MagicalUser adept, Date timestamp, String description, Double amount) {
+	public Receipt(MagicalUser apprentice, MagicalUser adept, Date timestamp, String description, Float amount) {
 		super();
 		this.apprentice = apprentice;
 		this.adept = adept;
@@ -109,11 +109,11 @@ public class Receipt implements BusinessObject {
 		this.description = description;
 	}
 
-	public Double getAmount() {
+	public Float getAmount() {
 		return amount;
 	}
 
-	public void setAmount(Double amount) {
+	public void setAmount(Float amount) {
 		this.amount = amount;
 	}
 

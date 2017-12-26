@@ -28,11 +28,34 @@ public class Register {
 	@Path("/create") //this the path we want to use?
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.TEXT_PLAIN)
-	public void register(MagicalUser user, PrivateUserInfo userInfo) {
+	public void register(MagicalUser user) {
+
+
 		//register user
 
+
+
+
+<<<<<<< HEAD
 		//Send email to user
-		sendEmailToUser(user, userInfo);
+		sendEmailToUser(user, userinfo);
+=======
+		/*-----------Send email to user-------------*/
+		Token token = TokenService.createToken(user);
+		TokenDao td = new TokenDao();
+		td.open();
+		td.insertToken(token);
+		td.close();
+
+		/*
+		try {
+			UserVerificationService.sendVerification(userinfo.getEmail(), token.getToken());
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		} catch (ExecutionException e) {
+			e.printStackTrace();
+		}*/
+>>>>>>> rest
 	}
 
 	/**
