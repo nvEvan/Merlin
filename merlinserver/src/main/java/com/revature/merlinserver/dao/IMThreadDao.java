@@ -16,7 +16,7 @@ public class IMThreadDao extends MerlinSessionDao<IMThread> {
 	 * Pulls all threads stored in DB
 	 * @return List of IMThreads if data exists else null
 	 */
-	List<IMThread> loadAll() {
+	public List<IMThread> loadAll() {
 		List<IMThread> threads = null;
 		
 		// If connection ready load all threads 
@@ -27,5 +27,6 @@ public class IMThreadDao extends MerlinSessionDao<IMThread> {
 		
 		return threads;
 	}
+	
 	
 }
