@@ -1,9 +1,7 @@
 package com.revature.merlinserver.service;
 
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Properties;
-import java.util.UUID;
+import java.util.concurrent.ExecutionException;
 
 import javax.mail.Message;
 import javax.mail.MessagingException;
@@ -13,7 +11,11 @@ import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
-import com.firebase.security.token.TokenGenerator;
+import com.revature.merlinserver.beans.CodeList;
+import com.revature.merlinserver.beans.MagicalUser;
+import com.revature.merlinserver.beans.PrivateUserInfo;
+import com.revature.merlinserver.dao.CodeListDao;
+import com.revature.merlinserver.dao.PrivateInfoDao;
 
 /**
  * When a user creates an account this class will send that user a verification email.
@@ -21,47 +23,50 @@ import com.firebase.security.token.TokenGenerator;
  * @author Alex
  */
 public class UserVerificationService {
-	
+
 	/**
 	 * Send the user a verification email.
-	 * @param email
-	 * @return
+	 * @param email to send the verification email
+	 * @param token for the user
+	 * @return true if email sent successfully
+	 * @throws ExecutionException 
+	 * @throws InterruptedException 
 	 */
-	public static boolean sendVerification(String email, String username) {
-		String password =  System.getenv("MerlinEmail");
-		final String gmail = "xarxes.merlin@gmail.com";
-
+	public static boolean sendVerification(final String email, final String token) throws InterruptedException, ExecutionException {
+		final String password =  System.getenv("MerlinEmail"), gmail = "xarxes.merlin@gmail.com";
 		Properties props = new Properties();
+		Session session = null;
+		
 		props.put("mail.smtp.auth", "true");
 		props.put("mail.smtp.starttls.enable", "true");
 		props.put("mail.smtp.host", "smtp.gmail.com");
 		props.put("mail.smtp.port", "587");
 
 		//authenticates the gmail account
-		Session session = Session.getInstance(props,
+		session = Session.getInstance(props,
 				new javax.mail.Authenticator() {
 			protected PasswordAuthentication getPasswordAuthentication() {
 				return new PasswordAuthentication(gmail, password);
 			}
 		});
-		
-		try {
-			Map<String, Object> authPayload = new HashMap<String, Object>();
-			authPayload.put("username", username);
 
-			TokenGenerator tokenGenerator = new TokenGenerator("mkaZznqcW0IsRGFwXXAgOtW9rs1ahtjgFYeBRndH");
-			String token = tokenGenerator.createToken(authPayload);
+		try {
+			String link = "", body = "";
+			Message message = null;
 			
-			String link = "http://localhost:8085/merlinserver/register/" + token;
-			String body = "Welcome to Merlin!\nClick the following link to activate your account +" + link;
-			
+			link = "http://localhost:8085/merlinserver/register/authenticate/" + token;
+			body = 
+					  "<h3>Welcome to Merlin!</h3>"
+					+ "<h4>Click the following link to activate your account:</h4>" 
+					+ "<h4><a href=" + link +">" + link + "</a></h4>";
+
 			//form the message details
-			Message message = new MimeMessage(session);
+			message = new MimeMessage(session);
 			message.setFrom(new InternetAddress("noreply@merlin-2a1ae.firebaseapp.com"));
 			message.setRecipients(Message.RecipientType.TO,
 					InternetAddress.parse(email));
 			message.setSubject("Merlin Account Verification");
-			message.setText(body);
+			message.setContent(body, "text/html");
 
 			Transport.send(message);
 
@@ -70,5 +75,49 @@ public class UserVerificationService {
 			return false;
 		}
 		return true;
+	}
+
+	/**
+	 * Update the status of a magical user to active.
+	 * @param token
+	 * @param user
+	 */
+	public static void updateStatus(MagicalUser user) {
+		PrivateInfoDao pd = new PrivateInfoDao();
+		CodeListDao cd = new CodeListDao();
+		
+		//get the private info of the magical user
+		pd.open();
+		PrivateUserInfo userinfo = pd.getPrivateInfoByUser(user);
+		pd.close();
+		
+		//get the active status
+		cd.open();
+		CodeList status = cd.getCodeListById(425); //id 425 = active status
+		cd.close();
+		
+		//set the user's status to active
+		userinfo.setStatus(status);
+		
+		//update the user's status
+		pd.open();
+		pd.update(userinfo);
+		pd.close();
+	}
+
+	/**
+	 * This method will check that the given user is a user that has not yet been verified.
+	 * @param user to be checked
+	 * @return true if the user is new
+	 */
+	public static boolean userIsNew(final MagicalUser user) {
+		PrivateInfoDao pd = new PrivateInfoDao();
+		boolean userIsNew;
+		
+		pd.open();
+		userIsNew = pd.isUserNew(user);
+		pd.close();
+		
+		return userIsNew;
 	}
 }
