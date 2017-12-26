@@ -33,8 +33,8 @@ public class AdeptInfo implements BusinessObject {
 	@JoinColumn(name="PAYMENT_INFO")
 	private CodeList paymentInfo;
 
-	@Column(precision=2, scale=8)
-	private Double price;
+	@Column(precision=8, scale=2)
+	private Float price;
 
 	/**
 	 * No-args constructor
@@ -50,7 +50,7 @@ public class AdeptInfo implements BusinessObject {
 	 * @param paymentInfo
 	 * @param price
 	 */
-	public AdeptInfo(Integer id, MagicalUser adept, CodeList paymentInfo, Double price) {
+	public AdeptInfo(Integer id, MagicalUser adept, CodeList paymentInfo, Float price) {
 		super();
 		this.id = id;
 		this.adept = adept;
@@ -64,7 +64,7 @@ public class AdeptInfo implements BusinessObject {
 	 * @param paymentInfo
 	 * @param price
 	 */
-	public AdeptInfo(MagicalUser adept, CodeList paymentInfo, Double price) {
+	public AdeptInfo(MagicalUser adept, CodeList paymentInfo, Float price) {
 		super();
 		this.adept = adept;
 		this.paymentInfo = paymentInfo;
@@ -95,11 +95,11 @@ public class AdeptInfo implements BusinessObject {
 		this.paymentInfo = paymentInfo;
 	}
 
-	public Double getPrice() {
+	public Float getPrice() {
 		return price;
 	}
 
-	public void setPrice(Double price) {
+	public void setPrice(Float price) {
 		this.price = price;
 	}
 }

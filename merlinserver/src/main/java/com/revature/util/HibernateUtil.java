@@ -46,7 +46,7 @@ public class HibernateUtil {
 		config.setProperty("hibernate.connection.pool_size", databaseProps[3]);
 		config.setProperty("show_swl", databaseProps[4]);
 		config.setProperty("hibernate.hbm2ddl.auto", databaseProps[5]);
-
+		
 		// create SessionFactory
 		sessionFactory = config.buildSessionFactory();
 	}

@@ -23,9 +23,10 @@ public class CodeListDaoTest {
 		CodeListDao cd = new CodeListDao();
 		CodeList cl = null;
 		
+		Assert.assertTrue(cd.open());
+		
 		cl = cd.getCodeListById(1);
 		
-		Assert.assertTrue(cd.open());
 		Assert.assertEquals(description, cl.getDescription());
 		Assert.assertEquals(code, cl.getCode());
 		Assert.assertTrue(id == cl.getId());

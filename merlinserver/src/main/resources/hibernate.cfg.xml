@@ -12,6 +12,7 @@
  		</property>
  		
  		<!--  CLASS MAPPING  -->
+ 		<mapping class="com.revature.merlinserver.beans.MagicalFileUpload" />
  		<mapping class="com.revature.merlinserver.beans.MagicalUser" />
  		<mapping class="com.revature.merlinserver.beans.CodeList" />
  		<mapping class="com.revature.merlinserver.beans.PrivateUserInfo" />
@@ -24,7 +25,9 @@
  		<mapping class="com.revature.merlinserver.beans.Badge" />
  		<mapping class="com.revature.merlinserver.beans.Review" />
  		<mapping class="com.revature.merlinserver.beans.UserBadge" />
- 		<mapping class="com.revature.merlinserver.beans.FileUpload" />
  		<mapping class="com.revature.merlinserver.beans.IMThread" />
+ 		<mapping class="com.revature.merlinserver.beans.Token" />
+ 		
+ 		
  	</session-factory>
  </hibernate-configuration> 

@@ -8,6 +8,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.Lob;
 import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
@@ -17,15 +18,15 @@ import javax.persistence.Table;
  * @author Luie
  */
 @Entity
-@Table(name="FileUpload")
-public class FileUpload implements BusinessObject {
+@Table(name="MagicalFileUpload")
+public class MagicalFileUpload implements BusinessObject {
 	@Id 
-	@SequenceGenerator(sequenceName="FILEUPLOAD_SEQ", name="FILEUPLOAD_SEQ")
-	@GeneratedValue(generator="FILEUPLOAD_SEQ", strategy=GenerationType.SEQUENCE)
+	@SequenceGenerator(sequenceName="MAGICAL_FILEUPLOAD_SEQ", name="MAGICAL_FILEUPLOAD_SEQ")
+	@GeneratedValue(generator="MAGICAL_FILEUPLOAD_SEQ", strategy=GenerationType.SEQUENCE)
 	private Integer id;
 	
 	@OneToOne
-	@JoinColumn(name="USER_ID")
+	@JoinColumn(name="UPLOADER_ID")
 	private MagicalUser user;
 	
 	@OneToOne
@@ -35,13 +36,14 @@ public class FileUpload implements BusinessObject {
 	@Column(name="file_name", nullable=false)
 	private String fileName;
 	
-	@Column(nullable=false)
+	@Lob
+	@Column(name="content", nullable=false)
 	private Blob file;
 
 	/**
 	 * No-args constructor
 	 */
-	public FileUpload() {
+	public MagicalFileUpload() {
 		// do nothing
 	}
 	
@@ -52,7 +54,7 @@ public class FileUpload implements BusinessObject {
 	 * @param fileName - name of the file
 	 * @param file - the actual file
 	 */
-	public FileUpload(MagicalUser user, CodeList fileType, String fileName, Blob file) {
+	public MagicalFileUpload(MagicalUser user, CodeList fileType, String fileName, Blob file) {
 		super();
 		this.user = user;
 		this.fileType = fileType;
@@ -68,7 +70,7 @@ public class FileUpload implements BusinessObject {
 	 * @param fileName - name of the file
 	 * @param file - the actual file
 	 */
-	public FileUpload(Integer id, MagicalUser user, CodeList fileType, String fileName, Blob file) {
+	public MagicalFileUpload(Integer id, MagicalUser user, CodeList fileType, String fileName, Blob file) {
 		super();
 		this.id = id;
 		this.user = user;
