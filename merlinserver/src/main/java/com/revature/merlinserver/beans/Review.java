@@ -18,7 +18,7 @@ import org.hibernate.annotations.Check;
  */
 @Entity
 @Table(name="Review")
-@Check(constraints="score < 6 <> score > 0")
+@Check(constraints="score > 0 AND score < 6")
 public class Review implements BusinessObject {
 	/**
 	 * Added required field member
@@ -39,8 +39,8 @@ public class Review implements BusinessObject {
 	@Column(nullable = false)
 	private String description;
 	
-	@Column(nullable = false, columnDefinition = "a")
-	private Double score;
+	@Column(nullable = false)
+	private Float score;
 
 	/**
 	 * No-args constructor
@@ -57,7 +57,7 @@ public class Review implements BusinessObject {
 	 * @param description
 	 * @param score
 	 */
-	public Review(Integer id, MagicalUser apprentice, MagicalUser adept, String description, Double score) {
+	public Review(Integer id, MagicalUser apprentice, MagicalUser adept, String description, Float score) {
 		super();
 		this.id = id;
 		this.apprentice = apprentice;
@@ -73,7 +73,7 @@ public class Review implements BusinessObject {
 	 * @param description
 	 * @param score
 	 */
-	public Review(MagicalUser apprentice, MagicalUser adept, String description, Double score) {
+	public Review(MagicalUser apprentice, MagicalUser adept, String description, Float score) {
 		super();
 		this.apprentice = apprentice;
 		this.adept = adept;
@@ -113,11 +113,11 @@ public class Review implements BusinessObject {
 		this.description = description;
 	}
 
-	public Double getScore() {
+	public Float getScore() {
 		return score;
 	}
 
-	public void setScore(Double score) {
+	public void setScore(Float score) {
 		this.score = score;
 	}
 }
