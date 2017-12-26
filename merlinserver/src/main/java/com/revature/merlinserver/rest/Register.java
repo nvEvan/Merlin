@@ -31,7 +31,7 @@ public class Register {
 	@Path("/create") //this the path we want to use?
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.TEXT_PLAIN)
-	public void register(MagicalUser user, PrivateUserInfo userinfo) {
+	public void register(MagicalUser user) {
 
 
 		//register user
@@ -46,13 +46,14 @@ public class Register {
 		td.insertToken(token);
 		td.close();
 
+		/*
 		try {
 			UserVerificationService.sendVerification(userinfo.getEmail(), token.getToken());
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		} catch (ExecutionException e) {
 			e.printStackTrace();
-		}
+		}*/
 	}
 
 	/**

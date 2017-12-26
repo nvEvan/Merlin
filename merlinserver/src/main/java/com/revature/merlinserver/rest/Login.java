@@ -29,7 +29,7 @@ public class Login {
 	
 	//Gets all users 
 	@GET
-	@Path("/MagicalUser/get/all")
+	@Path("/MagicalUser")
 	@Produces(MediaType.APPLICATION_JSON)
 	public List<MagicalUser> getMagicalUsers(){
 		MagicalUserDao dao = new MagicalUserDao();
