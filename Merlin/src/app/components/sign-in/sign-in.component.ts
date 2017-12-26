@@ -22,22 +22,24 @@ export class SignInComponent {
 
   userLogin() { 
     // Obtains a user based on username
-    this.getUserService.getLogin(this.username).subscribe( data => (this.user = data.json()) );
+    this.getUserService.getLogin(this.username).subscribe( data => {
+      this.user = data.json();
+      if(this.user.username === this.username && this.user.password === this.password){
+        this.login.setUsername(this.username);
+        this.router.navigateByUrl('profile');
+      }
+      else{
+        window.alert('Access Denied');
+      }
+    });
     
     // Console log statements to verify the user is valid
-    console.log(this.user.password);
-    console.log(this.user.userId);
-    console.log(this.user.username);
+    
+    //debugger;
 
     // If the user is valid then the login service stores the username and reroutes to profile page
     // Otherwise the user is shown a window telling them they are denied access.
-    if(this.user.username === this.username && this.user.password === this.password){
-      this.login.setUsername(this.username);
-      this.router.navigateByUrl('profile');
-    }
-    else{
-      window.alert('Access Denied');
-    }
+    
   }
 
 }
