@@ -27,4 +27,5 @@ public class IMThreadDao extends MerlinSessionDao<IMThread> {
 		
 		return threads;
 	}
+	
 }
