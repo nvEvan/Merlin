@@ -1,6 +1,7 @@
 package com.revature.merlinserver.dao;
 
 import org.hibernate.Query;
+import org.hibernate.Session;
 
 import com.revature.merlinserver.beans.CodeList;
 import com.revature.merlinserver.beans.MagicalUser;
@@ -11,6 +12,15 @@ import com.revature.merlinserver.beans.MagicalUser;
  */
 public class CodeListDao extends MerlinSessionDao<MagicalUser> {
 	
+	public CodeListDao() {
+		
+	}
+	
+	public CodeListDao(Session session) {
+		super(session);
+		// TODO Auto-generated constructor stub
+	}
+
 	/**
 	 * Finds the CodeList by its id.
 	 * @param id of the codelist

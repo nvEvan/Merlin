@@ -1,6 +1,7 @@
 package com.revature.merlinserver.dao;
 
 import org.hibernate.Query;
+import org.hibernate.Session;
 
 import com.revature.merlinserver.beans.MagicalUser;
 import com.revature.merlinserver.beans.Token;
@@ -12,6 +13,15 @@ import com.revature.util.DateUtil;
  * @author Alex
  */
 public class TokenDao extends MerlinSessionDao<MagicalUser> {
+
+	public TokenDao() {
+		
+	}
+	
+	public TokenDao(Session session) {
+		super(session);
+		// TODO Auto-generated constructor stub
+	}
 
 	/**
 	 * Insert the new token into the Token table.
@@ -45,12 +55,12 @@ public class TokenDao extends MerlinSessionDao<MagicalUser> {
 			Query q = null;
 			
 			//search the table for tokens 
-			q = session.createQuery("FROM TOKEN WHERE token = ?");
+			q = session.createQuery("FROM Token WHERE token = ?");
 			q.setParameter(0, tokenstr);
 
 			token = (Token) q.uniqueResult();
 
-			return token != null ? 0 : 1;
+			return token == null ? 0 : 1;
 		} else {
 			return 2;
 		}
@@ -68,7 +78,7 @@ public class TokenDao extends MerlinSessionDao<MagicalUser> {
 		if (isReady()) {
 			Query q = null;
 			
-			q = session.createQuery("SELECT user FROM TOKEN WHERE token = ?");
+			q = session.createQuery("SELECT user FROM Token WHERE token = ?");
 			q.setParameter(0, token);
 
 			user = (MagicalUser) q.uniqueResult();
@@ -88,7 +98,7 @@ public class TokenDao extends MerlinSessionDao<MagicalUser> {
 		if (isReady()) {
 			Query q = null;
 			
-			q = session.createQuery("FROM TOKEN WHERE user = ?");
+			q = session.createQuery("FROM Token WHERE user = ?");
 			q.setParameter(0, user);
 
 			token = (Token) q.uniqueResult();

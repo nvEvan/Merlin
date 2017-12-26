@@ -17,6 +17,24 @@ public abstract class MerlinSessionDao<T extends BusinessObject> implements Merl
 	protected static Logger logger = Logger.getLogger(MerlinSessionDao.class);
 	protected Session session;
 	protected Transaction transaction;
+	private boolean isExternalSession;
+	
+	public MerlinSessionDao() {
+		
+	}
+	
+	public MerlinSessionDao(Session session) {
+		setSession(session);
+	}
+	
+	public void setSession(Session session) {
+		this.session = session;
+		this.isExternalSession = true;
+	}
+	
+	public Session getSession() {
+		return session;
+	}
 	
 	/**
 	 * Opens and begins transaction in one step
@@ -46,6 +64,9 @@ public abstract class MerlinSessionDao<T extends BusinessObject> implements Merl
 	 */
 	@Override
 	public boolean openSession() {
+		if (isExternalSession)
+			return false;
+		
 		try {
 			// Ensure to free resources
 			close();
@@ -70,6 +91,9 @@ public abstract class MerlinSessionDao<T extends BusinessObject> implements Merl
 	 */
 	@Override
 	public boolean beginTransaction() {
+		if (isExternalSession)
+			return false;
+		
 		endTransaction();
 		
 		// Ensure we have a valid session handle
@@ -84,7 +108,7 @@ public abstract class MerlinSessionDao<T extends BusinessObject> implements Merl
 	 */
 	@Override
 	public void endTransaction() {
-		if (isTransactionActive()) 
+		if (!isExternalSession && isTransactionActive()) 
 			transaction.commit();
 			
 		transaction = null;
@@ -95,9 +119,10 @@ public abstract class MerlinSessionDao<T extends BusinessObject> implements Merl
 	 */
 	@Override
 	public void closeSession() {
-		if (isSessionOpen()) 
+		if (!isExternalSession && isSessionOpen()) 
 			session.close();
 
+		isExternalSession = false;
 		session = null;
 	}
 	
@@ -114,7 +139,7 @@ public abstract class MerlinSessionDao<T extends BusinessObject> implements Merl
 	 * @return true if open else false
 	 */
 	public boolean isTransactionActive() {
-		return transaction != null && transaction.isActive();
+		return isExternalSession || (transaction != null && transaction.isActive());
 	}
 	
 	/**
