@@ -13,6 +13,7 @@ import javax.ws.rs.core.MediaType;
 import com.revature.merlinserver.beans.MagicalUser;
 import com.revature.merlinserver.beans.PrivateUserInfo;
 import com.revature.merlinserver.beans.Token;
+import com.revature.merlinserver.dao.MagicalUserDao;
 import com.revature.merlinserver.dao.TokenDao;
 import com.revature.merlinserver.paramwrapper.RegisterParams;
 import com.revature.merlinserver.service.TokenService;
@@ -31,7 +32,15 @@ public class Register {
 	@Produces(MediaType.TEXT_PLAIN)
 	public void register(RegisterParams params) {
 		//register user
-
+		MagicalUser user = params.getUser();
+		PrivateUserInfo pi = params.getPrivateUserInfo();
+		
+		MagicalUserDao md = new MagicalUserDao();
+		md.open();
+		
+		
+		
+		
 		//Send email to user
 		sendEmailToUser(params.getUser(), params.getPrivateUserInfo());
 	}
