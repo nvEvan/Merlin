@@ -26,11 +26,6 @@
 	</dependencyManagement>
 
 	<dependencies>
-		<dependency>
-			<groupId>com.firebase</groupId>
-			<artifactId>firebase-token-generator</artifactId>
-			<version>2.0.0</version>
-		</dependency>
 		<!-- https://mvnrepository.com/artifact/javax.mail/mail -->
 		<dependency>
 			<groupId>javax.mail</groupId>
@@ -108,9 +103,8 @@
 	<build>
 		<pluginManagement>
 			<plugins>
-				<!-- Surefire plugin used to execute both TestNG and Junit tests my
-				running
-				'mvn test'. This is useful for running our tests on the Jenkins server -->
+				<!-- Surefire plugin used to execute both TestNG and Junit tests my running 
+					'mvn test'. This is useful for running our tests on the Jenkins server -->
 
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
