@@ -1,5 +1,7 @@
 package com.revature.merlinserver.rest;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 import javax.ws.rs.Consumes;
@@ -34,6 +36,19 @@ public class Register {
 
 		//Send email to user
 		sendEmailToUser(params.getUser(), params.getPrivateUserInfo());
+	}
+	
+	@GET
+	@Path("/get/helloworld")
+	@Produces(MediaType.APPLICATION_JSON)
+	public List<MagicalUser> HelloWorld() {
+		List<MagicalUser> my_users = new ArrayList<MagicalUser>();
+		my_users.add(new MagicalUser(1, "bobbert", "bob"));
+		my_users.add(new MagicalUser(2, "Evan", "password"));
+		my_users.add(new MagicalUser(3, "A", "A"));
+		my_users.add(new MagicalUser(4, "E", "E"));
+		
+		return my_users;
 	}
 
 	/**
