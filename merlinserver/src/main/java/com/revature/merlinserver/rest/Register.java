@@ -14,6 +14,7 @@ import com.revature.merlinserver.beans.MagicalUser;
 import com.revature.merlinserver.beans.PrivateUserInfo;
 import com.revature.merlinserver.beans.Token;
 import com.revature.merlinserver.dao.TokenDao;
+import com.revature.merlinserver.paramwrapper.RegisterParams;
 import com.revature.merlinserver.service.TokenService;
 import com.revature.merlinserver.service.UserVerificationService;
 
@@ -28,11 +29,11 @@ public class Register {
 	@Path("/create") //this the path we want to use?
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.TEXT_PLAIN)
-	public void register(MagicalUser user, PrivateUserInfo userInfo) {
+	public void register(RegisterParams params) {
 		//register user
 
 		//Send email to user
-		sendEmailToUser(user, userInfo);
+		sendEmailToUser(params.getUser(), params.getPrivateUserInfo());
 	}
 
 	/**
