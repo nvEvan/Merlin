@@ -3,7 +3,7 @@
  <hibernate-configuration> 
  	<session-factory>
  		<!-- Config database -->
- 		<property name="hibernate.connectino.driver_class">
+ 		<property name="hibernate.connection.driver_class">
  			oracle.jdbc.OracleDriver
  		</property>
  		
