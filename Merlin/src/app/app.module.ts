@@ -1,8 +1,28 @@
+///
+//  ANGULAR MODULES
+///
+
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { HttpModule, JsonpModule } from '@angular/http';
+
+///
+//  DEPENDENDICES
+///
+
+import { NgbModule} from '@ng-bootstrap/ng-bootstrap';
+
+///
+//  ROUTING
+///
+
+import { appRoute } from './routing/routes';
+
+///
+//  COMPONENTS
+///
 
 import { AppComponent } from './app.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
@@ -10,11 +30,16 @@ import { ProfileComponent } from './components/profile/profile.component';
 import { RegisterComponent } from './components/register/register.component';
 import { SignInComponent } from './components/sign-in/sign-in.component';
 import { HomeComponent } from './components/home/home.component';
-import { NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import { BadgesComponent } from './components/badges/badges.component';
-import { GetUserService } from './components/services/get-user.service';
-import { LoginService } from './components/services/login.service';
-import { UserPrivateInfoService } from './components/services/user-private-info.service';
+import { ThreadsComponent } from './components/threads/threads.component';
+
+///
+//  SERVICES
+///
+
+import { GetUserService } from './services/get-user.service';
+import { LoginService } from './services/login.service';
+import { UserPrivateInfoService } from './services/user-private-info.service';
 
 @NgModule({
   declarations: [
@@ -24,7 +49,8 @@ import { UserPrivateInfoService } from './components/services/user-private-info.
     RegisterComponent,
     SignInComponent,
     HomeComponent,
-    BadgesComponent
+    BadgesComponent,
+    ThreadsComponent
   ],
   imports: [
     BrowserModule,
@@ -32,22 +58,11 @@ import { UserPrivateInfoService } from './components/services/user-private-info.
     HttpModule,
     JsonpModule,
     NgbModule.forRoot(),
-    RouterModule.forRoot([
-      {path: '', component: HomeComponent},
-      {path: 'sign-in', component: SignInComponent},
-      {path: 'register', component: RegisterComponent},
-      {path: 'profile', component: ProfileComponent},
-      {path: 'home', component: HomeComponent},
-      {path: 'badges', component: BadgesComponent}
-    ])
+    RouterModule.forRoot(appRoute)
   ],
   providers: [GetUserService, LoginService, UserPrivateInfoService],
   bootstrap: [AppComponent]
 })
+  
 export class AppModule {
-  // constructor(private username:string){}
-
-  // setUser(username: string){
-  //   this.username = username;
-  // }
 }

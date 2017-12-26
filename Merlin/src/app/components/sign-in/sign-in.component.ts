@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { LoginService } from '../services/login.service';
+import { LoginService } from '../../services/login.service';
 import { Router } from '@angular/router';
-import { UserPrivateInfoService } from '../services/user-private-info.service';
+import { UserPrivateInfoService } from '../../services/user-private-info.service';
 
 @Component({
   selector: 'app-sign-in',
@@ -27,7 +27,7 @@ export class SignInComponent implements OnInit {
     
     if (true || this.info === this.password) {
       this.login.setUsername(this.username);
-      this.router.navigateByUrl('profile');
+      this.router.navigateByUrl('threads');
     } else {
       // console.log('false');
     }
