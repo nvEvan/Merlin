@@ -39,7 +39,7 @@ public class Login {
 		for(MagicalUser m : users){
 			System.out.println(m.getUsername());
 		}
-		//dao.close();
+		dao.close();
 		return users;
 	}
 }
