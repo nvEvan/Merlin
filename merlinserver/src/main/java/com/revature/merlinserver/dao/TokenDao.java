@@ -7,92 +7,93 @@ import com.revature.merlinserver.beans.Token;
 import com.revature.util.DateUtil;
 
 /**
- * 
+ * Dao for the Token bean.
+ * All interactions with the DB Token table are here.
  * @author Alex
  */
 public class TokenDao extends MerlinSessionDao<MagicalUser> {
 
-	public void insertToken(Token token) {
+	/**
+	 * Insert the new token into the Token table.
+	 * @param token
+	 */
+	public void insertToken(final Token token) {
 		if (isReady()) {
 			session.save(token);
 		}
 	}
 
-	public void updateToken(Token token) {
+	/**
+	 * Update the given token.
+	 * @param token
+	 */
+	public void updateToken(final Token token) {
 		if (isReady()) {
 			session.update(token);
 		}
 	}
 
 	/**
-	 * 
+	 * This method checks that a given token has not been assigned to a user yet.
 	 * @param tokenstr
-	 * @return if this token is a unique token
+	 * @return 0 if the token is unique, 1 if the the token is not unique, and 2 we were unable to connect to the RDS
 	 */
-	public boolean isTokenUnique(String tokenstr) {
+	public int isTokenUnique(final String tokenstr) {
+		Token token = null;
 
 		if (isReady()) {
-
-			Query q = session.createQuery("FROM TOKEN WHERE token = ? AND expDate > ?");
+			Query q = null;
+			
+			//search the table for tokens 
+			q = session.createQuery("FROM TOKEN WHERE token = ?");
 			q.setParameter(0, tokenstr);
 
-			java.util.Date date = new java.util.Date();
-			java.sql.Date sqlDate = DateUtil.toDate(date.toString());
+			token = (Token) q.uniqueResult();
 
-			q.setParameter(1, sqlDate);
-
-			Token token = (Token) q.uniqueResult();
-
-			if (token != null) {
-				return false;
-			} else {
-				return true;
-			}
+			return token != null ? 0 : 1;
 		} else {
-			return false;
+			return 2;
 		}
 	}
 
 	/**
-	 * 
-	 * @param tokenstr
-	 * @return
-	 */
-	public boolean tokenExistsAndIsNew(String tokenstr) {
-		if (isReady()) {
-
-			Query q = session.createQuery("FROM TOKEN WHERE token = ? AND expDate = ?");
-			q.setParameter(1, tokenstr);
-			q.setParameter(2, null);
-
-			Token token = (Token) q.uniqueResult();
-
-			if (token != null) {
-				return true;
-			} else {
-				return false;
-			}
-		} else {
-			return false;
-		}
-	}
-
-	/**
-	 * Each user has a unique token.
+	 * Each user has a unique token, this method will find the user of the given token.
+	 * If no user has the token, return null.
 	 * @param token
 	 * @return the user associated with the given token
 	 */
-	public MagicalUser getUserByToken(String token) {
+	public MagicalUser getUserByToken(final String token) {
 		MagicalUser user = null;
 		
 		if (isReady()) {
-
-			Query q = session.createQuery("SELECT user FROM TOKEN WHERE token = ?");
-			q.setParameter(1, token);
+			Query q = null;
+			
+			q = session.createQuery("SELECT user FROM TOKEN WHERE token = ?");
+			q.setParameter(0, token);
 
 			user = (MagicalUser) q.uniqueResult();
 		} 
 
 		return user;
+	}
+	
+	/**
+	 * Find the token associated with the given user.
+	 * @param user
+	 * @return the token of said user
+	 */
+	public Token getTokenByUser(final MagicalUser user) {
+		Token token = null;
+		
+		if (isReady()) {
+			Query q = null;
+			
+			q = session.createQuery("FROM TOKEN WHERE user = ?");
+			q.setParameter(0, user);
+
+			token = (Token) q.uniqueResult();
+		}
+		
+		return token;
 	}
 }
