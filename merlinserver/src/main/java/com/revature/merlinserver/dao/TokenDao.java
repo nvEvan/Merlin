@@ -112,4 +112,14 @@ public class TokenDao extends MerlinSessionDao<MagicalUser> {
 		
 		return token;
 	}
+	
+	/**
+	 * Delete a given token from the RDS.
+	 * @param token
+	 */
+	public void deleteToken(Token token) {
+		if (isReady()) {
+			session.delete(token);
+		}
+	}
 }

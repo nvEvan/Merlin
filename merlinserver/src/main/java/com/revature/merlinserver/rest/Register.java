@@ -49,6 +49,7 @@ public class Register {
 		System.out.println("session opened");
 		pd.setSession(md.getSession());
 		md.insertUser(user); //insert the new user
+		md.commit();
 		pd.insert(pi); //insert the user's private info
 		md.close();
 		
