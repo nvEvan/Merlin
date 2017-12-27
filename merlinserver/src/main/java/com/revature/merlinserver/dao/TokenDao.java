@@ -14,13 +14,19 @@ import com.revature.util.DateUtil;
  */
 public class TokenDao extends MerlinSessionDao<MagicalUser> {
 
+	/**
+	 * No-args constructor
+	 */
 	public TokenDao() {
-		
+		// do nothing
 	}
 	
+	/**
+	 * Assigns a session to this dao
+	 * @param session - session used to perform queries/transactions 
+	 */
 	public TokenDao(Session session) {
 		super(session);
-		// TODO Auto-generated constructor stub
 	}
 
 	/**

@@ -12,13 +12,18 @@ import com.revature.merlinserver.beans.MagicalUser;
  */
 public class CodeListDao extends MerlinSessionDao<MagicalUser> {
 	
+	/**
+	 * No-args constructor
+	 */
 	public CodeListDao() {
-		
+		// do nothing
 	}
-	
+	/**
+	 * Assigns a session to this dao
+	 * @param session - session used to perform queries/transactions 
+	 */
 	public CodeListDao(Session session) {
 		super(session);
-		// TODO Auto-generated constructor stub
 	}
 
 	/**
