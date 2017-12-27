@@ -13,11 +13,18 @@ import javax.ws.rs.core.MediaType;
 import com.revature.merlinserver.beans.MagicalUser;
 import com.revature.merlinserver.beans.PrivateUserInfo;
 import com.revature.merlinserver.beans.Token;
+import com.revature.merlinserver.dao.MagicalUserDao;
+import com.revature.merlinserver.dao.PrivateInfoDao;
 import com.revature.merlinserver.dao.TokenDao;
 import com.revature.merlinserver.paramwrapper.RegisterParams;
 import com.revature.merlinserver.service.TokenService;
 import com.revature.merlinserver.service.UserVerificationService;
 
+/**
+ * Class holding REST calls from the front end.
+ * Methods including registering a new user, logging in, etc
+ * @author Alex
+ */
 @Path("/register")
 public class Register {
 
@@ -31,9 +38,23 @@ public class Register {
 	@Produces(MediaType.TEXT_PLAIN)
 	public void register(RegisterParams params) {
 		//register user
-
-		//Send email to user
-		sendEmailToUser(params.getUser(), params.getPrivateUserInfo());
+		MagicalUser user = params.getUser();
+		PrivateUserInfo pi = params.getPrivateUserInfo();
+		
+		MagicalUserDao md = new MagicalUserDao();
+		PrivateInfoDao pd = new PrivateInfoDao();
+		
+		System.out.println("opening session");
+		md.open();
+		System.out.println("session opened");
+		pd.setSession(md.getSession());
+		md.insertUser(user); //insert the new user
+		pd.insert(pi); //insert the user's private info
+		md.close();
+		
+		System.out.println("Sending the email");
+		//Send verification email to user
+		sendEmailToUser(user, pi);
 	}
 
 	/**
@@ -57,11 +78,9 @@ public class Register {
 		}
 	}
 	
-	//
-	//PRIVATE METHODS
-	//
+	/*===================================== PRIVATE METHODS ===========================================*/
 	/**
-	 * This method sends the new user a verification email.
+	 * This method sends the new user a verification email. This method assists the method register
 	 * The email includes a brand new generated token used for verification.
 	 */
 	private void sendEmailToUser(MagicalUser user, PrivateUserInfo userinfo) {

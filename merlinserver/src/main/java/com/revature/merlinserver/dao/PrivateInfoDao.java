@@ -1,6 +1,7 @@
 package com.revature.merlinserver.dao;
 
 import org.hibernate.Query;
+import org.hibernate.Session;
 
 import com.revature.merlinserver.beans.CodeList;
 import com.revature.merlinserver.beans.MagicalUser;
@@ -11,6 +12,21 @@ import com.revature.merlinserver.beans.PrivateUserInfo;
  * @author Alex
  */
 public class PrivateInfoDao extends MerlinSessionDao<PrivateUserInfo> {
+
+	/**
+	 * No-args constructor
+	 */
+	public PrivateInfoDao() {
+		// do nothing
+	}
+
+	/**
+	 * Assigns a session to this dao
+	 * @param session - session used to perform queries/transactions 
+	 */
+	public PrivateInfoDao(Session session) {
+		super(session);
+	}
 
 	/**
 	 * Update a private user info.
@@ -60,5 +76,24 @@ public class PrivateInfoDao extends MerlinSessionDao<PrivateUserInfo> {
 		}
 
 		return userIsNew;
+	}
+
+	/**
+	 * Insert a new user into the RDS
+	 * @param pi
+	 */
+	public void insert(PrivateUserInfo pi) {
+		if (isReady())
+			session.save(pi);
+	}
+
+	/**
+	 * Delete the given user's private info from the RDS.
+	 * @param user
+	 */
+	public void deletePriverUserInfoByUser(PrivateUserInfo info) {
+		if (isReady()) {
+			session.delete(info);
+		}
 	}
 }

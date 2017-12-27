@@ -8,7 +8,7 @@ import com.revature.merlinserver.beans.BusinessObject;
 
 /**
  * Defines specifications/requirements all Merlin Server daos must implement
- * @author Luie
+ * @author Antony Lulciuc
  * @param <T>
  */
 public interface MerlinDao<T extends BusinessObject> {

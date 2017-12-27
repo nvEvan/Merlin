@@ -1,4 +1,4 @@
-package com.revature.merlintest.testng;
+package com.revature.merlintest.junit;
 
 import java.util.UUID;
 import java.util.concurrent.ExecutionException;
