@@ -47,6 +47,7 @@ public abstract class MerlinSessionDao<T extends BusinessObject> implements Merl
 	 */
 	public void setSession(Session session) {
 		this.session = session;
+		this.transaction = session.getTransaction();
 		this.isExternalSession = true;
 	}
 	
@@ -77,6 +78,14 @@ public abstract class MerlinSessionDao<T extends BusinessObject> implements Merl
 	public void close() {
 		endTransaction();
 		closeSession();
+	}
+	
+	/**
+	 * Commits all changes if transaction started
+	 */
+	public void commit() {
+		if (isTransactionActive())
+			transaction.commit();
 	}
 	
 	/**
@@ -164,8 +173,7 @@ public abstract class MerlinSessionDao<T extends BusinessObject> implements Merl
 	 * @return true if open else false (if uses external session then returns true always)
 	 */
 	public boolean isTransactionActive() {
-		// if has external session then ignore this instance
-		return isExternalSession || (transaction != null && transaction.isActive());
+		return (transaction != null && transaction.isActive());
 	}
 	
 	/**
