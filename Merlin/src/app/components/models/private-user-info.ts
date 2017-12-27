@@ -1,4 +1,4 @@
-export class UserPirvateInfo {
+export class PrivateUserInfo {
     username: string;
     userId: string; // change to number or not
     phone: string;

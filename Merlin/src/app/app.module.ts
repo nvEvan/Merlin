@@ -7,6 +7,7 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { HttpModule, JsonpModule } from '@angular/http';
+import { HttpClientModule } from '@angular/common/http';
 
 ///
 //  DEPENDENDICES
@@ -55,6 +56,7 @@ import { UserPrivateInfoService } from './services/user-private-info.service';
   imports: [
     BrowserModule,
     FormsModule,
+    HttpClientModule,
     HttpModule,
     JsonpModule,
     NgbModule.forRoot(),
