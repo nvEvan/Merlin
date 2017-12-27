@@ -44,6 +44,7 @@ export class ChatService {
 
   /**
    * Sends message to thread for 
+   * @param imthread - used to tie message to thread 
    * @param info - User information
    * @param msg - message they wish to send
    */
@@ -63,6 +64,8 @@ export class ChatService {
   }
 
   /**
+   * @description Acquires thread data from Firebase database 
+   * @param imthread - used to tie message to thread 
    * @returns List of messages 
    */
   getMessages(imthread: IMThread): FirebaseListObservable<ChatMessage[]>{
