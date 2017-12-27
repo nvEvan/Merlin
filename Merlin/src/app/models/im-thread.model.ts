@@ -1,5 +1,5 @@
-import { MagicalUser } from "./magical-user";
-import { CodeList } from "./codelist";
+import { MagicalUser } from "./magicaluser.model";
+import { CodeList } from "./codelist.model";
 
 /**
  * Defines container for IMThread Bean

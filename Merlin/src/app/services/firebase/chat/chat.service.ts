@@ -23,9 +23,10 @@ import { AuthService } from '../authenticate/auth.service';
 //  MODELS
 ///
 
-import { ChatMessage } from '../../../components/models/chat-message';
-import { PrivateUserInfo } from '../../../components/models/private-user-info';
-import { IMThread } from '../../../components/models/im-thread';
+import { ChatMessage } from '../../../models/chat-message.model';
+import { PrivateUserInfo } from '../../../models/private-user-info.model';
+import { IMThread } from '../../../models/im-thread.model';
+import { UserData } from '../../../models/composite/user-data.composite';
 
 @Injectable()
 export class ChatService {
@@ -48,7 +49,7 @@ export class ChatService {
    * @param info - User information
    * @param msg - message they wish to send
    */
-  sendMessage(imthread: IMThread, info: PrivateUserInfo, msg: string){
+  sendMessage(imthread: IMThread, info: UserData, msg: string){
     const timestamp = this.getTimeStamp();
     
     // Get lastest messages for DB
@@ -58,8 +59,8 @@ export class ChatService {
     this.chatMessages.push({
       message: msg,
       timeSent: timestamp,
-      userName: info.username,
-      email: info.email   
+      userName: info.general.username,
+      email: info.privateInfo.email   
     });
   }
 
