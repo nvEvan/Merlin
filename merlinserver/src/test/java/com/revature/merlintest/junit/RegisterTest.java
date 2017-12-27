@@ -8,9 +8,11 @@ import org.junit.Test;
 import com.revature.merlinserver.beans.CodeList;
 import com.revature.merlinserver.beans.MagicalUser;
 import com.revature.merlinserver.beans.PrivateUserInfo;
+import com.revature.merlinserver.beans.Token;
 import com.revature.merlinserver.dao.CodeListDao;
 import com.revature.merlinserver.dao.MagicalUserDao;
 import com.revature.merlinserver.dao.PrivateInfoDao;
+import com.revature.merlinserver.dao.TokenDao;
 import com.revature.merlinserver.paramwrapper.RegisterParams;
 import com.revature.merlinserver.rest.Register;
 
@@ -73,13 +75,19 @@ public class RegisterTest {
 	public void cleanUp() {
 		MagicalUserDao md = new MagicalUserDao();
 		PrivateInfoDao pd = new PrivateInfoDao();
+		TokenDao td = new TokenDao();
 		PrivateUserInfo info = null;
 		MagicalUser user = null;
+		Token token = null;
 		
 		md.open();
+		pd.setSession(md.getSession());
+		td.setSession(md.getSession());
 		user = md.getMagicalUserById(testUsername);
+		token = td.getTokenByUser(user);
 		info = pd.getPrivateInfoByUser(user);
 		pd.deletePriverUserInfoByUser(info);
+		td.deleteToken(token);
 		md.deleteUserByUsername(user);
 		md.close();
 	}
