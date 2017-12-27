@@ -24,6 +24,7 @@ public class TokenService {
 
 		td.open();
 		while (td.isTokenUnique(tokenstr) == 1) { //generate a token string that is unique
+			System.out.println("token wasn't unique");
 			tokenstr = UUID.randomUUID().toString();
 		}
 		td.close();
