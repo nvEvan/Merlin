@@ -12,6 +12,7 @@ import com.revature.util.DateUtil;
  * @author Alex
  */
 public class TokenService {
+	private static final int TOKEN_DURATION = 1800;
 
 	/**
 	 * Creates a random token for a user.
@@ -50,10 +51,11 @@ public class TokenService {
 	}
 
 	/**
-	 * Update this user's token date to the current date.
+	 * Update this user's token expiration date.
+	 * The expiration date will be 30 mins from the current time
 	 * @param user to be updated
 	 */
-	public static void updateToken(MagicalUser user) {
+	public static void updateToken(final MagicalUser user) {
 		final TokenDao td = new TokenDao();
 		Token token = null;
 		java.util.Date date = null;
@@ -61,7 +63,10 @@ public class TokenService {
 
 		date = new java.util.Date();
 		expDate = DateUtil.toDate(date.toString());
-
+		
+		final long newExpDate = expDate.getTime() + TOKEN_DURATION;
+		expDate.setTime(newExpDate);
+		
 		td.open();
 		token = td.getTokenByUser(user);
 		token.setExpDate(expDate);
