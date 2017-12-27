@@ -5,8 +5,8 @@
 		<servlet-name>Merlin Services</servlet-name>
 		<servlet-class>org.glassfish.jersey.servlet.ServletContainer</servlet-class>
 		<init-param>
-            <param-name>javax.ws.rs.Application</param-name>
-			<param-value>com.revature.merlineserver.config.MerlinAppConfig</param-value>
+			<param-name>jersey.config.server.provider.packages</param-name>
+			<param-value>com.revature.merlinserver.rest</param-value>
 		</init-param>
 		<load-on-startup>1</load-on-startup>
 	</servlet>
@@ -19,7 +19,7 @@
 		<filter-class>org.apache.catalina.filters.CorsFilter</filter-class>
 		<init-param>
 			<param-name>cors.allowed.origins</param-name>
-			<param-value>http://localhost:8085</param-value>
+			<param-value>http://localhost:4200</param-value>
 		</init-param>
 
 		<init-param>
