@@ -89,9 +89,7 @@ public class RegisterTest {
 		token = td.getTokenByUser(user);
 		
 		td.deleteToken(token);
-		td.commit();
 		pd.deletePriverUserInfoByUser(info);
-		pd.commit();
 		md.deleteUserByUsername(user);
 		md.close();
 	}
