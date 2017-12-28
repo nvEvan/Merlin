@@ -44,5 +44,4 @@ export class ProfileComponent implements OnInit {
       this.isPrivateInfo = false;
     }
   }
-
 }

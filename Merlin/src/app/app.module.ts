@@ -7,12 +7,16 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { HttpModule, JsonpModule } from '@angular/http';
+import { HttpClientModule } from '@angular/common/http';
 
 ///
 //  DEPENDENDICES
 ///
 
 import { NgbModule} from '@ng-bootstrap/ng-bootstrap';
+import { AngularFireModule } from 'angularfire2';
+import { AngularFireDatabaseModule } from 'angularfire2/database';
+import { AngularFireAuthModule, AngularFireAuth } from 'angularfire2/auth';
 
 ///
 //  ROUTING
@@ -41,6 +45,12 @@ import { GetUserService } from './services/get-user/get-user.service';
 import { LoginService } from './services/login/login.service';
 import { UserPrivateInfoService } from './services/user-private-info/user-private-info.service';
 
+///
+//  VARIABLES
+///
+
+import { environment } from './../environments/environment'
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -55,8 +65,13 @@ import { UserPrivateInfoService } from './services/user-private-info/user-privat
   imports: [
     BrowserModule,
     FormsModule,
+    HttpClientModule,
     HttpModule,
     JsonpModule,
+    AngularFireAuthModule,
+    AngularFireDatabaseModule,
+    AngularFireModule,
+    AngularFireModule.initializeApp(environment.firebase),
     NgbModule.forRoot(),
     RouterModule.forRoot(appRoute)
   ],
