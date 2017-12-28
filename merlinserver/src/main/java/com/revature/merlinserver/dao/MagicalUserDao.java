@@ -62,7 +62,27 @@ public class MagicalUserDao extends MerlinSessionDao<MagicalUser> {
 	 * @param id
 	 * @return null if no magical user exists of that id, or the user if a user is found of that id
 	 */
-	public MagicalUser getMagicalUserById(final String username) {
+	public MagicalUser getMagicalUserById(final int id) {
+		MagicalUser user = null;
+		
+		if (isReady()) {
+			Query q = null;
+			
+			q = session.createQuery("FROM MagicalUser WHERE id = ?");
+			q.setParameter(0, id);
+			
+			user = (MagicalUser) q.uniqueResult();
+		}
+		
+		return user;
+	}
+	
+	/**
+	 * Find the magical user associated by a specific username
+	 * @param username of the user being searched for
+	 * @return null if no magical user exists of that username, or the user if a user is found of that username
+	 */
+	public MagicalUser getMagicalUserByUsername(final String username) {
 		MagicalUser user = null;
 		
 		if (isReady()) {
