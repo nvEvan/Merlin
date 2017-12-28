@@ -10,14 +10,21 @@ import com.revature.merlinserver.beans.MagicalUser;
 
 /**
  * Performs SQL operations/transactions on MagicalUser Table
- * @author Luie
+ * @author Antony Lulciuc
  */
 public class MagicalUserDao extends MerlinSessionDao<MagicalUser> {
 
+	/**
+	 * No-args constructor
+	 */
 	public MagicalUserDao() {
-		
+		// do nothing
 	}
 	
+	/**
+	 * Assigns a session to this dao
+	 * @param session - session used to perform queries/transactions 
+	 */
 	public MagicalUserDao(Session session) {
 		super(session);
 	}

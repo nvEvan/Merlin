@@ -13,10 +13,17 @@ import com.revature.merlinserver.beans.PrivateUserInfo;
  */
 public class PrivateInfoDao extends MerlinSessionDao<PrivateUserInfo> {
 
+	/**
+	 * No-args constructor
+	 */
 	public PrivateInfoDao() {
-		
+		// do nothing
 	}
-	
+
+	/**
+	 * Assigns a session to this dao
+	 * @param session - session used to perform queries/transactions 
+	 */
 	public PrivateInfoDao(Session session) {
 		super(session);
 	}
