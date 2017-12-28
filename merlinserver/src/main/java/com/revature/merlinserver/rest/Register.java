@@ -33,10 +33,10 @@ public class Register {
 	 * @param token
 	 */
 	@POST
-	@Path("/create") //this the path we want to use?
+	@Path("/create/") //this the path we want to use?
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.TEXT_PLAIN)
-	public void register(@PathParam("params") RegisterParams params) {
+	public String register(final RegisterParams params) {
 		//register user
 		MagicalUser user = params.getUser();
 		PrivateUserInfo pi = params.getPrivateUserInfo();
@@ -55,6 +55,8 @@ public class Register {
 		System.out.println("Sending the email");
 		//Send verification email to user
 		sendEmailToUser(user, pi);
+		
+		return "User has been registered, and awaiting verification";
 	}
 
 	/**
@@ -63,9 +65,9 @@ public class Register {
 	 * @param token provided in the url
 	 */
 	@GET
-	@Path("/authenticate{token}")
+	@Path("/authenticate/{token}/")
 	@Produces(MediaType.TEXT_PLAIN)
-	public void authenticate(@PathParam("token") String token) {
+	public String authenticate(@PathParam("token") final String token) {
 
 	    //Grab the user from the token
 	    //If there is no user of the token, then someone entered a phony token in the url.
@@ -76,6 +78,8 @@ public class Register {
 			UserVerificationService.updateStatus(user); //update their status to 'active'
 			TokenService.updateToken(user); //update their token to the current time
 		}
+		
+		return user.getUsername() + " has been verified";
 	}
 	
 	/*===================================== PRIVATE METHODS ===========================================*/

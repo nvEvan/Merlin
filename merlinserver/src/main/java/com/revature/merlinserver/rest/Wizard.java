@@ -25,16 +25,16 @@ public class Wizard {
 	 * Return the private info of all adepts
 	 */
 	@GET
-	@Path("/unverified_adepts")
+	@Path("/unverified_adepts/")
 	@Produces(MediaType.APPLICATION_JSON)
-	public void getUnverifiedAdepts() {
+	public List<PrivateUserInfo> getUnverifiedAdepts() {
 		PrivateInfoDao privateInfoDao = new PrivateInfoDao();
 		
 		privateInfoDao.open();
 		final List<PrivateUserInfo> unverifiedAdepts = privateInfoDao.getAllUnverifiedAdepts();
 		privateInfoDao.close();
 		
-		//TODO return this list of unverified users back to the client
+		return unverifiedAdepts;
 	}
 	
 	/**
@@ -42,8 +42,8 @@ public class Wizard {
 	 * This method will set the adept's status from 'PENDING' to 'ACTIVE'
 	 */
 	@GET
-	@Path("/approve_adept{username}")
-	public void approveAdept(@PathParam("username") String username) {
+	@Path("/approve_adept/{username}/")
+	public String approveAdept(@PathParam("username") String username) {
 		MagicalUserDao magicDao = new MagicalUserDao();
 		PrivateInfoDao privateInfoDao = new PrivateInfoDao();
 		MagicalUser adept = null;
@@ -53,5 +53,7 @@ public class Wizard {
 		privateInfoDao.setSession(magicDao.getSession());
 		privateInfoDao.approveAdept(adept);
 		magicDao.close();
+		
+		return username + " has been approved";
 	}
 }
