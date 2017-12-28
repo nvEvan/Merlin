@@ -1,22 +1,21 @@
 import { Injectable } from '@angular/core';
-import { AppComponent } from '../app.component';
+import { AppComponent } from '../../app.component';
+import { Http } from '@angular/http';
 
 @Injectable()
 export class LoginService {
   private username: string;
-  
-  constructor() { }
 
-  login(username: string) {
-    this.username = username;
-  }
+  constructor(private http: Http) { }
 
+  // Returns the current user's name
   getUsername() {
     return this.username;
   }
 
+  // Set the username 
   setUsername(username: string) {
     this.username = username;
   }
-
+  
 }

@@ -7,6 +7,7 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { HttpModule, JsonpModule } from '@angular/http';
+import { HttpClientModule } from '@angular/common/http';
 
 ///
 //  DEPENDENDICES
@@ -37,9 +38,9 @@ import { ThreadsComponent } from './components/threads/threads.component';
 //  SERVICES
 ///
 
-import { GetUserService } from './services/get-user.service';
-import { LoginService } from './services/login.service';
-import { UserPrivateInfoService } from './services/user-private-info.service';
+import { GetUserService } from './services/get-user/get-user.service';
+import { LoginService } from './services/login/login.service';
+import { UserPrivateInfoService } from './services/user-private-info/user-private-info.service';
 
 @NgModule({
   declarations: [
@@ -55,6 +56,7 @@ import { UserPrivateInfoService } from './services/user-private-info.service';
   imports: [
     BrowserModule,
     FormsModule,
+    HttpClientModule,
     HttpModule,
     JsonpModule,
     NgbModule.forRoot(),

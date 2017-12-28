@@ -1,37 +1,45 @@
-import { Component, OnInit } from '@angular/core';
-import { LoginService } from '../../services/login.service';
+import { Component } from '@angular/core';
+import { LoginService } from '../../services/login/login.service';
 import { Router } from '@angular/router';
-import { UserPrivateInfoService } from '../../services/user-private-info.service';
+import { GetUserService } from '../../services/get-user/get-user.service';
 
 @Component({
   selector: 'app-sign-in',
   templateUrl: './sign-in.component.html',
   styleUrls: ['./sign-in.component.css']
 })
-export class SignInComponent implements OnInit {
+export class SignInComponent {
 
-  info = {};
-  username: string;
-  password: string;
+  private user = {
+    password: null,
+    userId: null,
+    username: null
+  };
+  private username: string;
+  private password: string;
 
-  constructor(private router: Router, private login: LoginService, private getUserInfo: UserPrivateInfoService) { }
+  constructor(private router: Router, private login: LoginService, private getUserService: GetUserService) { }
 
-  ngOnInit() {
-  }
-
-  userLogin() {
-    this.getUserInfo.getPrivateInfo(this.username).subscribe(rInfo => this.info = rInfo);
-
-    console.log(this.info);
-    console.log(this.info);
+  userLogin() { 
+    // Obtains a user based on username
+    this.getUserService.getLogin(this.username).subscribe( data => {
+      this.user = data.json();
+      if(this.user.username === this.username && this.user.password === this.password){
+        this.login.setUsername(this.username);
+        this.router.navigateByUrl('profile');
+      }
+      else{
+        window.alert('Access Denied');
+      }
+    });
     
-    if (true || this.info === this.password) {
-      this.login.setUsername(this.username);
-      this.router.navigateByUrl('threads');
-    } else {
-      // console.log('false');
-    }
+    // Console log statements to verify the user is valid
+    
+    //debugger;
 
+    // If the user is valid then the login service stores the username and reroutes to profile page
+    // Otherwise the user is shown a window telling them they are denied access.
+    
   }
 
 }
