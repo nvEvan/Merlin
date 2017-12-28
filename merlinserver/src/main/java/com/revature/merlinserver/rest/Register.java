@@ -36,7 +36,7 @@ public class Register {
 	@Path("/create") //this the path we want to use?
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.TEXT_PLAIN)
-	public void register(RegisterParams params) {
+	public void register(@PathParam("params") RegisterParams params) {
 		//register user
 		MagicalUser user = params.getUser();
 		PrivateUserInfo pi = params.getPrivateUserInfo();
