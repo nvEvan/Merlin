@@ -18,6 +18,7 @@ import com.revature.merlinserver.dao.MagicalUserDao;
  */
 @Path("/login")
 public class Login {
+	
 	// TODO : do login stuff
 	@POST
 	@Path("/validate")
