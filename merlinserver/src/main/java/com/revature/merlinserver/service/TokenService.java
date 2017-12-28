@@ -12,25 +12,58 @@ import com.revature.util.DateUtil;
  * @author Alex
  */
 public class TokenService {
+	/**The duration of user tokens will last 30 minutes.*/
 	private static final int TOKEN_DURATION = 1800;
 
 	/**
-	 * Creates a random token for a user.
+	 * Creates a random token for newly registered user.
 	 * @param user
 	 * @return the new token for that user
 	 */
-	public static Token createToken(MagicalUser user) {
+	public static Token createToken(final MagicalUser user) {
 		String tokenstr = UUID.randomUUID().toString();
 		TokenDao td = new TokenDao();
-
+		Token token = null;
+		
 		td.open();
 		while (td.isTokenUnique(tokenstr) == 1) { //generate a token string that is unique
-			System.out.println("token wasn't unique");
 			tokenstr = UUID.randomUUID().toString();
 		}
+		
+		token = new Token(user, tokenstr, null);
+		
+		td.insertToken(token);
 		td.close();
 
-		return new Token(user, tokenstr, null); //return the new token object
+		return token; //return the new token object
+	}
+	
+	/**
+	 * Creates a new token for a user logging in.
+	 * @param user
+	 * @return to the user a new token
+	 */
+	public static Token createTokenForUser(final MagicalUser user) {
+		String tokenstr = UUID.randomUUID().toString();
+		TokenDao td = new TokenDao();
+		Token token = null;
+		java.util.Date date = null;
+		java.sql.Date expDate = null;
+		
+		td.open();
+		while (td.isTokenUnique(tokenstr) == 1) { //generate a token string that is unique
+			tokenstr = UUID.randomUUID().toString();
+		}
+		
+		date = new java.util.Date();
+		expDate = DateUtil.toDate(date.toString());
+		expDate.setTime(expDate.getTime() + TOKEN_DURATION);
+		token = new Token(user, tokenstr, expDate); //set the user's expiration date
+		
+		td.insertToken(token); //persist the token
+		td.close();
+
+		return token; //return the new token object
 	}
 
 	/**
@@ -39,7 +72,7 @@ public class TokenService {
 	 * @param token
 	 * @return the user associated with the given token
 	 */
-	public static MagicalUser getUserByToken(String token) {
+	public static MagicalUser getUserByToken(final String token) {
 		TokenDao td = new TokenDao();
 		MagicalUser user = null;
 
@@ -60,17 +93,18 @@ public class TokenService {
 		Token token = null;
 		java.util.Date date = null;
 		java.sql.Date expDate = null;
+		long newExpDate;
 
 		date = new java.util.Date();
 		expDate = DateUtil.toDate(date.toString());
 		
-		final long newExpDate = expDate.getTime() + TOKEN_DURATION;
+		newExpDate = expDate.getTime() + TOKEN_DURATION; //set the user's new expiration date to current time + 30 minutes
 		expDate.setTime(newExpDate);
 		
 		td.open();
 		token = td.getTokenByUser(user);
 		token.setExpDate(expDate);
-		td.updateToken(token);
+		td.updateToken(token); //update the token
 		td.close();
 	}
 }
