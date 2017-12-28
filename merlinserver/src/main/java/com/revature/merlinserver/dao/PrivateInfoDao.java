@@ -1,5 +1,8 @@
 package com.revature.merlinserver.dao;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.hibernate.Query;
 import org.hibernate.Session;
 
@@ -95,5 +98,74 @@ public class PrivateInfoDao extends MerlinSessionDao<PrivateUserInfo> {
 		if (isReady()) {
 			session.delete(info);
 		}
+	}
+
+	/**
+	 * This method will return a list of all unverified adepts.
+	 * @return
+	 */
+	public List<PrivateUserInfo> getAllUnverifiedAdepts() {
+		List<PrivateUserInfo> unverifiedAdepts = null;
+		
+		if (isReady()) {
+			Query q = null;
+			unverifiedAdepts = new ArrayList<>();
+			final int pendingId = 424; //id of codelist pending status
+			final int adeptId = 430; //id of codelist adept role
+			CodeList pendingStatus = null;
+			CodeList roleStatus = null;
+			
+			//get the pending status codelist
+			q = session.createQuery("FROM CodeList WHERE id = ?");
+			q.setParameter(0, pendingId);
+			pendingStatus = (CodeList) q.uniqueResult();
+			
+			//get the adept role codelist
+			q = session.createQuery("FROM CodeList WHERE id = ?");
+			q.setParameter(0, adeptId);
+			roleStatus = (CodeList) q.uniqueResult();
+			
+			//get all adepts that are pending
+			q = session.createQuery("FROM PrivateUserInfo WHERE status = ? && role = ?");
+			q.setParameter(0, pendingStatus);
+			q.setParameter(1, roleStatus);
+			
+			//add all of our unverified adepts to the list
+			for (Object privateUserInfo : q.list()) {
+				unverifiedAdepts.add((PrivateUserInfo) privateUserInfo);
+			}
+		}
+		
+		return unverifiedAdepts;
+	}
+
+	/**
+	 * Approve an adept account.
+	 * Set the adept's private user info status from 'PENDING' to 'ACTIVE'
+	 * @param adept
+	 */
+	public void approveAdept(MagicalUser adept) {
+		if (isReady()) {
+			Query q = null;
+			final int activeId = 425; //id of codelist active status
+			CodeList activeStatus = null;
+			PrivateUserInfo privateUserInfo = null;
+			
+			//get the active status codelist
+			q = session.createQuery("FROM CodeList WHERE id = ?");
+			q.setParameter(0, activeId);
+			activeStatus = (CodeList) q.uniqueResult();
+			
+			
+			//get the private user info
+			q = session.createQuery("FROM PrivateUserInfo WHERE user = ?");
+			q.setParameter(0, adept);
+			privateUserInfo = (PrivateUserInfo) q.uniqueResult();
+			
+			privateUserInfo.setStatus(activeStatus); //set their status to active
+			
+			session.update(privateUserInfo);
+		}
+		
 	}
 }

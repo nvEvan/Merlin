@@ -60,7 +60,7 @@ public class RegisterTest {
 		
 		md.open();
 		pd.setSession(md.getSession());
-		user = md.getMagicalUserById(testUsername);
+		user = md.getMagicalUserByUsername(testUsername);
 		pui = pd.getPrivateInfoByUser(user);
 		md.close();
 		
@@ -84,7 +84,7 @@ public class RegisterTest {
 		pd.setSession(md.getSession());
 		td.setSession(md.getSession());
 		
-		user = md.getMagicalUserById(testUsername);
+		user = md.getMagicalUserByUsername(testUsername);
 		info = pd.getPrivateInfoByUser(user);
 		token = td.getTokenByUser(user);
 		
