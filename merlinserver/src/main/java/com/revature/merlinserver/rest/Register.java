@@ -10,16 +10,21 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
-import com.revature.merlinserver.beans.CodeList;
 import com.revature.merlinserver.beans.MagicalUser;
 import com.revature.merlinserver.beans.PrivateUserInfo;
 import com.revature.merlinserver.beans.Token;
-import com.revature.merlinserver.dao.CodeListDao;
+import com.revature.merlinserver.dao.MagicalUserDao;
 import com.revature.merlinserver.dao.PrivateInfoDao;
 import com.revature.merlinserver.dao.TokenDao;
+import com.revature.merlinserver.paramwrapper.RegisterParams;
 import com.revature.merlinserver.service.TokenService;
 import com.revature.merlinserver.service.UserVerificationService;
 
+/**
+ * Class holding REST calls from the front end.
+ * Methods including registering a new user, logging in, etc
+ * @author Alex
+ */
 @Path("/register")
 public class Register {
 
@@ -31,54 +36,68 @@ public class Register {
 	@Path("/create") //this the path we want to use?
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.TEXT_PLAIN)
-	public void register(MagicalUser user) {
-
-
+	public void register(RegisterParams params) {
 		//register user
-
-
-
-
-		/*-----------Send email to user-------------*/
-		Token token = TokenService.createToken(user);
-		TokenDao td = new TokenDao();
-		td.open();
-		td.insertToken(token);
-		td.close();
-
-		/*
-		try {
-			UserVerificationService.sendVerification(userinfo.getEmail(), token.getToken());
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		} catch (ExecutionException e) {
-			e.printStackTrace();
-		}*/
+		MagicalUser user = params.getUser();
+		PrivateUserInfo pi = params.getPrivateUserInfo();
+		
+		MagicalUserDao md = new MagicalUserDao();
+		PrivateInfoDao pd = new PrivateInfoDao();
+		
+		System.out.println("opening session");
+		md.open();
+		System.out.println("session opened");
+		pd.setSession(md.getSession());
+		md.insertUser(user); //insert the new user
+		md.commit();
+		pd.insert(pi); //insert the user's private info
+		md.close();
+		
+		System.out.println("Sending the email");
+		//Send verification email to user
+		sendEmailToUser(user, pi);
 	}
 
 	/**
-	 * When a user clicks on their email verification link.
-	 * @param token
+	 * When a user clicks on their email verification link, this method will find the user associated with the provided token.
+	 * The method checks that this token is new and unused token, and will assign the user the token and set the user's status to 'active'.
+	 * @param token provided in the url
 	 */
 	@GET
 	@Path("/authenticate{token}")
 	@Produces(MediaType.TEXT_PLAIN)
 	public void authenticate(@PathParam("token") String token) {
 
+	    //Grab the user from the token
+	    //If there is no user of the token, then someone entered a phony token in the url.
 		MagicalUser user = TokenService.getUserByToken(token);
 		
 		//update the user's status to 'active' status
-		if (TokenService.tokenExistsAndIsNew(token)) {
-			
-			UserVerificationService.updateStatus(user);
-			
-
-		} else {
-			//the user did not click the link in their email
-			//they are entering a phony token
+		if (UserVerificationService.userIsNew(user)) { //check the user is new
+			UserVerificationService.updateStatus(user); //update their status to 'active'
+			TokenService.updateToken(user); //update their token to the current time
 		}
+	}
+	
+	/*===================================== PRIVATE METHODS ===========================================*/
+	/**
+	 * This method sends the new user a verification email. This method assists the method register
+	 * The email includes a brand new generated token used for verification.
+	 */
+	private void sendEmailToUser(MagicalUser user, PrivateUserInfo userinfo) {
+		Token token = TokenService.createToken(user);
+		TokenDao td = new TokenDao();
+		
+		td.open();
+		td.insertToken(token); //store the new token
+		td.close();
 
-
-
+		try {
+			UserVerificationService.sendVerification(userinfo.getEmail(), token.getToken()); //send the user the verification email
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		} catch (ExecutionException e) {
+			e.printStackTrace();
+		}
 	}
 }
