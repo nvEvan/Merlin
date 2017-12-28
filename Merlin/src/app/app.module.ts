@@ -32,6 +32,7 @@ import { SignInComponent } from './components/sign-in/sign-in.component';
 import { HomeComponent } from './components/home/home.component';
 import { BadgesComponent } from './components/badges/badges.component';
 import { ThreadsComponent } from './components/threads/threads.component';
+import { SearchAdeptsComponent } from './components/search-adepts/search-adepts.component';
 
 ///
 //  SERVICES
@@ -50,7 +51,8 @@ import { UserPrivateInfoService } from './services/user-private-info/user-privat
     SignInComponent,
     HomeComponent,
     BadgesComponent,
-    ThreadsComponent
+    ThreadsComponent,
+    SearchAdeptsComponent
   ],
   imports: [
     BrowserModule,
