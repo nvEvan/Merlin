@@ -29,9 +29,10 @@ public class Wizard {
 	@Produces(MediaType.APPLICATION_JSON)
 	public List<PrivateUserInfo> getUnverifiedAdepts() {
 		PrivateInfoDao privateInfoDao = new PrivateInfoDao();
+		List<PrivateUserInfo> unverifiedAdepts = null;
 		
 		privateInfoDao.open();
-		final List<PrivateUserInfo> unverifiedAdepts = privateInfoDao.getAllUnverifiedAdepts();
+		unverifiedAdepts = privateInfoDao.getAllUnverifiedAdepts();
 		privateInfoDao.close();
 		
 		return unverifiedAdepts;

@@ -44,15 +44,12 @@ public class Register {
 		MagicalUserDao md = new MagicalUserDao();
 		PrivateInfoDao pd = new PrivateInfoDao();
 		
-		System.out.println("opening session");
 		md.open();
-		System.out.println("session opened");
 		pd.setSession(md.getSession());
 		md.insertUser(user); //insert the new user
 		pd.insert(pi); //insert the user's private info
 		md.close();
 		
-		System.out.println("Sending the email");
 		//Send verification email to user
 		sendEmailToUser(user, pi);
 		
