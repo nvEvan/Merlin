@@ -1,7 +1,13 @@
 <app-navbar></app-navbar>
 <div>
-  <input type="button" value="Show Public/Private Information" (click)=viewPublicPrivate()>
   <div>
-    <p>Welcome to your page {{username}}!</p>
+    <h1>Welcome to your page {{userData.user.username}}!</h1>
+  </div>
+  <div>
+    <p>First Name: {{userData.privateUserInfo.firstName}}</p>
+    <p>Last Name: {{userData.privateUserInfo.lastname}}</p>
+    <p>Phone: {{userData.privateUserInfo.phoneNumber}}</p>
+    <p>Address: {{userData.privateUserInfo.address}}</p>
+    <p>E-mail: {{userData.privateUserInfo.email}}</p>
   </div>
 </div>
