@@ -3,7 +3,6 @@ package com.revature.merlinserver.rest;
 import java.util.List;
 
 import javax.ws.rs.Consumes;
-import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
@@ -12,8 +11,10 @@ import javax.ws.rs.core.MediaType;
 
 import com.revature.merlinserver.beans.MagicalUser;
 import com.revature.merlinserver.beans.PrivateUserInfo;
+import com.revature.merlinserver.beans.Token;
 import com.revature.merlinserver.dao.MagicalUserDao;
 import com.revature.merlinserver.dao.PrivateInfoDao;
+import com.revature.merlinserver.dao.TokenDao;
 
 /**
  * TODO : do login validation and other stuff
@@ -22,42 +23,37 @@ import com.revature.merlinserver.dao.PrivateInfoDao;
 @Path("/login")
 public class Login {
 	
-	// TODO : do login stuff
-	@POST
-	@Path("/validate")
-	@Produces(MediaType.TEXT_PLAIN)
-	@Consumes(MediaType.APPLICATION_JSON)
-	public String validate(MagicalUser user) {
-		return "stuff = " + user.getUsername() + " " + user.getPassword();
-	}
-	
-	//Gets all users 
-	@POST
-	@Path("/MagicalUser")
-	@Produces(MediaType.APPLICATION_JSON)
-	public List<MagicalUser> getMagicalUsers(){
-		MagicalUserDao dao = new MagicalUserDao();
-		dao.open();
-		List<MagicalUser> users = dao.loadAll();
-		dao.close();
-		return users;
-	}
-	
 	//Get explicit user
 	@POST
-	@Path("/MagicalUser/{username}")
+	@Path("/MagicalUser")
+	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public MagicalUser getMagicalUser(@PathParam("username") String username){
+	public PrivateUserInfo getPrivateUserInfo(MagicalUser user){
 		MagicalUserDao dao = new MagicalUserDao();
+		MagicalUser mUser = null;
+		PrivateUserInfo info = null;
+
 		dao.open();
-		List<MagicalUser> users = dao.loadAll();
+		mUser = dao.getMagicalUserByLogin(user.getUsername(), user.getPassword());
 		dao.close();
-		for(MagicalUser m : users){
-			if(username.equals(m.getUsername())){
-				return m;
-			}
+				
+		if(mUser != null){
+			TokenDao td = new TokenDao();
+			Token token = null;
+			PrivateInfoDao pd = new PrivateInfoDao();
+			
+			td.open();
+			token = td.getTokenByUser(mUser);
+			td.close();
+			
+			pd.open();
+			info = pd.getPrivateInfoByUser(mUser);
+			pd.close();
+			
+			return info;
+		} else{
+			return null;
 		}
-		return null;
 	}
 	
 	//Get explicit user info
