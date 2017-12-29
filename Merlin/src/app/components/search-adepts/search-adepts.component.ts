@@ -5,21 +5,8 @@ import { Http, Response } from '@angular/http';
 
 @Component({
     selector:'app-search-adepts',
-    template: `
-    <table>
-        <thead>
-            <th>Name</th>
-            <th>Index</th>
-        </thead>
-        <tbody>
-            <tr *ngFor="let hero of heroes">
-                <td>{{hero.name}}</td>
-            </tr>
-        </tbody>
-    </table>
-`
-    // templateUrl: './search-adepts.component.html', 
-    // styleUrls: ['./search-adepts.component.css']
+    templateUrl: './search-adepts.component.html', 
+    styleUrls: ['./search-adepts.component.css']
 })
 
 export class SearchAdeptsComponent {
