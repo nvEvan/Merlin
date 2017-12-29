@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core";
 import { PrivateUserInfo } from "../../models/private-user-info.model"
-import { Http } from "@angular/http/src/http";
+import { Http } from "@angular/http";
 
 @Injectable()
 export class RegistrationService {

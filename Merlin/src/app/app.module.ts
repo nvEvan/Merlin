@@ -8,6 +8,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { HttpModule, JsonpModule } from '@angular/http';
 import { HttpClientModule } from '@angular/common/http';
+import { Observable } from 'rxjs/Observable';
 
 ///
 //  DEPENDENDICES
@@ -36,6 +37,8 @@ import { SignInComponent } from './components/sign-in/sign-in.component';
 import { HomeComponent } from './components/home/home.component';
 import { BadgesComponent } from './components/badges/badges.component';
 import { ThreadsComponent } from './components/threads/threads.component';
+import { StateComponent } from './components/codelist/state/state.component'
+import { CityComponent } from './components/codelist/city/city.component';
 
 ///
 //  SERVICES
@@ -44,6 +47,8 @@ import { ThreadsComponent } from './components/threads/threads.component';
 import { GetUserService } from './services/get-user/get-user.service';
 import { LoginService } from './services/login/login.service';
 import { UserPrivateInfoService } from './services/user-private-info/user-private-info.service';
+import { CodeListService } from './services/codelist/codelist.service';
+import { RegistrationService } from './services/registration/registration.service';
 
 ///
 //  VARIABLES
@@ -60,7 +65,9 @@ import { environment } from './../environments/environment'
     SignInComponent,
     HomeComponent,
     BadgesComponent,
-    ThreadsComponent
+    ThreadsComponent,
+    StateComponent,
+    CityComponent
   ],
   imports: [
     BrowserModule,
@@ -75,7 +82,8 @@ import { environment } from './../environments/environment'
     NgbModule.forRoot(),
     RouterModule.forRoot(appRoute)
   ],
-  providers: [GetUserService, LoginService, UserPrivateInfoService],
+  providers: [GetUserService, LoginService, UserPrivateInfoService, CodeListService, 
+    RegistrationService, Observable],
   bootstrap: [AppComponent]
 })
   

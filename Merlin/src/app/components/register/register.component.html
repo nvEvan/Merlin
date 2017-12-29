@@ -1,19 +1,54 @@
 <div class="register">
-  <div *ngIf="usernameIsUnique">
+  <div *ngIf="!usernameIsUnique">
     <span id="formMessage" style="color:red">This username is not available.</span>
   </div>
-  <table>
-      <tr><td id="label">Username</td><td><input name="username" type="text" value=magicalUser.username required></td></tr>
-      <tr><td id="label">Password</td><td><input name="password" type="password" value=magicalUser.password required></td></tr>
-      <tr><td id="label">First Name</td><td><input name="fname" type="text" value=privateUserInfo.firstName required></td></tr>
-      <tr><td id="label">Last Name</td><td><input name="lname" type="text" value=privateUserInfo.lastName required></td></tr>
-      <tr><td id="label">Phone</td><td><input name="phone" type="text" value=privateUserInfo.phoneNumber required></td></tr>
-      <tr><td id="label">E-mail</td><td><input name="email"  type="email" value=privateUserInfo.email required></td></tr>
-      <tr><td id="label">Address</td><td><input name="address" type="text" value=privateUserInfo.address required></td></tr>
-      <tr><td id="label">City</td><td></td></tr>
-      <tr><td id="label">State</td><td><app-statelist></app-statelist></td></tr>
-  </table
-  <input type="button" value="Register" (click) = register()>
+
+  <!-- user's email -->
+  <div>
+    <div><span>Email</span></div>
+    <input type="text" [value]=privateUserInfo.email required>
+  </div>
+
+  <!--Username MUST be unique-->
+  <div>
+    <span id="usernameAlert" style="color:red"></span>
+    <div><span>Username</span></div>
+    <input type="text" [value]=magicalUser.username required>
+  </div>
+
+  <!-- Password -->
+  <div>
+    <div><span>Password</span><span>Confirm Password</span></div>
+    <input type="password" [value]=magicalUser.password required>
+    <input type="Confirm password" [value]=magicalUser.password required>
+  </div>
+
+  <div>
+    <div><span>First Name</span></div>
+    <input type="text" [value]=privateUserInfo.firstName required>
+    <div><span>Last Name</span></div>
+    <input type="text" [value]=privateUserInfo.lastName required>
+  </div>
+
+  <div>
+    <div><span>Address</span></div>
+    <input type="text" [value]=privateUserInfo.address required>
+  </div>
+
+  <div>
+    <div><span>State</span></div>
+    <app-statelist></app-statelist>
+  </div>
+
+  <div>
+    <span>Phone Number</span>
+    <input type="text" [value]=privateUserInfo.phoneNumber required>
+  </div>
+
+  <div>
+    <input type="button" value="Register" (click)=register()>
+  </div>
+
 </div>
 
 <a href="home">Back</a>

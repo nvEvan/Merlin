@@ -1,18 +1,20 @@
-import { Component } from "@angular/core/src/metadata/directives";
+import { Component } from "@angular/core";
 import { CodeListService } from "../../../services/codelist/codelist.service";
 
 @Component({
-    selector: 'app-statelist',
-    templateUrl: './state.component.html'
+    selector: 'app-citylist',
+    templateUrl: './city.component.html'
 })
 
 /**
  * City component that will hold the possible states for user registration.
  */
-export class City {
+export class CityComponent {
     constructor(private codeListService : CodeListService) { }
 
+    /*
     getStateCodeLists() {
         return this.codeListService.getCodeListsByCode("CITY-CODE");
     }
+    */
 }
