@@ -29,15 +29,15 @@ public class PrivateUserInfo implements BusinessObject {
 	@JoinColumn(name="MAGICAL_USER")
 	private MagicalUser user;
 	
-	@OneToOne(fetch=FetchType.LAZY)
+	@OneToOne(fetch=FetchType.EAGER)
 	@JoinColumn(name="ROLE_COLUMN")
 	private CodeList role;
 	
-	@OneToOne(fetch=FetchType.LAZY)
+	@OneToOne(fetch=FetchType.EAGER)
 	@JoinColumn(name="STATE_CITY_COLUMN")
 	private CodeList stateCity;
 	
-	@OneToOne(fetch=FetchType.LAZY)
+	@OneToOne(fetch=FetchType.EAGER)
 	@JoinColumn(name="STATUS_COLUMN")
 	private CodeList status;
 	
