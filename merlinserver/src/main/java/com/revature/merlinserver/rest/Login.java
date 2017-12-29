@@ -15,6 +15,7 @@ import com.revature.merlinserver.beans.Token;
 import com.revature.merlinserver.dao.MagicalUserDao;
 import com.revature.merlinserver.dao.PrivateInfoDao;
 import com.revature.merlinserver.dao.TokenDao;
+import com.revature.merlinserver.service.TokenService;
 
 /**
  * TODO : do login validation and other stuff
@@ -28,29 +29,18 @@ public class Login {
 	@Path("/MagicalUser")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public PrivateUserInfo getPrivateUserInfo(MagicalUser user){
+	public MagicalUser getPrivateUserInfo(MagicalUser user){
 		MagicalUserDao dao = new MagicalUserDao();
 		MagicalUser mUser = null;
-		PrivateUserInfo info = null;
 
 		dao.open();
 		mUser = dao.getMagicalUserByLogin(user.getUsername(), user.getPassword());
 		dao.close();
 				
 		if(mUser != null){
-			TokenDao td = new TokenDao();
-			Token token = null;
-			PrivateInfoDao pd = new PrivateInfoDao();
-			
-			td.open();
-			token = td.getTokenByUser(mUser);
-			td.close();
-			
-			pd.open();
-			info = pd.getPrivateInfoByUser(mUser);
-			pd.close();
-			
-			return info;
+			TokenService ts = new TokenService();
+			ts.createTokenForUser(mUser);
+			return mUser;
 		} else{
 			return null;
 		}
