@@ -7,6 +7,8 @@ import com.revature.merlinserver.beans.Token;
 import com.revature.merlinserver.dao.TokenDao;
 import com.revature.util.DateUtil;
 
+import oracle.sql.DATE;
+
 /**
  * Service methods needed for token creation, verification, and data retrieval involving tokens.
  * @author Alex
@@ -56,7 +58,7 @@ public class TokenService {
 		}
 		
 		date = new java.util.Date();
-		expDate = DateUtil.toDate(date.toString());
+		expDate = new java.sql.Date(date.getTime());
 		expDate.setTime(expDate.getTime() + TOKEN_DURATION);
 		token = new Token(user, tokenstr, expDate); //set the user's expiration date
 		

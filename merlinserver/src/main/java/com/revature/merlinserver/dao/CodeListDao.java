@@ -1,5 +1,8 @@
 package com.revature.merlinserver.dao;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.hibernate.Query;
 import org.hibernate.Session;
 
@@ -43,5 +46,27 @@ public class CodeListDao extends MerlinSessionDao<MagicalUser> {
 		}
 		
 		return cl;
+	}
+	
+	/**
+	 * Return all of the codelists of a given code
+	 * @return the list of codelists of that code
+	 */
+	public List<com.revature.merlinserver.beans.CodeList> getCodeListsByCode(final String code) {
+		List<CodeList> states = null;
+		
+		if (isReady()) {
+			Query q = null;
+			states = new ArrayList<com.revature.merlinserver.beans.CodeList>();
+			
+			q = session.createQuery("FROM CodeList WHERE code = ?"); //grab codelists by certain code
+			q.setParameter(0, code);
+			
+			for (Object state : q.list()) {
+				states.add((CodeList) state);
+			}
+		}
+		
+		return states;
 	}
 }
