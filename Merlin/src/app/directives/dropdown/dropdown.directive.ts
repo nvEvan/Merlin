@@ -16,6 +16,7 @@ export class DropdownDirective {
     }
 
     @HostBinding('class.open') 
+    
     get opened() {
         return this.isOpen;
     }
