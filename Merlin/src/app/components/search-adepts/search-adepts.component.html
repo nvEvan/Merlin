@@ -1,7 +1,7 @@
 <div>
     <hr>
     <p>Hello From search-adepts!</p>
-    <button (click)=doSomething()>Fetch Adepts</button>
+    <!--<button (click)=doSomething()>Fetch Adepts</button>-->
 </div>
 <div>
     <table>
@@ -12,6 +12,19 @@
         <tbody>
             <tr *ngFor="let hero of heroes">
                 <td>{{hero.name}}</td>
+                <td>{{hero.id}}</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+<div>
+    <table>
+        <thead>
+            <th>Username</th>
+        </thead>
+        <tbody>
+            <tr *ngFor="let adept of Adepts">
+                <td>{{adept.username}}</td>
             </tr>
         </tbody>
     </table>
