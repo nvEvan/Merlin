@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import { LoginService } from '../../services/login/login.service';
 import { Router } from '@angular/router';
 import { GetUserService } from '../../services/get-user/get-user.service';
+import { MagicalUser } from '../../models/magical-user.model';
+import { UserPrivateData } from '../../models/composite/user-private-data.composite';
 
 @Component({
   selector: 'app-sign-in',
@@ -10,36 +12,26 @@ import { GetUserService } from '../../services/get-user/get-user.service';
 })
 export class SignInComponent {
 
-  private user = {
-    password: null,
-    userId: null,
-    username: null
-  };
-  private username: string;
-  private password: string;
+  user: MagicalUser;
+  userInfo: UserPrivateData;
 
-  constructor(private router: Router, private login: LoginService, private getUserService: GetUserService) { }
+  constructor(private router: Router, private login: LoginService, private getUserService: GetUserService) {
+    this.user = new MagicalUser();
+   }
 
   userLogin() { 
-    // Obtains a user based on username
-    this.getUserService.getLogin(this.username).subscribe( data => {
-      this.user = data.json();
-      if(this.user.username === this.username && this.user.password === this.password){
-        this.login.setUsername(this.username);
-        this.router.navigateByUrl('profile');
-      }
-      else{
-        window.alert('Access Denied');
-      }
-    });
-    
-    // Console log statements to verify the user is valid
-    
-    //debugger;
-
-    // If the user is valid then the login service stores the username and reroutes to profile page
-    // Otherwise the user is shown a window telling them they are denied access.
-    
+    console.log(this.user);
+    this.getUserService.getLogin(this.user).subscribe(
+      response => {
+        this.userInfo = response.json();
+        console.log(this.userInfo);
+        if(this.userInfo){
+          this.login.setUser(this.userInfo);
+          this.router.navigateByUrl('profile');
+        } else {
+          window.alert('Access Denied');
+        }
+      });
   }
 
 }
