@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
 import { AppComponent } from '../../app.component';
 import { Http } from '@angular/http';
-import { MagicalUser } from '../../models/magical-user.model';
+import { UserPrivateData } from '../../models/composite/user-private-data.composite';
 
 @Injectable()
 export class LoginService {
-  user: MagicalUser;
+  user: UserPrivateData;
 
   constructor(private http: Http) { }
 
@@ -15,7 +15,7 @@ export class LoginService {
   }
 
   // Set the username 
-  setUser(user: MagicalUser) {
+  setUser(user: UserPrivateData) {
     this.user = user;
   }
 

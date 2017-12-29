@@ -26,6 +26,7 @@ export class SignInComponent {
         this.userInfo = response.json();
         console.log(this.userInfo);
         if(this.userInfo){
+          this.login.setUser(this.userInfo);
           this.router.navigateByUrl('profile');
         } else {
           window.alert('Access Denied');
