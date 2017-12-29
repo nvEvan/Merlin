@@ -3,7 +3,7 @@ import { LoginService } from '../../services/login/login.service';
 import { Router } from '@angular/router';
 import { GetUserService } from '../../services/get-user/get-user.service';
 import { MagicalUser } from '../../models/magical-user.model';
-import { shared } from '../../../shared/shared';
+import { UserPrivateData } from '../../models/composite/user-private-data.composite';
 
 @Component({
   selector: 'app-sign-in',
@@ -12,22 +12,25 @@ import { shared } from '../../../shared/shared';
 })
 export class SignInComponent {
   user: MagicalUser;
+  userInfo: UserPrivateData;
 
-  constructor(private router: Router, private login: LoginService, private getUserService: GetUserService) { 
+  constructor(private router: Router, private login: LoginService, private getUserService: GetUserService) {
     this.user = new MagicalUser();
-  }
+   }
 
   userLogin() { 
-    this.getUserService.getLogin(this.user).subscribe(data => {
-      if (data) {
-        debugger;
-        var info = data.json().user;
-
-        shared.data.info.general = new MagicalUser();
-        shared.data.info.general.username = info.username;
-        this.router.navigateByUrl('threads');
-      }
-    })
+    console.log(this.user);
+    this.getUserService.getLogin(this.user).subscribe(
+      response => {
+        this.userInfo = response.json();
+        console.log(this.userInfo);
+        if(this.userInfo){
+          this.login.setUser(this.userInfo);
+          this.router.navigateByUrl('profile');
+        } else {
+          window.alert('Access Denied');
+        }
+      });
   }
 
 }
