@@ -131,4 +131,10 @@ public class IMThread implements BusinessObject {
 	public void setThreadCreationDate(Date threadCreationDate) {
 		this.threadCreationDate = threadCreationDate;
 	}
+
+	@Override
+	public String toString() {
+		return "IMThread [id=" + id + ", creator=" + creator + ", status=" + status + ", name=" + name + ", link="
+				+ link + ", threadCreationDate=" + threadCreationDate + "]";
+	}
 }
