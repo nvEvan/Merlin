@@ -1,12 +1,12 @@
-<div class="container">
+<div class="container" style="position: absolute; top: 100px">
   <form>
   <div class="row">
-    <div class="text-right col-lg-5">
-      <div class="row"><input [(ngModel)]="user.username" name="username" type="text" placeholder="Username"></div>
-      <div class="row"><input [(ngModel)]="user.password" name="password" type="password" placeholder="Password"></div>
-      <div class="row"><input id="login" type="button" value="Login" (click)=userLogin()></div>
+    <div class="text-right col-md-6" style="top: 90px">
+      <div class="row"><p><input [(ngModel)]="user.username" name="username" type="text" placeholder="Username"></p></div>
+      <div class="row"><p><input [(ngModel)]="user.password" name="password" type="password" placeholder="Password"></p></div>
+      <div class="row"><p><input id="login" type="button" value="Login" (click)=userLogin()></p></div>
     </div>
-    <div class="text-left col-lg-5">
+    <div class="text-left col-md-4">
       <app-register></app-register>
     </div>
   </div>
