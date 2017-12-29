@@ -42,17 +42,9 @@ public class CodeList {
 		CodeListDao codeListDao = new CodeListDao();
 		
 		codeListDao.open();
-		cities = codeListDao.getCodeListsByCode("US-CITY"); //grab all state code lists
+		cities = codeListDao.getCodeListsByCode("CITY-CODE"); //grab all state code lists
 		codeListDao.close();
 		
 		return cities;
-	}
-	
-	@GET
-	@Path("/hello")
-	@Produces(MediaType.TEXT_PLAIN)
-	public String helloWorld() {
-		
-		return "hello";
 	}
 }
