@@ -1,5 +1,7 @@
 package com.revature.merlinserver.rest;
 
+import static org.hamcrest.CoreMatchers.is;
+
 import java.util.concurrent.ExecutionException;
 
 import javax.ws.rs.Consumes;
@@ -77,6 +79,25 @@ public class Register {
 		}
 		
 		return user.getUsername() + " has been verified";
+	}
+	
+	/**
+	 * This method will check if a username already exists in the RDS.
+	 * @param username
+	 * @return true if the username is unique and does not exist in the RDS
+	 */
+	@GET
+	@Path("/unique/{username}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public boolean isUsernameUnique(@PathParam("username") final String username) {
+		boolean isUnique = false;
+		MagicalUserDao magicalUserDao = new MagicalUserDao();
+		
+		magicalUserDao.open();
+		isUnique = magicalUserDao.getMagicalUserByUsername(username) == null; //check if this username exists
+		magicalUserDao.close();
+		
+		return isUnique;
 	}
 	
 	/*===================================== PRIVATE METHODS ===========================================*/

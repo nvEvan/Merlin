@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
@@ -17,34 +18,16 @@ public class CodeList {
 	 * @return the list of state codelists
 	 */
 	@GET
+	@Path("/getcodelist/{code}")
 	@Produces(MediaType.APPLICATION_JSON)
-	@Path("/state")
-	public List<com.revature.merlinserver.beans.CodeList> getStateCodeLists() {
-		List<com.revature.merlinserver.beans.CodeList> states = null;
+	public List<com.revature.merlinserver.beans.CodeList> getStateCodeLists(@PathParam("code") String code) {
+		List<com.revature.merlinserver.beans.CodeList> codelist = null;
 		CodeListDao codeListDao = new CodeListDao();
 		
 		codeListDao.open();
-		states = codeListDao.getCodeListsByCode("US-STATE"); //grab all state code lists
+		codelist = codeListDao.getCodeListsByCode(code); //grab all code lists by given code
 		codeListDao.close();
 		
-		return states;
-	}
-	
-	/**
-	 * Grabs all city codelists.
-	 * @return
-	 */
-	@GET
-	@Path("/city")
-	@Produces(MediaType.APPLICATION_JSON)
-	public List<com.revature.merlinserver.beans.CodeList> getCityCodeLists() {
-		List<com.revature.merlinserver.beans.CodeList> cities = null;
-		CodeListDao codeListDao = new CodeListDao();
-		
-		codeListDao.open();
-		cities = codeListDao.getCodeListsByCode("CITY-CODE"); //grab all state code lists
-		codeListDao.close();
-		
-		return cities;
+		return codelist;
 	}
 }
