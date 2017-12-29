@@ -21,10 +21,7 @@
 			<param-name>cors.allowed.origins</param-name>
 			<param-value>http://localhost:4200</param-value>
 		</init-param>
-		<init-param>
-			<param-name>cors.allowed.origins.any</param-name>
-			<param-value>*</param-value>
-		</init-param>
+		
 		<init-param>
 			<param-name>cors.allowed.methods</param-name>
 			<param-value>GET, POST, PUT, DELETE, OPTIONS, HEAD</param-value>

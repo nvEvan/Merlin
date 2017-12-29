@@ -15,6 +15,8 @@ import com.revature.merlinserver.beans.Token;
 import com.revature.merlinserver.dao.MagicalUserDao;
 import com.revature.merlinserver.dao.PrivateInfoDao;
 import com.revature.merlinserver.dao.TokenDao;
+import com.revature.merlinserver.paramwrapper.RegisterParams;
+import com.revature.merlinserver.paramwrapper.UserParam;
 import com.revature.merlinserver.service.TokenService;
 
 /**
@@ -29,7 +31,7 @@ public class Login {
 	@Path("/MagicalUser")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public MagicalUser getPrivateUserInfo(MagicalUser user){
+	public UserParam login(MagicalUser user){
 		MagicalUserDao dao = new MagicalUserDao();
 		MagicalUser mUser = null;
 
@@ -38,12 +40,16 @@ public class Login {
 		dao.close();
 				
 		if(mUser != null){
-			TokenService ts = new TokenService();
-			ts.createTokenForUser(mUser);
-			return mUser;
-		} else{
-			return null;
+			PrivateInfoDao pd = new PrivateInfoDao();
+			UserParam up = new UserParam();
+			
+			up.setPrivateUserInfo(pd.getPrivateInfoByUser(mUser));
+			up.setUser(mUser);
+			//up.setToken(TokenService.createTokenForUser(mUser).getToken());
+			return up;
 		}
+		
+		return null;
 	}
 	
 	//Get explicit user info
