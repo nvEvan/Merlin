@@ -21,7 +21,10 @@ export class SignInComponent {
     this.getUserService.getLogin(this.user).subscribe(data => {
       if (data) {
         debugger;
-        shared.data.userData = data.json();  
+        var info = data.json().user;
+
+        shared.data.info.general = new MagicalUser();
+        shared.data.info.general.username = info.username;
         this.router.navigateByUrl('threads');
       }
     })

@@ -38,12 +38,20 @@ import { BadgesComponent } from './components/badges/badges.component';
 import { ThreadsComponent } from './components/threads/threads.component';
 
 ///
+//  DIRECTIVES
+///
+
+import { DropdownDirective } from './directives/dropdown/dropdown.directive';
+
+///
 //  SERVICES
 ///
 
 import { GetUserService } from './services/get-user/get-user.service';
 import { LoginService } from './services/login/login.service';
 import { UserPrivateInfoService } from './services/user-private-info/user-private-info.service';
+import { ChatService } from './services/firebase/chat/chat.service';
+import { AuthService } from './services/firebase/authenticate/auth.service';
 
 ///
 //  VARIABLES
@@ -60,7 +68,8 @@ import { environment } from './../environments/environment'
     SignInComponent,
     HomeComponent,
     BadgesComponent,
-    ThreadsComponent
+    ThreadsComponent,
+    DropdownDirective
   ],
   imports: [
     BrowserModule,
@@ -75,7 +84,13 @@ import { environment } from './../environments/environment'
     NgbModule.forRoot(),
     RouterModule.forRoot(appRoute)
   ],
-  providers: [GetUserService, LoginService, UserPrivateInfoService],
+  providers: [
+    GetUserService, 
+    LoginService,
+    UserPrivateInfoService, 
+    AuthService, 
+    ChatService
+  ],
   bootstrap: [AppComponent]
 })
   

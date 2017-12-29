@@ -3,5 +3,7 @@
 	<div class="row">
 		{{threads.length}}
 		{{url}}
+		<input [(ngModel)]="msg">
+		<button (click)=onSubmit()>submit</button>
 	</div>
 </div>

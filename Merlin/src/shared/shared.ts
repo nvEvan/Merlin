@@ -6,6 +6,6 @@ import { UserData } from "../app/models/composite/user-data.composite";
 
 export var shared = {
     data: {
-        userData: UserData
+        info: new UserData()
     }
 }

@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { LoginService } from '../../services/login/login.service';
+import { DropdownDirective } from '../../directives/dropdown/dropdown.directive';
+
 @Component({
   selector: 'app-navbar',
   templateUrl: './navbar.component.html',
