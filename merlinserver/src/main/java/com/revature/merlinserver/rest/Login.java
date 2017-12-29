@@ -39,11 +39,12 @@ public class Login {
 			PrivateInfoDao pd = new PrivateInfoDao();
 			UserParam up = new UserParam();
 			
-//			pd.open();
+			up.setToken(TokenService.createTokenForUser(mUser).getToken());
+			pd.open();
 			up.setPrivateUserInfo(pd.getPrivateInfoByUser(mUser));
-//			pd.close();
+			pd.close();
 			up.setUser(mUser);
-//			up.setToken(TokenService.createTokenForUser(mUser).getToken());
+			
 			return up;
 		}
 		
