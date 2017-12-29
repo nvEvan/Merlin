@@ -9,39 +9,7 @@ import { UserPrivateInfoService } from '../../services/user-private-info/user-pr
   styleUrls: ['./profile.component.css']
 })
 export class ProfileComponent implements OnInit {
-  user = {
-    'username':  '',
-    'firstName': '',
-    'lastName': ''
-  };
   
-  privateInfo = {
-    'email': '',
-    'phone': '',
-    'address': '',
-    'city': '',
-    'state': ''
-  };
-  
-  isPublicInfo = true;
-  isPrivateInfo = false;
-  
-  username: string;
-  constructor(private getUserService: GetUserService, private getPrivateService: UserPrivateInfoService, private login: LoginService) { 
-    this.username = this.login.getUsername();
-  }
+  ngOnInit() { }
 
-  ngOnInit() {
-    this.username = this.login.getUsername();
-  }
-
-  viewPublicPrivate() {
-    if (this.isPublicInfo) {
-      this.isPublicInfo = false;
-      this.isPrivateInfo = true;
-    } else {
-      this.isPublicInfo = true;
-      this.isPrivateInfo = false;
-    }
-  }
 }

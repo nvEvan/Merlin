@@ -28,7 +28,7 @@ export const appRoute: Routes =  [
     },
     {
        path: 'home', 
-       component: HomeComponent
+       component: SignInComponent
     },
     {
       path: 'threads',

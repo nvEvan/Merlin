@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { LoginService } from '../../services/login/login.service';
 import { Router } from '@angular/router';
 import { GetUserService } from '../../services/get-user/get-user.service';
+import { MagicalUser } from '../../models/magical-user.model';
 
 @Component({
   selector: 'app-sign-in',
@@ -10,33 +11,25 @@ import { GetUserService } from '../../services/get-user/get-user.service';
 })
 export class SignInComponent {
 
-  private user = {
-    password: null,
-    userId: null,
-    username: null
-  };
-  private username: string;
-  private password: string;
+  user: MagicalUser;
+  userInfo: any;
 
-  constructor(private router: Router, private login: LoginService, private getUserService: GetUserService) { }
+  constructor(private router: Router, private login: LoginService, private getUserService: GetUserService) {
+    this.user = new MagicalUser();
+   }
 
   userLogin() { 
-    // Obtains a user based on username
-    this.getUserService.getLogin(this.username).subscribe( data => {
-      
-      // Assign the js object to our user object
-      this.user = data.json();
-
-      // If the user is valid then the login service stores the username and reroutes to profile page
-      // Otherwise the user is shown a window telling them they are denied access.
-      if(this.user.username === this.username && this.user.password === this.password){
-        this.login.setUsername(this.username);
-        this.router.navigateByUrl('profile');
-      }
-      else{
-        window.alert('Access Denied');
-      }
-    });
+    console.log(this.user);
+    this.getUserService.getLogin(this.user).subscribe(
+      response => {
+        console.log(response.json());
+        this.userInfo = response.json();
+        if(this.userInfo){
+          this.router.navigateByUrl('profile');
+        } else {
+          window.alert('Access Denied');
+        }
+      });
   }
 
 }
