@@ -1,2 +1,4 @@
-# Merlin
-Revature Project 2
+
+<img src='./Merlin/resources/logo.png' /> 
+
+**Merlin** is a Web Application designed around online learning and collaboration. Creating a welcoming atmosphere, Merlin matches tutors to students by providing mechanisms for private tutoring sessions and a general chat-forum for group collaboration. Utilizing top of the line technology, Merlin is a fast and reliable resource where students can search for and request tutoring sessions from tutors matching their subject, location, and pricing needs. Tutors can increase their exposure through public profiles listing their availability, subjects, and prices. Via a comprehensive rating system, tutors and students can provide feedback on tutoring sessions. In short, Merlin will be a innovative center-hub for students who wish to acquire knowledge and for those who wish to share it.
