@@ -11,7 +11,7 @@
         <tbody>
             <tr *ngFor="let adept of Adepts">
                 <td>{{adept.firstName}} {{adept.lastName}}</td>
-                <td><button (click)="navigateToAdeptPublicProfile()">View</button></td>
+                <td><button (click)="navigateToAdeptPublicProfile(adept)">View</button></td>
             </tr>
         </tbody>
     </table>

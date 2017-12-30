@@ -12,24 +12,23 @@ import { OnInit } from '@angular/core/src/metadata/lifecycle_hooks';
     styleUrls: ['./search-adepts.component.css']
 })
 
+/*
+* SearchAdeptsComponent - Functionality for searchign through adepts
+* @author - Evan
+*/
 export class SearchAdeptsComponent implements OnInit{
     Adepts : any;
     adeptId : number; 
     message : string;
     
-    constructor(private http: Http, private router: Router, private adeptIdService : AdeptIdService){
-        this.http.get("http://localhost:8085/merlinserver/rest/fetch/adepts/all")
-        .subscribe(
-            (res: Response) => {
-                console.log("Fetching Adepts");
-                this.Adepts = res.json();
-                console.log(this.Adepts);
-            }
-        )
-    };
+    constructor(private http: Http, private router: Router, private adeptIdService : AdeptIdService){};
 
-    navigateToAdeptPublicProfile() {
-        console.log("Navigating to an adept profile!");
+    /*
+    * navigateToAdeptPublicProfile - Navigates to view an adept's public profile
+    * @params   Adept - JSON object containing adept information
+    */
+    navigateToAdeptPublicProfile(Adept) {
+        this.adeptIdService.changeId(Adept.user.userId);
         this.router.navigate(['adept-public-profile']);
       };
 
@@ -39,12 +38,17 @@ export class SearchAdeptsComponent implements OnInit{
     };
 
     ngOnInit() {
+        //Fetch all adepts from the database
+        this.http.get("http://localhost:8085/merlinserver/rest/fetch/adepts/all")
+        .subscribe(
+            (res: Response) => {
+                this.Adepts = res.json();
+            }
+        )
+
         this.adeptIdService.currentMessage.subscribe(message => this.message = message)
         this.adeptIdService.adeptId.subscribe(adeptID => this.adeptId = adeptID)
-        console.log("#1: " + this.message);
         this.adeptIdService.changeMessage("Changing the message!!! In SearchAdeptsComponent");
         this.adeptIdService.changeId(-58);
-        console.log("#2: " + this.message);
-        console.log("#3: A number -> " + this.adeptId);
     }
 }
