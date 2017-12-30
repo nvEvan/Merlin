@@ -66,17 +66,31 @@
       <div #citydiv>
         <app-city></app-city>
       </div>
+      <!-- Tell the user they did not select a valid state/city combination -->
+      <div>
+        <span *ngIf="showStateCityAlert" style="color:red">
+          You must select a city belonging to the correct state.
+        </span>
+      </div>
+      
     </div>
 
-  </div>
+    <div>
+      <span>Phone Number</span>
+      <input id="phoneNumberInput" type="text" [(ngModel)]="privateUserInfo.phoneNumber">
+    </div>
 
-  <div>
-    <span>Phone Number</span>
-    <input id="phoneNumberInput" type="text" [(ngModel)]="privateUserInfo.phoneNumber">
-  </div>
+    <div>
+      <input id="registerInput" type="button" value="Register" (click)="register()">
 
-  <div>
-    <input id="registerInput" type="button" value="Register" (click)="register()">
+    </div>
+
+    <!-- Tell the user they have fields that are unfilled -->
+    <div>
+      <span *ngIf="fieldsAreBlank" style="color:red">
+        You must fill out all information.
+      </span>
+    </div>
   </div>
 
 </div>

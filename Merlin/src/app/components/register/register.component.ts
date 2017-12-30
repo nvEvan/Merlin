@@ -21,8 +21,9 @@ import { CodeListService } from '../../services/codelist/codelist.service';
   styleUrls: ['./register.component.css']
 })
 
-
-
+/**
+ * Component for user registration.
+ */
 export class RegisterComponent implements OnInit {
   @ViewChild("citydiv") citySelect: ElementRef
   @ViewChild("statediv") stateSelect: ElementRef
@@ -30,12 +31,12 @@ export class RegisterComponent implements OnInit {
   private magicalUser: MagicalUser
   private privateUserInfo: PrivateUserInfo
   private apprenticeData: UserPrivateData
-  private city: string
-  private state: string
   confirmPassword: string = ""
 
   showPasswordAlert: boolean = false
   showUsernameAlert: boolean = false
+  showStateCityAlert : boolean = false
+  fieldsAreBlank : boolean = false
 
   roles: CodeList[]
 
@@ -70,6 +71,7 @@ export class RegisterComponent implements OnInit {
     this.codeListService.getStateCityCode(state, city).subscribe(
       data => {
         this.privateUserInfo.stateCity = data
+        this.showStateCityAlert = data == null
       }
     )
 
@@ -121,9 +123,13 @@ export class RegisterComponent implements OnInit {
    * @return true if all these cases are true
    */
   allFieldsAreEntered(): boolean {
-    return this.privateUserInfo.address != null && this.privateUserInfo.email != null &&
-      this.privateUserInfo.lastName != null && this.privateUserInfo.phoneNumber != null &&
-      this.privateUserInfo.firstName != null && this.privateUserInfo.role != null &&
-      this.privateUserInfo.stateCity != null
+    let allFieldsAreEntered : boolean = this.privateUserInfo.address != null && this.privateUserInfo.email != null &&
+    this.privateUserInfo.lastName != null && this.privateUserInfo.phoneNumber != null &&
+    this.privateUserInfo.firstName != null && this.privateUserInfo.role != null &&
+    this.privateUserInfo.stateCity != null
+
+    this.fieldsAreBlank = !allFieldsAreEntered
+
+    return allFieldsAreEntered
   }
 }

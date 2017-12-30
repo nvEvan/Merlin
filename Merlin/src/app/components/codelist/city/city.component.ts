@@ -4,6 +4,10 @@ import { CodeList } from "../../../models/code-list.model";
 import { OnInit } from "@angular/core/src/metadata/lifecycle_hooks";
 import { Observable } from "rxjs/Observable";
 
+/**
+ * Component used to display options for cities in user registration.
+ * @author Alex
+ */
 @Component({
     selector: 'app-city',
     templateUrl: './city.component.html'

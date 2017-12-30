@@ -4,6 +4,10 @@ import { UserPrivateData } from "../../models/composite/user-private-data.compos
 import { Observable } from "rxjs/Observable";
 import { Response } from "@angular/http/src/static_response";
 
+/**
+ * Service class used for User registration.
+ * @author Alex
+ */
 @Injectable()
 export class RegistrationService {
 
