@@ -37,6 +37,7 @@ import { HomeComponent } from './components/home/home.component';
 import { BadgesComponent } from './components/badges/badges.component';
 import { ThreadsComponent } from './components/threads/threads.component';
 import { SearchAdeptsComponent } from './components/search-adepts/search-adepts.component';
+import { AdeptPublicProfileComponent } from './components/adept-public-profile/adept-public-profile.component'
 
 ///
 //  SERVICES
@@ -50,7 +51,7 @@ import { UserPrivateInfoService } from './services/user-private-info/user-privat
 //  VARIABLES
 ///
 
-import { environment } from './../environments/environment'
+import { environment } from './../environments/environment';
 
 @NgModule({
   declarations: [
@@ -62,7 +63,8 @@ import { environment } from './../environments/environment'
     HomeComponent,
     BadgesComponent,
     ThreadsComponent,
-    SearchAdeptsComponent
+    SearchAdeptsComponent,
+    AdeptPublicProfileComponent
   ],
   imports: [
     BrowserModule,

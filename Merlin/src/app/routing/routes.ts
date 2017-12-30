@@ -10,6 +10,7 @@ import { ProfileComponent } from './../components/profile/profile.component';
 import { HomeComponent } from './../components/home/home.component';
 import { ThreadsComponent } from './../components/threads/threads.component';
 import { SearchAdeptsComponent } from '../components/search-adepts/search-adepts.component';
+import { AdeptPublicProfileComponent } from '../components/adept-public-profile/adept-public-profile.component';
 
 /**
  * Place all routes here (used for navigating our application).
@@ -38,6 +39,10 @@ export const appRoute: Routes =  [
     {
       path: 'search-adepts',
       component: SearchAdeptsComponent
+    },
+    {
+      path: 'adept-public-profile',
+      component: AdeptPublicProfileComponent
     },
     
     // Default screen is ThreadsComponent
