@@ -131,4 +131,14 @@ public class MagicalUserDao extends MerlinSessionDao<MagicalUser> {
 		
 		return user;
 	}
+	
+	/**
+	 * updates the users information to table
+	 * @param user
+	 */
+	public void update(final MagicalUser user){
+		if(isReady()){
+			session.update(user);
+		}
+	}
 }
