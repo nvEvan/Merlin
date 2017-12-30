@@ -96,26 +96,6 @@ public class TokenDao extends MerlinSessionDao<MagicalUser> {
 	}
 	
 	/**
-	 * Find the token associated with the given user.
-	 * @param user
-	 * @return the token of said user
-	 */
-	public Token getTokenByUser(final MagicalUser user) {
-		Token token = null;
-		
-		if (isReady()) {
-			Query q = null;
-			
-			q = session.createQuery("FROM Token WHERE user = ?");
-			q.setParameter(0, user);
-
-			token = (Token) q.uniqueResult();
-		}
-		
-		return token;
-	}
-	
-	/**
 	 * Acquires valid token if found
 	 * @param token - what to find
 	 * @return Token instance if token string valid and not expired
