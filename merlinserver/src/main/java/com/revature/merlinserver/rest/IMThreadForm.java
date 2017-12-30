@@ -2,6 +2,7 @@ package com.revature.merlinserver.rest;
 
 import java.sql.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
@@ -11,6 +12,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
 import com.revature.merlinserver.beans.IMThread;
+import com.revature.merlinserver.dao.CodeListDao;
 import com.revature.merlinserver.dao.IMThreadDao;
 import com.revature.merlinserver.paramwrapper.InsertIMThreadParams;
 import com.revature.merlinserver.service.TokenService;
@@ -59,12 +61,22 @@ public class IMThreadForm {
 	@Produces(MediaType.TEXT_PLAIN)
 	public String insertIMThread(InsertIMThreadParams params) {
 		IMThreadDao dao = new IMThreadDao();
+		CodeListDao cd = new CodeListDao();
+		com.revature.merlinserver.beans.CodeList status = null;
 		String response = "invalid token";
+		IMThread thread;
 		
 		// if has valid token
 		if (TokenService.isTokenValid(params.getToken())) {
 			// open connection
 			dao.open();
+			cd.setSession(dao.getSession());
+			
+			// get new status 
+			status = cd.getCodeListsByCode("STATUS").stream().filter((item) -> item.getValue().equals("NEW")).collect(Collectors.toList()).get(0);
+			thread = params.getThread();
+			thread.setStatus(status);
+			thread.setThreadCreationDate(new Date(new java.util.Date().getTime()));
 			
 			// insert data
 			response = dao.insertIMThread(params.getThread()) == 1 ? "ok" : "Failed to insert IMThread, where IMThread=[" + params.getThread() + "]";

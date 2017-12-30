@@ -13,6 +13,15 @@ public class InsertIMThreadParams extends TokenParam {
 		super();
 	}
 	
+	
+	
+	public InsertIMThreadParams(String token) {
+		super(token);
+		// TODO Auto-generated constructor stub
+	}
+
+
+
 	public IMThread getThread() {
 		return thread;
 	}
