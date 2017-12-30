@@ -1,52 +1,86 @@
 <div class="register">
-  <div *ngIf="!usernameIsUnique">
-    <span id="formMessage" style="color:red">This username is not available.</span>
-  </div>
 
+  <div>
+    <div>
+      <span>Role</span>
+      <select name="Role" [(ngModel)]="privateUserInfo.role">
+        <option [ngValue]="role" *ngFor="let role of roles">{{role.value}}</option>
+      </select>
+    </div>
+  </div>
   <!-- user's email -->
   <div>
-    <div><span>Email</span></div>
-    <input type="text" [value]=privateUserInfo.email required>
+    <div>
+      <span>Email</span>
+    </div>
+    <input type="text" [(ngModel)]="privateUserInfo.email">
   </div>
 
   <!--Username MUST be unique-->
   <div>
     <span id="usernameAlert" style="color:red"></span>
-    <div><span>Username</span></div>
-    <input type="text" [value]=magicalUser.username required>
+    <div>
+      <span>Username</span>
+    </div>
+    <input type="text" [(ngModel)]="magicalUser.username" (blur)="usernameIsUnique()">
+    <span *ngIf="showUsernameAlert" style="color:red">This username is not available.</span>
   </div>
 
   <!-- Password -->
   <div>
-    <div><span>Password</span><span>Confirm Password</span></div>
-    <input type="password" [value]=magicalUser.password required>
-    <input type="Confirm password" [value]=magicalUser.password required>
+    <div>
+      <span>Password</span>
+      <span>Confirm Password</span>
+    </div>
+    <input type="password" [(ngModel)]="magicalUser.password" (keyup)="!passwordsMatch()">
+    <input type="password" [(ngModel)]="confirmPassword" (keyup)="!passwordsMatch()">
+    <span *ngIf="showPasswordAlert" style="color:red">These passwords do not match.</span>
   </div>
 
   <div>
-    <div><span>First Name</span></div>
-    <input type="text" [value]=privateUserInfo.firstName required>
-    <div><span>Last Name</span></div>
-    <input type="text" [value]=privateUserInfo.lastName required>
+    <div>
+      <span>First Name</span>
+    </div>
+    <input type="text" [(ngModel)]="privateUserInfo.firstName">
+    <div>
+      <span>Last Name</span>
+    </div>
+    <input type="text" [(ngModel)]="privateUserInfo.lastName">
   </div>
 
   <div>
-    <div><span>Address</span></div>
-    <input type="text" [value]=privateUserInfo.address required>
+    <div>
+      <span>Address</span>
+    </div>
+    <input type="text" [(ngModel)]="privateUserInfo.address">
   </div>
 
   <div>
-    <div><span>State</span></div>
-    <app-statelist></app-statelist>
+    <div>
+      <span>State City</span>
+    </div>
+    <div>
+      <div>
+        <select name="states" [(ngModel)]="privateUserInfo.stateCity" class="form-control">
+          <option [ngValue]="state" *ngFor="let state of states">
+            {{state.description}}
+          </option>
+        </select>
+      </div>
+      <!--state component-->
+
+      <!-- city component -->
+    </div>
+
   </div>
 
   <div>
     <span>Phone Number</span>
-    <input type="text" [value]=privateUserInfo.phoneNumber required>
+    <input type="text" [(ngModel)]="privateUserInfo.phoneNumber">
   </div>
 
   <div>
-    <input type="button" value="Register" (click)=register()>
+    <input type="button" value="Register" (click)="register()">
   </div>
 
 </div>

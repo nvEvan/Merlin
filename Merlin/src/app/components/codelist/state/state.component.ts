@@ -13,19 +13,11 @@ import { Observable } from "rxjs/Observable";
  * State component that will hold the possible states for user registration.
  */
 export class StateComponent implements OnInit {
-    states : CodeList[]
+    
 
     constructor(private codeListService : CodeListService) { }
 
-    ngOnInit() : void {
-        console.log("get states");
-        /*
-        this.codeListService.getCodeListsByCode("US-STATE")
-        .subscribe(response => {
-            console.log(response);
-            this.states = response;
-            console.log(this.states);
-        })*/
-            
+    ngOnInit() : void {        
+       
     }
 }

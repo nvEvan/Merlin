@@ -8,7 +8,6 @@ import { Routes, RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { HttpModule, JsonpModule } from '@angular/http';
 import { HttpClientModule } from '@angular/common/http';
-import { Observable } from 'rxjs/Observable';
 
 ///
 //  DEPENDENDICES
@@ -82,8 +81,10 @@ import { environment } from './../environments/environment'
     NgbModule.forRoot(),
     RouterModule.forRoot(appRoute)
   ],
-  providers: [GetUserService, LoginService, UserPrivateInfoService, CodeListService, 
-    RegistrationService, Observable],
+  providers: [
+    GetUserService, LoginService, UserPrivateInfoService, CodeListService, 
+    RegistrationService
+  ],
   bootstrap: [AppComponent]
 })
   

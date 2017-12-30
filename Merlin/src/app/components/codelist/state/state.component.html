@@ -1,6 +1,5 @@
 <div>
-    <!-- 
-    <select name='states' *ngFor="let state of states">
-        <option value=state>state</option>
-    </select>-->
+    <select name='states' class="form-control">
+        <option value='state.value' *ngFor="let state of states">{{state.description}}</option>
+    </select>
 </div>

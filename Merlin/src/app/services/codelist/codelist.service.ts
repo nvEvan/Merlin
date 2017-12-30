@@ -10,15 +10,12 @@ import { Response } from "@angular/http/src/static_response";
 @Injectable()
 export class CodeListService {
 
-    constructor(private http : Http, private codes: Observable<CodeList[]>) {}
+    constructor(private http : Http) {}
 
-    /*
     //get all codelists by a code
     getCodeListsByCode(code : string) : Observable<CodeList[]> {
         let url : string = 'http://localhost:8085/merlinserver/rest/codelist/getcodelist/' + code
 
-        return this.http.get(url)
-            .map((response: Response)=> response.json());
+        return this.http.get(url).map((response: Response)=> response.json());
     }
-    */
 }
