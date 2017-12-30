@@ -40,5 +40,6 @@ public class RegistrationSeleniumTest {
 		rf.selectRole("APPRENTICE");
 		rf.inputAddress("merlin");
 		rf.register();
+		driver.quit();
 	}
 }
