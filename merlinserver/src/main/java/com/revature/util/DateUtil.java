@@ -95,9 +95,10 @@ public class DateUtil {
 	 * Initialize predefined date formats 
 	 */
 	private static void initFormats() {
+		String path = DateUtil.class.getClassLoader().getResource("data.xlsx").getPath();
 		formats =  new ArrayList<>();
 		
-		for (Object[] row : IOUtil.loadSpreadSheet(IOUtil.MAIN_RESOURCE + "data.xlsx", "dateformats", String.class)) 
+		for (Object[] row : IOUtil.loadSpreadSheet(path, "dateformats", String.class)) 
 			formats.add((String)row[0]);
 	}
 	

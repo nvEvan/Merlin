@@ -106,4 +106,29 @@ public class MagicalUserDao extends MerlinSessionDao<MagicalUser> {
 			session.delete(user);
 		}
 	}
+	
+	/**
+	 * Enter the parameters of string username and password. The method searches for a MagicalUser
+	 * who has those matching elements. If found we get out MagicalUser as our return object, otherwise
+	 * we obtain a null.
+	 * @param username
+	 * @param password
+	 * @return
+	 */
+	public MagicalUser getMagicalUserByLogin(final String username, final String password){
+		MagicalUser user = null;
+		
+		if(isReady()) {
+			Query q = null;
+			
+			// Write a query that searches a MagicalUser that contains a particular username and password
+			q = session.createQuery("FROM MagicalUser WHERE username = ? AND password = ?");
+			q.setParameter(0, username); // We set our username and password with the values of our parameter
+			q.setParameter(1, password);
+			
+			user = (MagicalUser) q.uniqueResult();
+		}
+		
+		return user;
+	}
 }

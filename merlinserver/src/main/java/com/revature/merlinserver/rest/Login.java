@@ -1,16 +1,19 @@
 package com.revature.merlinserver.rest;
 
-import java.util.List;
-
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
 import com.revature.merlinserver.beans.MagicalUser;
+import com.revature.merlinserver.beans.PrivateUserInfo;
 import com.revature.merlinserver.dao.MagicalUserDao;
+import com.revature.merlinserver.dao.PrivateInfoDao;
+import com.revature.merlinserver.paramwrapper.UserParam;
+import com.revature.merlinserver.service.TokenService;
 
 /**
  * TODO : do login validation and other stuff
@@ -19,29 +22,33 @@ import com.revature.merlinserver.dao.MagicalUserDao;
 @Path("/login")
 public class Login {
 	
-	// TODO : do login stuff
+	// Obtain user's user info and private info
 	@POST
-	@Path("/validate")
-	@Produces(MediaType.TEXT_PLAIN)
-	@Consumes(MediaType.APPLICATION_JSON)
-	public String validate(MagicalUser user) {
-		return "stuff = " + user.getUsername() + " " + user.getPassword();
-	}
-	
-	//Gets all users 
-	@GET
 	@Path("/MagicalUser")
+	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public List<MagicalUser> getMagicalUsers(){
+	public UserParam login(MagicalUser user){
 		MagicalUserDao dao = new MagicalUserDao();
+		MagicalUser mUser = null;
+
 		dao.open();
-		List<MagicalUser> users = dao.loadAll();
-		System.out.println(users);
-		for(MagicalUser m : users){
-			System.out.println(m.getUsername());
-		}
+		mUser = dao.getMagicalUserByLogin(user.getUsername(), user.getPassword());
 		dao.close();
-		return users;
+				
+		if(mUser != null){
+			PrivateInfoDao pd = new PrivateInfoDao();
+			UserParam up = new UserParam();
+			
+			up.setToken(TokenService.createTokenForUser(mUser).getToken());
+			pd.open();
+			up.setPrivateUserInfo(pd.getPrivateInfoByUser(mUser));
+			pd.close();
+			up.setUser(mUser);
+			
+			return up;
+		}
+		
+		return null;
 	}
 }
 
