@@ -98,7 +98,7 @@ public class TokenService {
 		long newExpDate;
 
 		date = new java.util.Date();
-		expDate = DateUtil.toDate(date.toString());
+		expDate = new java.sql.Date(date.getTime());
 		
 		newExpDate = expDate.getTime() + TOKEN_DURATION; //set the user's new expiration date to current time + 30 minutes
 		expDate.setTime(newExpDate);
