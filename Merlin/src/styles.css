@@ -1,1 +1,125 @@
-/* You can add global styles to this file, and also import other style files */
+/**
+ *	CSS used throughout the application
+ */
+ 
+ html, body {
+    height: 100%;
+} 
+
+/* Primary button color */
+.btn-primary {
+    background-color: #0072ff!important;
+}
+
+ button[disabled].btn-primary {
+      background-color: rgba(0, 128, 255, 0.7)!important;
+      border-color: rgba(0, 128, 255, 0.7)!important;
+ }
+
+.btn-primary:hover {
+    background-color: #0099ff!important;
+    border-color: #00aaff;
+}
+
+.btn-primary:active {
+    background-color: #004aff!important;
+}
+
+/* Secondary button color */
+ .btn-secondary {
+    background-color: #aa3453!important;
+    color: white;
+}
+
+ button[disabled].btn-secondary {
+      background-color: rgba(168, 64, 64, 0.7)!important;
+      border-color: rgba(168, 64, 64, 0.7)!important;
+ }
+
+.btn-secondary:hover {
+    background-color: #ff3453!important;
+    border-color: #ff4455;
+}
+
+.btn-secondary:active {
+    background-color: #771243!important;
+    background-color: #551243!important;
+}
+
+
+/* User for Dropdown divider */
+.hr-divider {
+    margin:1px;
+    margin-left:5px;
+    margin-right:5px;
+    border:1px solid rgba(40,40,40,0.25);
+}
+
+/* Main Title block */
+.header-block {
+    margin-top: 12%;
+}
+ 
+/* Aligns content horizontal center*/
+.center-block {
+   display: block;
+   margin-left: auto;
+   margin-right: auto;
+}
+
+/* Defines max width for input box for wide spaces */
+.input-max-width {
+   max-width: 387px;
+}
+
+/* Adjusts padding for inputs in a div */
+.input-max-group-adjust input, 
+.input-max-group-adjust button, 
+.input-max-group-adjust div {
+   padding-left: 2px; 
+   padding-right: 2px;
+}
+  
+ .input-fa-wrapper input {
+    position: relative; 
+    font-family: 'FontAwesome';
+}
+
+.title {
+	font-size: 1.25em;
+}
+
+
+/**
+    Adjust header block according to viewport height 
+                                                        **/ 
+
+@media screen and (min-height: 50px) {
+    .header-block {
+        margin-top: 5%!important;
+    }
+}
+
+@media screen and (min-height: 350px) {
+    .header-block {
+        margin-top: 6%!important;
+    }
+}
+
+@media screen and (min-height: 350px) {
+    .header-block {
+        margin-top: 8%!important;
+    }
+}
+
+@media screen and (min-height: 350px) {
+    .header-block {
+        margin-top: 10%!important;
+    }
+}
+
+@media screen and (min-height: 600px) {
+    .header-block {
+        margin-top: 12%!important;
+    }
+}

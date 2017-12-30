@@ -1,9 +1,17 @@
 <app-navbar></app-navbar>
 <div class="container-fluid">
 	<div class="row">
-		{{threads.length}}
-		{{url}}
-		<input [(ngModel)]="msg">
-		<button (click)=onSubmit()>submit</button>
+		<div class="col-2-xs">
+			<button class="form-control" (click)=onSubmit()><span class="fa fa-plus-o"></span>&nbsp;New Thread</button>
+		</div>
+	</div>
+	
+	<!-- DISPLAY ALL THREADS -->
+	<div class="row">
+		<div class="col-x12-xs">
+			<ul>
+				<li>stuff</li>
+			</ul>
+		</div>
 	</div>
 </div>

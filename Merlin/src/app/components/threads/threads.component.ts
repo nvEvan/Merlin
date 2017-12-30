@@ -11,6 +11,7 @@ import { IMThread } from '../../models/im-thread.model';
 import { ChatService } from '../../services/firebase/chat/chat.service';
 import { PrivateUserInfo } from '../../models/private-user-info.model';
 import { UserData } from '../../models/composite/user-data.composite';
+import { LoginService } from '../../services/login/login.service';
 
 @Component({
   selector: 'app-threads',
@@ -19,30 +20,44 @@ import { UserData } from '../../models/composite/user-data.composite';
 })
 
 export class ThreadsComponent {
-  threads = [];
-  messageCount = 0;
+  threads: IMThread[];
+  userData: UserData;
   msg: string;
 
-  // TODO : pull IM-Threads for user to interact with 
-  constructor(private http: HttpClient, private chat: ChatService)  {
-    console.log(shared.data.info);
-    this.http.get(environment.url + "merlinserver/rest/threads/get/all").subscribe(data => this.threads.push(data));
+  // Pull IM-Threads for user to interact with 
+  constructor(private login: LoginService, private http: HttpClient, private chat: ChatService)  {
+    this.userData = this.login.getUserData();
   }
+
+  ///
+  //  INIT METHODS
+  ///
+
+  loadAllThreads() {
+    this.http.get(environment.url + "merlinserver/rest/threads/get/all/").subscribe(data => {
+      this.threads.push(<IMThread>data);
+    });
+  }
+
+  ///
+  //  EVENT HANDLERS
+  ///
 
   onSubmit() {
     var imthread = new IMThread();
-    var data = new UserData();
 
     debugger;
     imthread.link="messagetest";
     imthread.name="test";
-    imthread.creator = shared.data.info.general;
-    data.privateInfo = new PrivateUserInfo();
-    data.privateInfo.email = "myemail@email.com";
-    data.general = shared.data.info.general;
+    imthread.creator = this.userData.general;
 
-    this.chat.sendMessage(imthread, data, "this is a test");
-    debugger;
+    this.chat.sendMessage(imthread, this.userData, "this is a test");
   }
+
+
+  ///
+  //  HELPER METHODS
+  ///
+ 
 }
 

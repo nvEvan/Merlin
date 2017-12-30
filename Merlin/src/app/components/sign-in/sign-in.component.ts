@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { GetUserService } from '../../services/get-user/get-user.service';
 import { MagicalUser } from '../../models/magical-user.model';
 import { UserPrivateData } from '../../models/composite/user-private-data.composite';
+import { UserData } from '../../models/composite/user-data.composite';
 
 @Component({
   selector: 'app-sign-in',
@@ -12,21 +13,21 @@ import { UserPrivateData } from '../../models/composite/user-private-data.compos
 })
 export class SignInComponent {
   user: MagicalUser;
-  userInfo: UserPrivateData;
+  userData: UserData;
 
   constructor(private router: Router, private login: LoginService, private getUserService: GetUserService) {
     this.user = new MagicalUser();
    }
 
   userLogin() { 
-    console.log(this.user);
+
     this.getUserService.getLogin(this.user).subscribe(
       response => {
-        this.userInfo = response.json();
-        console.log(this.userInfo);
-        if(this.userInfo){
-          this.login.setUser(this.userInfo);
-          this.router.navigateByUrl('profile');
+        this.userData = response.json();
+        
+        if(this.userData) {
+          this.login.setUserData(this.userData);
+          this.router.navigateByUrl('threads');
         } else {
           window.alert('Access Denied');
         }
