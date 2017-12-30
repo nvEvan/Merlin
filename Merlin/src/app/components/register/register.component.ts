@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ElementRef, AfterViewInit, ViewChild } from '@angular/core';
 import { RegistrationService } from '../../services/registration/registration.service';
 import { PrivateUserInfo } from '../../models/private-user-info.model';
 import { MagicalUser } from '../../models/magical-user.model';
@@ -21,7 +21,12 @@ import { CodeListService } from '../../services/codelist/codelist.service';
   styleUrls: ['./register.component.css']
 })
 
+
+
 export class RegisterComponent implements OnInit {
+  @ViewChild("citydiv") citySelect: ElementRef
+  @ViewChild("statediv") stateSelect: ElementRef
+
   private magicalUser: MagicalUser
   private privateUserInfo: PrivateUserInfo
   private apprenticeData: UserPrivateData
@@ -32,21 +37,9 @@ export class RegisterComponent implements OnInit {
   showPasswordAlert: boolean = false
   showUsernameAlert: boolean = false
 
-  states: CodeList[]
-  cities: CodeList[]
   roles: CodeList[]
 
   ngOnInit() {
-    this.codeListService.getCodeListsByCode("US-STATE")
-      .subscribe(response => {
-        this.states = response;
-      })
-
-    this.codeListService.getCodeListsByCode("CITY-CODE")
-      .subscribe(response => {
-        this.cities = response;
-      })
-
     this.codeListService.getCodeListsByCode("USER-ROLE")
       .subscribe(response => {
         this.roles = response;
@@ -57,22 +50,36 @@ export class RegisterComponent implements OnInit {
   constructor(private registerService: RegistrationService, private router: Router,
     private codeListService: CodeListService) {
     this.magicalUser = new MagicalUser()
-    this.privateUserInfo = new PrivateUserInfo
+    this.privateUserInfo = new PrivateUserInfo()
   }
 
   /**
    * Attempt to register the new user.
    */
   register(): void {
+    let city = this.citySelect.nativeElement.children[0].children[0].value
+    let state = this.stateSelect.nativeElement.children[0].children[0].value
+
+    if (city == null || state == null)
+      return
+
+    this.codeListService.getStateCityCode(state, city).subscribe(
+      data => {
+        this.privateUserInfo.stateCity = data
+      }
+    )
+
     if (this.allFieldsAreEntered() && !this.showUsernameAlert && !this.showPasswordAlert) {
       if (this.privateUserInfo.role.value.toString() == "APPRENTICE") { //register an apprentice account
+
         this.apprenticeData = new UserPrivateData()
-        this.apprenticeData.privateInfo = this.privateUserInfo
+        this.privateUserInfo.user = this.magicalUser
+        this.apprenticeData.privateUserInfo = this.privateUserInfo
         this.apprenticeData.user = this.magicalUser
 
         console.log("registering the user")
         console.log(JSON.stringify(this.apprenticeData))
-        // this.registerService.registerApprentice(this.apprenticeData);
+        this.registerService.registerApprentice(this.apprenticeData);
 
         this.router.navigate(['home'])
       }

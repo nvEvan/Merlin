@@ -5,7 +5,7 @@ import { OnInit } from "@angular/core/src/metadata/lifecycle_hooks";
 import { Observable } from "rxjs/Observable";
 
 @Component({
-    selector: 'app-citylist',
+    selector: 'app-city',
     templateUrl: './city.component.html'
 })
 

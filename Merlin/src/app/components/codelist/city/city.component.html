@@ -1,5 +1,5 @@
-<div>
-    <select name='city' class="form-control">
-        <option value='city.value' *ngFor="let city of cities" >{{city.description}}</option>
-    </select>
-</div>
+<select name="city" [value]="city" class="form-control">
+    <option [value]="city.value" *ngFor="let city of cities">
+        {{city.description}}
+    </option>
+</select>

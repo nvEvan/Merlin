@@ -5,7 +5,7 @@ import { OnInit } from "@angular/core/src/metadata/lifecycle_hooks";
 import { Observable } from "rxjs/Observable";
 
 @Component({
-    selector: 'app-statelist',
+    selector: 'app-state',
     templateUrl: './state.component.html'
 })
 
@@ -13,11 +13,14 @@ import { Observable } from "rxjs/Observable";
  * State component that will hold the possible states for user registration.
  */
 export class StateComponent implements OnInit {
-    
+    states: CodeList[]
 
     constructor(private codeListService : CodeListService) { }
 
     ngOnInit() : void {        
-       
+        this.codeListService.getCodeListsByCode("US-STATE")
+        .subscribe(response => {
+          this.states = response;
+        })
     }
 }

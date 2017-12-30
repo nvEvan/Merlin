@@ -60,16 +60,12 @@
       <span>State City</span>
     </div>
     <div>
-      <div>
-        <select name="states" [(ngModel)]="privateUserInfo.stateCity" class="form-control">
-          <option [ngValue]="state" *ngFor="let state of states">
-            {{state.description}}
-          </option>
-        </select>
+      <div #statediv>
+        <app-state></app-state>
       </div>
-      <!--state component-->
-
-      <!-- city component -->
+      <div #citydiv>
+        <app-city></app-city>
+      </div>
     </div>
 
   </div>
