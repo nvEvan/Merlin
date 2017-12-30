@@ -5,6 +5,7 @@ import java.util.List;
 import org.hibernate.Query;
 
 import com.revature.merlinserver.beans.IMThread;
+import com.revature.util.ServiceUtil;
 
 /**
  * Used to acquire form thread information for user
@@ -28,5 +29,35 @@ public class IMThreadDao extends MerlinSessionDao<IMThread> {
 		return threads;
 	}
 	
+	/**
+	 * Inserts a instant message thread if session opened 
+	 * @param thread - what to insert
+	 * @returns 1 on successful insert else 0 
+	 */
+	public int insertIMThread(IMThread thread) {
+		// Ensure session and thread info is ready for processing
+		if (isReady() && hasValidData(thread)) {
+			session.save(thread);
+			return 1;
+		}
+		
+		return 0;
+	}
 	
+	
+	///
+	//	PRIVATE METHODS
+	///
+	
+	private boolean hasValidData(IMThread thread) {
+		boolean result = thread == null;
+		
+		// Validate new IMThread instance data
+		result = result && thread.getCreator() != null;
+		result = result && !ServiceUtil.isNullOrEmpty(thread.getLink());
+		result = result && !ServiceUtil.isNullOrEmpty(thread.getName());
+		result = result && thread.getThreadCreationDate() != null;
+		
+		return result;
+	}
 }
