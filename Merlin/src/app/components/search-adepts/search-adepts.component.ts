@@ -13,7 +13,7 @@ export class SearchAdeptsComponent {
     Adepts : any;
     
     constructor(private http: Http){
-        this.http.get("http://localhost:8085/merlinserver/rest/fetch/adepts/testuser")
+        this.http.get("http://localhost:8085/merlinserver/rest/fetch/adepts/all")
         .subscribe(
             (res: Response) => {
                 console.log("Fetching Adepts");
