@@ -156,7 +156,6 @@ public class PrivateInfoDao extends MerlinSessionDao<PrivateUserInfo> {
 			q.setParameter(0, activeId);
 			activeStatus = (CodeList) q.uniqueResult();
 			
-			
 			//get the private user info
 			q = session.createQuery("FROM PrivateUserInfo WHERE user = ?");
 			q.setParameter(0, adept);
@@ -166,6 +165,24 @@ public class PrivateInfoDao extends MerlinSessionDao<PrivateUserInfo> {
 			
 			session.update(privateUserInfo);
 		}
+	}
+
+	/**
+	 * Return the pending status code list
+	 * @param i
+	 * @return
+	 */
+	public CodeList getStatusById(int id) {
+		CodeList pendingStatus = null;
 		
+		if (isReady()) {
+			Query q = null;
+			
+			//get the pending status codelist
+			q = session.createQuery("FROM CodeList WHERE id = ?");
+			q.setParameter(0, id);
+			pendingStatus = (CodeList) q.uniqueResult();
+		}
+		return pendingStatus;
 	}
 }

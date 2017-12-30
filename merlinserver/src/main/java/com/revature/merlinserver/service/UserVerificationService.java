@@ -54,7 +54,7 @@ public class UserVerificationService {
 			String link = "", body = "";
 			Message message = null;
 			
-			link = "http://localhost:8085/merlinserver/register/authenticate/" + token;
+			link = "http://localhost:8085/merlinserver/rest/register/authenticate/" + token;
 			body = 
 					  "<h3>Welcome to Merlin!</h3>"
 					+ "<h4>Click the following link to activate your account:</h4>" 
