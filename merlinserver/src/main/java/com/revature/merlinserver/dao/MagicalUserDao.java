@@ -6,6 +6,7 @@ import java.util.List;
 import org.hibernate.Query;
 import org.hibernate.Session;
 
+import com.revature.merlinserver.beans.CodeList;
 import com.revature.merlinserver.beans.MagicalUser;
 
 /**
@@ -44,6 +45,27 @@ public class MagicalUserDao extends MerlinSessionDao<MagicalUser> {
 				users.add((MagicalUser) user);
 			}
 		}
+
+		return users;
+	}
+	
+	/**
+	 * Loads MagicalUsers by role from database
+	 * @return List of magical users matching the input role. Null if no users found
+	 */
+	public List<MagicalUser> loadUserByRole(CodeList role) {
+		List<MagicalUser> users = null;
+
+		if (isReady()) {
+			Query query = session.createQuery("FROM MagicalUser");
+			users = new ArrayList<>();
+
+			for (Object user : query.list()) {
+				users.add((MagicalUser) user);
+			}
+		}
+		
+		System.out.println(role);
 
 		return users;
 	}
