@@ -76,10 +76,11 @@ public class Register {
 		//update the user's status to 'active' status
 		if (UserVerificationService.userIsNew(user)) { //check the user is new and has not already been activated
 			UserVerificationService.updateStatus(user); //update their status to 'active'
-			TokenService.updateToken(user); //update their token to the current time
+			TokenService.updateTokenByToken(token); //update their token to the current time
+			return "Thank you for registering " + user.getUsername() + ", your account has been verified";
+		} else {
+			return "Your account has already been verified!";
 		}
-		
-		return "Thank you for registering " + user.getUsername() + ", your account has been verified";
 	}
 	
 	/**

@@ -84,12 +84,9 @@ public class RegisterTest {
 		pd.setSession(md.getSession());
 		td.setSession(md.getSession());
 		user = md.getMagicalUserByUsername(testUsername);
-		token = td.getTokenByUser(user);
 		
 		info = pd.getPrivateInfoByUser(user);
-		token = td.getTokenByUser(user);
 		
-		td.deleteToken(token);
 		pd.deletePriverUserInfoByUser(info);
 		td.deleteToken(token);
 		pd.commit();
