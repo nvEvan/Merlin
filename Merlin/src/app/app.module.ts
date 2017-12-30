@@ -46,6 +46,7 @@ import { AdeptPublicProfileComponent } from './components/adept-public-profile/a
 import { GetUserService } from './services/get-user/get-user.service';
 import { LoginService } from './services/login/login.service';
 import { UserPrivateInfoService } from './services/user-private-info/user-private-info.service';
+import { AdeptIdService } from './services/adept-id/adept-id.service';
 
 ///
 //  VARIABLES
@@ -79,7 +80,7 @@ import { environment } from './../environments/environment';
     NgbModule.forRoot(),
     RouterModule.forRoot(appRoute)
   ],
-  providers: [GetUserService, LoginService, UserPrivateInfoService],
+  providers: [GetUserService, LoginService, UserPrivateInfoService, AdeptIdService],
   bootstrap: [AppComponent]
 })
   

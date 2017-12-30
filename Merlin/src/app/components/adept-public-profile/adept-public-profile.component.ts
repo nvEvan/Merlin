@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { AdeptIdService } from '../../services/adept-id/adept-id.service';
+
 
 @Component({
   selector: 'app-adept-public-profile',
@@ -7,8 +9,13 @@ import { Component, OnInit } from '@angular/core';
   inputs: ['Adept']
 })
 export class AdeptPublicProfileComponent implements OnInit {
-  constructor() { }
+  adeptID : number; 
+  message : string;
+
+  constructor(private adeptId_service : AdeptIdService ) { }
 
   ngOnInit() {
+    this.adeptId_service.currentMessage.subscribe(message => this.message = message)
+    console.log("The Adept ID: " + this.message);
   }
 }
