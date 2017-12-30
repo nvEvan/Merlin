@@ -37,8 +37,8 @@ public class FetchAdepts {
 
 	@GET
 	@Path("/testuser")
-	@Produces(MediaType.TEXT_PLAIN)
-	public String createTestUsers() {
+	@Produces(MediaType.APPLICATION_JSON)
+	public List<MagicalUser> createTestUsers() {
 		// pull some code lists for the private user info
 		CodeListDao cld = new CodeListDao();
 		System.out.println("opening codelist session");
@@ -53,7 +53,7 @@ public class FetchAdepts {
 		mod.close();
 
 		System.out.println(users);
-		return "Hello from createTestUsers";
+		return users;
 	}
 
 }
