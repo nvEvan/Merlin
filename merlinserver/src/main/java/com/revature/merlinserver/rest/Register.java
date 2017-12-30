@@ -66,21 +66,20 @@ public class Register {
 	 * @param token provided in the url
 	 */
 	@GET
-	@Path("/authenticate/{token}/")
+	@Path("/authenticate/{token}")
 	@Produces(MediaType.TEXT_PLAIN)
 	public String authenticate(@PathParam("token") final String token) {
-
 	    //Grab the user from the token
 	    //If there is no user of the token, then someone entered a phony token in the url.
 		MagicalUser user = TokenService.getUserByToken(token);
 		
 		//update the user's status to 'active' status
-		if (UserVerificationService.userIsNew(user)) { //check the user is new
+		if (UserVerificationService.userIsNew(user)) { //check the user is new and has not already been activated
 			UserVerificationService.updateStatus(user); //update their status to 'active'
 			TokenService.updateToken(user); //update their token to the current time
 		}
 		
-		return user.getUsername() + " has been verified";
+		return "Thank you for registering " + user.getUsername() + ", your account has been verified";
 	}
 	
 	/**
@@ -116,7 +115,8 @@ public class Register {
 		td.close();
 
 		try {
-			UserVerificationService.sendVerification(userinfo.getEmail(), token.getToken()); //send the user the verification email
+			//send the user the verification email
+			UserVerificationService.sendVerification(userinfo.getEmail(), user.getUsername(), token.getToken());
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		} catch (ExecutionException e) {

@@ -49,7 +49,7 @@ public class PrivateInfoDao extends MerlinSessionDao<PrivateUserInfo> {
 
 		if (isReady()) {
 			Query q = null;
-			
+
 			q = session.createQuery("FROM PrivateUserInfo WHERE user = ?");
 			q.setParameter(0, user);
 			userinfo = (PrivateUserInfo) q.uniqueResult();
@@ -69,13 +69,15 @@ public class PrivateInfoDao extends MerlinSessionDao<PrivateUserInfo> {
 
 		if (isReady()) {
 			Query q = null;
-			CodeList cl = null;
-			
-			q = session.createQuery("SELECT status FROM PrivateUserInfo WHERE user = ?"); //grab the status
+			CodeList userStatus = null;
+			PrivateUserInfo privateUserInfo = null;
+
+			q = session.createQuery("FROM PrivateUserInfo WHERE user = ?"); //grab the status
 			q.setParameter(0, user);
-			cl = (CodeList) q.uniqueResult();
+			privateUserInfo = (PrivateUserInfo) q.uniqueResult();
+			userStatus = privateUserInfo.getStatus();
 			
-			userIsNew = cl.getId() == codelistStatusIDPending; //check if their account is PENDING
+			userIsNew = userStatus.getId() == codelistStatusIDPending; //check if their account is PENDING
 		}
 
 		return userIsNew;
@@ -106,7 +108,7 @@ public class PrivateInfoDao extends MerlinSessionDao<PrivateUserInfo> {
 	 */
 	public List<PrivateUserInfo> getAllUnverifiedAdepts() {
 		List<PrivateUserInfo> unverifiedAdepts = null;
-		
+
 		if (isReady()) {
 			Query q = null;
 			unverifiedAdepts = new ArrayList<>();
@@ -114,28 +116,28 @@ public class PrivateInfoDao extends MerlinSessionDao<PrivateUserInfo> {
 			final int adeptId = 430; //id of codelist adept role
 			CodeList pendingStatus = null;
 			CodeList roleStatus = null;
-			
+
 			//get the pending status codelist
 			q = session.createQuery("FROM CodeList WHERE id = ?");
 			q.setParameter(0, pendingId);
 			pendingStatus = (CodeList) q.uniqueResult();
-			
+
 			//get the adept role codelist
 			q = session.createQuery("FROM CodeList WHERE id = ?");
 			q.setParameter(0, adeptId);
 			roleStatus = (CodeList) q.uniqueResult();
-			
+
 			//get all adepts that are pending
 			q = session.createQuery("FROM PrivateUserInfo WHERE status = ? && role = ?");
 			q.setParameter(0, pendingStatus);
 			q.setParameter(1, roleStatus);
-			
+
 			//add all of our unverified adepts to the list
 			for (Object privateUserInfo : q.list()) {
 				unverifiedAdepts.add((PrivateUserInfo) privateUserInfo);
 			}
 		}
-		
+
 		return unverifiedAdepts;
 	}
 
@@ -150,19 +152,19 @@ public class PrivateInfoDao extends MerlinSessionDao<PrivateUserInfo> {
 			final int activeId = 425; //id of codelist active status
 			CodeList activeStatus = null;
 			PrivateUserInfo privateUserInfo = null;
-			
+
 			//get the active status codelist
 			q = session.createQuery("FROM CodeList WHERE id = ?");
 			q.setParameter(0, activeId);
 			activeStatus = (CodeList) q.uniqueResult();
-			
+
 			//get the private user info
 			q = session.createQuery("FROM PrivateUserInfo WHERE user = ?");
 			q.setParameter(0, adept);
 			privateUserInfo = (PrivateUserInfo) q.uniqueResult();
-			
+
 			privateUserInfo.setStatus(activeStatus); //set their status to active
-			
+
 			session.update(privateUserInfo);
 		}
 	}
@@ -174,10 +176,10 @@ public class PrivateInfoDao extends MerlinSessionDao<PrivateUserInfo> {
 	 */
 	public CodeList getStatusById(int id) {
 		CodeList pendingStatus = null;
-		
+
 		if (isReady()) {
 			Query q = null;
-			
+
 			//get the pending status codelist
 			q = session.createQuery("FROM CodeList WHERE id = ?");
 			q.setParameter(0, id);

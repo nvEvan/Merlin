@@ -32,8 +32,8 @@ public class UserVerificationService {
 	 * @throws ExecutionException 
 	 * @throws InterruptedException 
 	 */
-	public static boolean sendVerification(final String email, final String token) throws InterruptedException, ExecutionException {
-		final String password =  System.getenv("MerlinEmail"), gmail = "xarxes.merlin@gmail.com";
+	public static boolean sendVerification(final String email, final String userName, final String token) throws InterruptedException, ExecutionException {
+		final String password =  System.getenv("MerlinEmail"), gmail = "xarxes.merlin@gmail.com", host = System.getenv("merlinhost");
 		Properties props = new Properties();
 		Session session = null;
 		
@@ -54,9 +54,9 @@ public class UserVerificationService {
 			String link = "", body = "";
 			Message message = null;
 			
-			link = "http://localhost:8085/merlinserver/rest/register/authenticate/" + token;
+			link = host + "merlinserver/rest/register/authenticate/" + token;
 			body = 
-					  "<h3>Welcome to Merlin!</h3>"
+					  "<h3>Welcome to Merlin, " + userName + "!</h3>"
 					+ "<h4>Click the following link to activate your account:</h4>" 
 					+ "<h4><a href=" + link +">" + link + "</a></h4>";
 
