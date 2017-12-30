@@ -9,13 +9,14 @@ import { AdeptIdService } from '../../services/adept-id/adept-id.service';
   inputs: ['Adept']
 })
 export class AdeptPublicProfileComponent implements OnInit {
-  adeptID : number; 
+  adeptId : number; 
   message : string;
 
-  constructor(private adeptId_service : AdeptIdService ) { }
+  constructor(private adeptIdService : AdeptIdService ) { }
 
   ngOnInit() {
-    this.adeptId_service.currentMessage.subscribe(message => this.message = message)
-    console.log("The Adept ID: " + this.message);
+    this.adeptIdService.currentMessage.subscribe(message => this.message = message);
+    this.adeptIdService.adeptId.subscribe(adeptID => this.adeptId = adeptID);
+    console.log("The Adept ID: " + this.adeptId);
   }
 }

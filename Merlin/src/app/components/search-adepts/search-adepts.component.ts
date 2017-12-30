@@ -14,10 +14,10 @@ import { OnInit } from '@angular/core/src/metadata/lifecycle_hooks';
 
 export class SearchAdeptsComponent implements OnInit{
     Adepts : any;
-    adeptID : number; 
+    adeptId : number; 
     message : string;
     
-    constructor(private http: Http, private router: Router, private adeptId_service : AdeptIdService){
+    constructor(private http: Http, private router: Router, private adeptIdService : AdeptIdService){
         this.http.get("http://localhost:8085/merlinserver/rest/fetch/adepts/all")
         .subscribe(
             (res: Response) => {
@@ -39,9 +39,12 @@ export class SearchAdeptsComponent implements OnInit{
     };
 
     ngOnInit() {
-        this.adeptId_service.currentMessage.subscribe(message => this.message = message)
+        this.adeptIdService.currentMessage.subscribe(message => this.message = message)
+        this.adeptIdService.adeptId.subscribe(adeptID => this.adeptId = adeptID)
         console.log("#1: " + this.message);
-        this.adeptId_service.changeMessage("Changing the message!!! In SearchAdeptsComponent");
+        this.adeptIdService.changeMessage("Changing the message!!! In SearchAdeptsComponent");
+        this.adeptIdService.changeId(-58);
         console.log("#2: " + this.message);
+        console.log("#3: A number -> " + this.adeptId);
     }
 }
