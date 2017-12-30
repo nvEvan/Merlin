@@ -8,6 +8,7 @@ import org.hibernate.Session;
 
 import com.revature.merlinserver.beans.CodeList;
 import com.revature.merlinserver.beans.MagicalUser;
+import com.revature.merlinserver.beans.PrivateUserInfo;
 
 /**
  * Performs SQL operations/transactions on MagicalUser Table
@@ -53,15 +54,23 @@ public class MagicalUserDao extends MerlinSessionDao<MagicalUser> {
 	 * Loads MagicalUsers by role from database
 	 * @return List of magical users matching the input role. Null if no users found
 	 */
-	public List<MagicalUser> loadUserByRole(CodeList role) {
-		List<MagicalUser> users = null;
+//	public List<MagicalUser> loadUsersByRole(CodeList role) {
+	public List<PrivateUserInfo> loadUsersByRole(CodeList role) {
+//		List<MagicalUser> users = null;
+		List<PrivateUserInfo> users = null;
 
 		if (isReady()) {
-			Query query = session.createQuery("FROM MagicalUser");
+
+//			Query query = session.createQuery("FROM MagicalUser");
+			Query query = session.createQuery("FROM PrivateUserInfo");
+//			Query query_temp = session.createQuery("FROM MagicalUser INNER JOIN PRIVATEUSERINFO on MagicalUser.USER_ID = PRIVATEUSERINFO.PRIVATEUSERINFO_ID");
+//			System.out.println(query_temp);
+			
 			users = new ArrayList<>();
 
 			for (Object user : query.list()) {
-				users.add((MagicalUser) user);
+//				users.add((MagicalUser) user);
+				users.add((PrivateUserInfo) user);
 			}
 		}
 		
