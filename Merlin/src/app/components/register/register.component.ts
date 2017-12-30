@@ -39,6 +39,9 @@ export class RegisterComponent implements OnInit {
 
   roles: CodeList[]
 
+  /**
+   * Initialize the select option for user role
+   */
   ngOnInit() {
     this.codeListService.getCodeListsByCode("USER-ROLE")
       .subscribe(response => {
@@ -63,12 +66,14 @@ export class RegisterComponent implements OnInit {
     if (city == null || state == null)
       return
 
+    //check if the user inputted a valid state/city combination
     this.codeListService.getStateCityCode(state, city).subscribe(
       data => {
         this.privateUserInfo.stateCity = data
       }
     )
 
+    //check the user's info is ready to be registered
     if (this.allFieldsAreEntered() && !this.showUsernameAlert && !this.showPasswordAlert) {
       if (this.privateUserInfo.role.value.toString() == "APPRENTICE") { //register an apprentice account
 

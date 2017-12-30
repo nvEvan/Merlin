@@ -3,7 +3,7 @@
   <div>
     <div>
       <span>Role</span>
-      <select name="Role" [(ngModel)]="privateUserInfo.role">
+      <select id="roleInput" name="Role" [(ngModel)]="privateUserInfo.role">
         <option [ngValue]="role" *ngFor="let role of roles">{{role.value}}</option>
       </select>
     </div>
@@ -13,7 +13,7 @@
     <div>
       <span>Email</span>
     </div>
-    <input type="text" [(ngModel)]="privateUserInfo.email">
+    <input id="emailInput" type="text" [(ngModel)]="privateUserInfo.email">
   </div>
 
   <!--Username MUST be unique-->
@@ -22,7 +22,7 @@
     <div>
       <span>Username</span>
     </div>
-    <input type="text" [(ngModel)]="magicalUser.username" (blur)="usernameIsUnique()">
+    <input id="usernameInput" type="text" [(ngModel)]="magicalUser.username" (blur)="usernameIsUnique()">
     <span *ngIf="showUsernameAlert" style="color:red">This username is not available.</span>
   </div>
 
@@ -32,8 +32,8 @@
       <span>Password</span>
       <span>Confirm Password</span>
     </div>
-    <input type="password" [(ngModel)]="magicalUser.password" (keyup)="!passwordsMatch()">
-    <input type="password" [(ngModel)]="confirmPassword" (keyup)="!passwordsMatch()">
+    <input id="password1Input" type="password" [(ngModel)]="magicalUser.password" (keyup)="!passwordsMatch()">
+    <input id="password2Input" type="password" [(ngModel)]="confirmPassword" (keyup)="!passwordsMatch()">
     <span *ngIf="showPasswordAlert" style="color:red">These passwords do not match.</span>
   </div>
 
@@ -41,18 +41,18 @@
     <div>
       <span>First Name</span>
     </div>
-    <input type="text" [(ngModel)]="privateUserInfo.firstName">
+    <input id="firstNameInput" type="text" [(ngModel)]="privateUserInfo.firstName">
     <div>
       <span>Last Name</span>
     </div>
-    <input type="text" [(ngModel)]="privateUserInfo.lastName">
+    <input id="lastNameInput" type="text" [(ngModel)]="privateUserInfo.lastName">
   </div>
 
   <div>
     <div>
       <span>Address</span>
     </div>
-    <input type="text" [(ngModel)]="privateUserInfo.address">
+    <input id="addressInput" type="text" [(ngModel)]="privateUserInfo.address">
   </div>
 
   <div>
@@ -72,11 +72,11 @@
 
   <div>
     <span>Phone Number</span>
-    <input type="text" [(ngModel)]="privateUserInfo.phoneNumber">
+    <input id="phoneNumberInput" type="text" [(ngModel)]="privateUserInfo.phoneNumber">
   </div>
 
   <div>
-    <input type="button" value="Register" (click)="register()">
+    <input id="registerInput" type="button" value="Register" (click)="register()">
   </div>
 
 </div>
