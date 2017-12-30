@@ -89,7 +89,7 @@ public class Register {
 		pendingStatus = privateInfoDao.getStatusById(424);
 		pi.setStatus(pendingStatus); //set the newly registered status to 'PENDING'
 		magicalUserDao.insertUser(user); //insert the new user
-		magicalFileDao.insertFile(magicalFileDao);
+		magicalFileDao.insertFile(magicalFileUpload);
 		pi.setUser(user);
 		privateInfoDao.insert(pi); //insert the user's private info
 		magicalUserDao.close();

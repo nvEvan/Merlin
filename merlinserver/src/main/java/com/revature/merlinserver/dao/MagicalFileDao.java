@@ -1,5 +1,6 @@
 package com.revature.merlinserver.dao;
 
+import com.revature.merlinserver.beans.MagicalFileUpload;
 import com.revature.merlinserver.beans.MagicalUser;
 
 /**
@@ -12,9 +13,9 @@ public class MagicalFileDao extends MerlinSessionDao<MagicalUser> {
 	 * Persist the file bean
 	 * @param magicalFileDao
 	 */
-	public void insertFile(final MagicalFileDao magicalFileDao) {
+	public void insertFile(final MagicalFileUpload magicalFile) {
 		if (isReady())
-			session.save(magicalFileDao);
+			session.save(magicalFile);
 	}
 	
 	
