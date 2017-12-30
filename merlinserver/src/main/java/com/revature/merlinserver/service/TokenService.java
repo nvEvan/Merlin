@@ -84,6 +84,27 @@ public class TokenService {
 
 		return user;
 	}
+	
+	/**
+	 * Determines if token expired
+	 * @param token - what to validate
+	 * @return true is valid else false
+	 */
+	public static boolean isTokenValid(String token) {
+		TokenDao td = new TokenDao();
+		boolean result;
+		
+		// open session
+		td.open();
+		
+		// validate token
+		result = td.isTokenUnique(token) == 0;
+		
+		// close session
+		td.close();
+		
+		return result;
+	}
 
 	/**
 	 * Update this user's token expiration date.
@@ -107,6 +128,31 @@ public class TokenService {
 		token = td.getTokenByUser(user);
 		token.setExpDate(expDate);
 		td.updateToken(token); //update the token
+		td.close();
+	}
+	
+	/**
+	 * Update this user's token expiration date.
+	 * The expiration date will be 30 mins from the current time
+	 * @param user to be updated
+	 */
+	public static void updateTokenByToken(String token) {
+		final TokenDao td = new TokenDao();
+		Token tkn = null;
+		java.util.Date date = null;
+		java.sql.Date expDate = null;
+		long newExpDate;
+
+		date = new java.util.Date();
+		expDate = DateUtil.toDate(date.toString());
+		
+		newExpDate = expDate.getTime() + TOKEN_DURATION; //set the user's new expiration date to current time + 30 minutes
+		expDate.setTime(newExpDate);
+		
+		td.open();
+		tkn = td.getValidTokenByTokenString(token);
+		tkn.setExpDate(expDate);
+		td.updateToken(tkn); //update the token
 		td.close();
 	}
 }
