@@ -4,6 +4,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.Select;
 
 /**
  * Factory class used to hold the web elements of the registration page
@@ -12,37 +13,40 @@ import org.openqa.selenium.support.PageFactory;
 public class RegistrationFactory {
 	
 	@FindBy(id="emailInput")
-	WebElement emailInput;
+	private WebElement emailInput;
 	
 	@FindBy(id="usernameInput")
-	WebElement usernameInput;
+	private WebElement usernameInput;
 	
 	@FindBy(id="password1Input")
-	WebElement password1Input;
+	private WebElement password1Input;
 	
 	@FindBy(id="password2Input")
-	WebElement password2Input;
+	private WebElement password2Input;
 	
-	@FindBy(id="firstName")
-	WebElement firstNameInput;
+	@FindBy(id="firstNameInput")
+	private WebElement firstNameInput;
 	
-	@FindBy(id="lastName")
-	WebElement lastNameInput;
+	@FindBy(id="lastNameInput")
+	private WebElement lastNameInput;
 	
-	@FindBy(id="address")
-	WebElement addressInput;
+	@FindBy(id="addressInput")
+	private WebElement addressInput;
 	
 	@FindBy(id="stateInput")
-	WebElement stateInput;
+	private WebElement stateInput;
 	
 	@FindBy(id="cityInput")
-	WebElement cityInput;
+	private WebElement cityInput;
 	
-	@FindBy(id="phoneNumber")
-	WebElement phoneNumberInput;
+	@FindBy(id="phoneNumberInput")
+	private WebElement phoneNumberInput;
+	
+	@FindBy(id="roleInput")
+	private WebElement roleInput;
 	
 	@FindBy(id="registerInput")
-	WebElement registerInput;
+	private WebElement registerInput;
 	
 	/**
 	 * 
@@ -65,15 +69,41 @@ public class RegistrationFactory {
 	}
 	
 	public void inputPassword2(String password2) {
-		this.password1Input.sendKeys(password2);
+		this.password2Input.sendKeys(password2);
+	}	
+	
+	public void selectCity(String city) {
+		Select sel = new Select(cityInput);
+		sel.selectByVisibleText(city);
 	}
 	
-	
-	
-	public void inputCity(String city) {
-
+	public void selectState(String state) {
+		Select sel = new Select(stateInput);
+		sel.selectByVisibleText(state);
 	}
 	
+	public void selectRole(String role) {
+		Select sel = new Select(roleInput);
+		sel.selectByVisibleText(role);
+	}
 	
+	public void inputPhoneNumber(String phoneNumber) {
+		phoneNumberInput.sendKeys(phoneNumber);
+	}
+	
+	public void register() {
+		registerInput.click();
+	}
 
+	public void inputAddress(String address) {
+		addressInput.sendKeys(address);		
+	}
+
+	public void inputFirstName(String firstName) {
+		firstNameInput.sendKeys(firstName);
+	}
+
+	public void inputLastName(String lastName) {
+		lastNameInput.sendKeys(lastName);
+	}
 }

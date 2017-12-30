@@ -11,13 +11,16 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
 import com.revature.merlinserver.beans.CodeList;
+import com.revature.merlinserver.beans.MagicalFileUpload;
 import com.revature.merlinserver.beans.MagicalUser;
 import com.revature.merlinserver.beans.PrivateUserInfo;
 import com.revature.merlinserver.beans.Token;
+import com.revature.merlinserver.dao.MagicalFileDao;
 import com.revature.merlinserver.dao.MagicalUserDao;
 import com.revature.merlinserver.dao.PrivateInfoDao;
 import com.revature.merlinserver.dao.TokenDao;
-import com.revature.merlinserver.paramwrapper.RegisterParams;
+import com.revature.merlinserver.paramwrapper.RegisterAdeptParams;
+import com.revature.merlinserver.paramwrapper.RegisterApprenticeParams;
 import com.revature.merlinserver.service.TokenService;
 import com.revature.merlinserver.service.UserVerificationService;
 
@@ -30,14 +33,14 @@ import com.revature.merlinserver.service.UserVerificationService;
 public class Register {
 
 	/**
-	 * Rest call from angular to register a new user.
+	 * Rest call from angular to register a new apprentice.
 	 * @param token
 	 */
 	@POST
 	@Path("/apprentice") //this the path we want to use?
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.TEXT_PLAIN)
-	public String register(final RegisterParams params) {
+	public String registerApprentice(final RegisterApprenticeParams params) {
 		MagicalUser user = params.getUser();
 		PrivateUserInfo pi = params.getPrivateUserInfo();
 		CodeList pendingStatus = null;
@@ -60,6 +63,43 @@ public class Register {
 		return "User has been registered, and awaiting verification";
 	}
 
+	/**
+	 * Rest call from angular to register a new apprentice.
+	 * @param token
+	 */
+	@POST
+	@Path("/adept") //this the path we want to use?
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.TEXT_PLAIN)
+	public String registerAdept(final RegisterAdeptParams params) {
+		MagicalUser user = params.getUser();
+		PrivateUserInfo pi = params.getPrivateUserInfo();
+		MagicalFileUpload magicalFileUpload = params.getMagicalFileUpload();
+		CodeList pendingStatus = null;
+		
+		MagicalUserDao magicalUserDao = new MagicalUserDao();
+		PrivateInfoDao privateInfoDao = new PrivateInfoDao();
+		MagicalFileDao magicalFileDao = new MagicalFileDao();
+		
+		//open our session
+		magicalUserDao.open();
+		privateInfoDao.setSession(magicalUserDao.getSession());
+		magicalFileDao.setSession(magicalUserDao.getSession());
+		
+		pendingStatus = privateInfoDao.getStatusById(424);
+		pi.setStatus(pendingStatus); //set the newly registered status to 'PENDING'
+		magicalUserDao.insertUser(user); //insert the new user
+		magicalFileDao.insertFile(magicalFileDao);
+		pi.setUser(user);
+		privateInfoDao.insert(pi); //insert the user's private info
+		magicalUserDao.close();
+		
+		//Send verification email to user
+		sendEmailToUser(user, pi);
+		
+		return "User has been registered, and awaiting verification";
+	}
+	
 	/**
 	 * When a user clicks on their email verification link, this method will find the user associated with the provided token.
 	 * The method checks that this token is new and unused token, and will assign the user the token and set the user's status to 'active'.

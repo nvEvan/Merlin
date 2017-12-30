@@ -13,14 +13,14 @@ import com.revature.merlinserver.dao.CodeListDao;
 import com.revature.merlinserver.dao.MagicalUserDao;
 import com.revature.merlinserver.dao.PrivateInfoDao;
 import com.revature.merlinserver.dao.TokenDao;
-import com.revature.merlinserver.paramwrapper.RegisterParams;
+import com.revature.merlinserver.paramwrapper.RegisterApprenticeParams;
 import com.revature.merlinserver.rest.Register;
 
 public class RegisterTest {
 	
 	private static final String testUsername = "testbobbert";
 	private PrivateUserInfo pui;
-	private RegisterParams params;
+	private RegisterApprenticeParams params;
 	private MagicalUser user;
 	private Register r;
 	
@@ -43,7 +43,7 @@ public class RegisterTest {
 		cd.close();
 		
 		pui = new PrivateUserInfo(user, role, stateCity, status, "Bobbert", "bobson", "merlintest@mail.com", "123145", "123 elm");
-		params = new RegisterParams(user, pui);
+		params = new RegisterApprenticeParams(user, pui);
 	}
 	
 	/**
@@ -51,7 +51,7 @@ public class RegisterTest {
 	 */
 	@Test
 	public void registerTest() {
-		r.register(params);
+		r.registerApprentice(params);
 		
 		MagicalUserDao md = new MagicalUserDao();
 		PrivateInfoDao pd = new PrivateInfoDao();
