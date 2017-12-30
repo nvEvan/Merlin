@@ -7,7 +7,6 @@ import org.hibernate.Session;
 
 import com.revature.merlinserver.beans.MagicalUser;
 import com.revature.merlinserver.beans.Token;
-import com.revature.util.DateUtil;
 
 /**
  * Dao for the Token bean.
@@ -114,6 +113,27 @@ public class TokenDao extends MerlinSessionDao<MagicalUser> {
 		}
 		
 		return token;
+	}
+	
+	/**
+	 * Acquires valid token if found
+	 * @param token - what to find
+	 * @return Token instance if token string valid and not expired
+	 */
+	public Token getValidTokenByTokenString(String token) {
+		Token tkn = null;
+		
+		if (isReady()) {
+			Query q = null;
+			
+			q = session.createQuery("FROM Token WHERE token = ? AND (expDate IS NULL OR expDate < ?)");
+			q.setParameter(0, token);
+			q.setParameter(1, new Date(new java.util.Date().getTime()));
+			
+			tkn = (Token) q.uniqueResult();
+		}
+		
+		return tkn;
 	}
 	
 	/**

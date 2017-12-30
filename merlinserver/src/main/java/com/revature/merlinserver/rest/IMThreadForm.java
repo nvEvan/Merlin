@@ -71,6 +71,9 @@ public class IMThreadForm {
 			
 			// close connection
 			dao.close();
+			
+			// update token exp time
+			TokenService.updateTokenByToken(params.getToken());
 		}
 		
 		return response;
