@@ -3,7 +3,7 @@
   <div>
     <div>
       <span>Role</span>
-      <select id="roleInput" name="Role" [(ngModel)]="privateUserInfo.role">
+      <select id="roleInput" name="Role" [(ngModel)]="privateUserInfo.role" (change)="roleChange()">
         <option [ngValue]="role" *ngFor="let role of roles">{{role.value}}</option>
       </select>
     </div>
@@ -61,10 +61,10 @@
     </div>
     <div>
       <div #statediv>
-        <app-state></app-state>
+        <app-state (change)="checkCityState()"></app-state>
       </div>
       <div #citydiv>
-        <app-city></app-city>
+        <app-city (change)="checkCityState()"></app-city>
       </div>
       <!-- Tell the user they did not select a valid state/city combination -->
       <div>
@@ -72,7 +72,7 @@
           You must select a city belonging to the correct state.
         </span>
       </div>
-      
+
     </div>
 
     <div>
@@ -81,8 +81,16 @@
     </div>
 
     <div>
-      <input id="registerInput" type="button" value="Register" (click)="register()">
+      <!--File upload for adepts -->
+      <ng4-files-click id="fileUpload" *ngIf="adeptAccount" (filesSelect)="filesSelect($event)" accept=".txt,.pdf,.doc,.docx">
+        <span>Submit Certification</span>
+      </ng4-files-click>
+      <input (change)="fileChange($event)" type="file">
+    </div>
 
+    <div>
+      <!-- register the account -->
+      <input id="registerInput" type="button" value="Register" (click)="register()">
     </div>
 
     <!-- Tell the user they have fields that are unfilled -->
