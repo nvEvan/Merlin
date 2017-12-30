@@ -34,7 +34,6 @@ public class DateUtil {
 	 */
 	public static Date toDate(String date) {
 		Date sqlDate = null;
-		String dir = System.getProperty("user.dir");
 		
 	    // Ensure string properly formatted 
 		date = date == null ? "" : date.trim();
