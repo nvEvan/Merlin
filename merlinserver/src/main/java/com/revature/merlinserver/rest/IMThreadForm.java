@@ -1,5 +1,6 @@
 package com.revature.merlinserver.rest;
 
+import java.sql.Date;
 import java.util.List;
 
 import javax.ws.rs.Consumes;
@@ -11,6 +12,9 @@ import javax.ws.rs.core.MediaType;
 
 import com.revature.merlinserver.beans.IMThread;
 import com.revature.merlinserver.dao.IMThreadDao;
+import com.revature.merlinserver.paramwrapper.InsertIMThreadParams;
+import com.revature.merlinserver.service.TokenService;
+import com.revature.util.DateUtil;
 
 /**
  * Handles all Instant Messaging Thread requests
@@ -39,25 +43,35 @@ public class IMThreadForm {
 		// close connection
 		dao.close();
 		
+		Date d = DateUtil.toDate("10/10/2017");
+		
 		return threads;
 	}
 	
+	/**
+	 * Insert new IMThread thread
+	 * @param params - new thread
+	 * @return 'ok' if successful
+	 */
 	@POST
-	@Path("insert")
+	@Path("/insert")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.TEXT_PLAIN)
-	public String insertIMThread(IMThread thread) {
+	public String insertIMThread(InsertIMThreadParams params) {
 		IMThreadDao dao = new IMThreadDao();
-		String response;
+		String response = "invalid token";
 		
-		// open connection
-		dao.open();
-		
-		// insert data
-		response = dao.insertIMThread(thread) == 1 ? "ok" : "Failed to insert IMThread, where IMThread=[" + thread + "]";
-		
-		// close connection
-		dao.close();
+		// if has valid token
+		if (TokenService.isTokenValid(params.getToken())) {
+			// open connection
+			dao.open();
+			
+			// insert data
+			response = dao.insertIMThread(params.getThread()) == 1 ? "ok" : "Failed to insert IMThread, where IMThread=[" + params.getThread() + "]";
+			
+			// close connection
+			dao.close();
+		}
 		
 		return response;
 	}

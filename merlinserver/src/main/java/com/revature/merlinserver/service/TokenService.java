@@ -84,6 +84,27 @@ public class TokenService {
 
 		return user;
 	}
+	
+	/**
+	 * Determines if token expired
+	 * @param token - what to validate
+	 * @return true is valid else false
+	 */
+	public static boolean isTokenValid(String token) {
+		TokenDao td = new TokenDao();
+		boolean result;
+		
+		// open session
+		td.open();
+		
+		// validate token
+		result = td.isTokenUnique(token) == 0;
+		
+		// close session
+		td.close();
+		
+		return result;
+	}
 
 	/**
 	 * Update this user's token expiration date.

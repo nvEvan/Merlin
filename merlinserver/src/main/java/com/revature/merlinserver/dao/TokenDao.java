@@ -1,5 +1,7 @@
 package com.revature.merlinserver.dao;
 
+import java.sql.Date;
+
 import org.hibernate.Query;
 import org.hibernate.Session;
 
@@ -61,11 +63,12 @@ public class TokenDao extends MerlinSessionDao<MagicalUser> {
 			Query q = null;
 			
 			//search the table for tokens 
-			q = session.createQuery("FROM Token WHERE token = ?");
+			q = session.createQuery("FROM Token WHERE token = ? AND (expDate IS NULL OR expDate > ?)");
 			q.setParameter(0, tokenstr);
-
+			q.setParameter(1, new Date(new java.util.Date().getTime()));
+			
 			token = (Token) q.uniqueResult();
-
+			
 			return token == null ? 0 : 1;
 		} else {
 			return 2;
