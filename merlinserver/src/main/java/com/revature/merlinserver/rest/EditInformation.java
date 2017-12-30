@@ -6,9 +6,11 @@ import javax.ws.rs.Path;
 import javax.ws.rs.core.MediaType;
 
 import com.revature.merlinserver.dao.PrivateInfoDao;
+import com.revature.merlinserver.dao.TokenDao;
 import com.revature.merlinserver.paramwrapper.UserParam;
+import com.revature.merlinserver.service.TokenService;
 
-@Path("Edit")
+@Path("/Edit")
 public class EditInformation {
 	
 	/**
@@ -18,12 +20,12 @@ public class EditInformation {
 	 * @param userData
 	 */
 	@POST
-	@Path("MagicalUser")
+	@Path("/MagicalPrivateInfo")
 	@Consumes(MediaType.APPLICATION_JSON)
 	public void editUser(UserParam userData){
 		PrivateInfoDao pd = new PrivateInfoDao();
 		
-		pd.open();
+		pd.open();		
 		pd.update(userData.getPrivateUserInfo());
 		pd.close();
 	}
