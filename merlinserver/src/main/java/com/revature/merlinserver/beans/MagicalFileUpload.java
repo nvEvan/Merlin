@@ -38,7 +38,7 @@ public class MagicalFileUpload implements BusinessObject {
 	
 	@Lob
 	@Column(name="content", nullable=false)
-	private byte[] file;
+	private Blob file;
 
 	/**
 	 * No-args constructor
@@ -54,7 +54,7 @@ public class MagicalFileUpload implements BusinessObject {
 	 * @param fileName - name of the file
 	 * @param file - the actual file
 	 */
-	public MagicalFileUpload(MagicalUser user, CodeList fileType, String fileName, byte[] file) {
+	public MagicalFileUpload(MagicalUser user, CodeList fileType, String fileName, Blob file) {
 		super();
 		this.user = user;
 		this.fileType = fileType;
@@ -70,7 +70,7 @@ public class MagicalFileUpload implements BusinessObject {
 	 * @param fileName - name of the file
 	 * @param file - the actual file
 	 */
-	public MagicalFileUpload(Integer id, MagicalUser user, CodeList fileType, String fileName, byte[] file) {
+	public MagicalFileUpload(Integer id, MagicalUser user, CodeList fileType, String fileName, Blob file) {
 		super();
 		this.id = id;
 		this.user = user;
@@ -111,11 +111,11 @@ public class MagicalFileUpload implements BusinessObject {
 		this.fileName = fileName;
 	}
 
-	public byte[] getFile() {
+	public Blob getFile() {
 		return file;
 	}
 
-	public void setFile(byte[] file) {
+	public void setFile(Blob file) {
 		this.file = file;
 	}
 }
