@@ -22,4 +22,7 @@ export class NavbarComponent implements OnInit {
     this.login.logout();
     this.router.navigateByUrl('home');
   }
+  adeptSearch() {
+    this.router.navigateByUrl('');
+  }
 }
