@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { LoginService } from '../../services/login/login.service';
+import { DropdownDirective } from '../../directives/dropdown/dropdown.directive';
+
 @Component({
   selector: 'app-navbar',
   templateUrl: './navbar.component.html',
@@ -8,10 +10,11 @@ import { LoginService } from '../../services/login/login.service';
 })
   
 export class NavbarComponent implements OnInit {
+  username: string;
 
-  username:string;
-
-  constructor(private router: Router, private login: LoginService){}
+  constructor(private router: Router, private login: LoginService){
+    this.username = this.login.getUserData().user.username;
+  }
 
   ngOnInit(){  }
 

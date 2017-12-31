@@ -9,6 +9,7 @@ import { SignInComponent } from './../components/sign-in/sign-in.component';
 import { ProfileComponent } from './../components/profile/profile.component';
 import { HomeComponent } from './../components/home/home.component';
 import { ThreadsComponent } from './../components/threads/threads.component';
+import { ChatRoom } from '../components/chatroom/chatroom.component';
 
 /**
  * Place all routes here (used for navigating our application).
@@ -33,6 +34,10 @@ export const appRoute: Routes =  [
     {
       path: 'threads',
       component: ThreadsComponent
+    },
+    {
+      path: 'chatroom',
+      component: ChatRoom
     },
     
     // Default screen is ThreadsComponent

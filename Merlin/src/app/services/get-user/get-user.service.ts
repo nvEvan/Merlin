@@ -13,5 +13,4 @@ export class GetUserService {
   getLogin(user: MagicalUser) {
     return this.http.post(environment.url + 'merlinserver/rest/login/MagicalUser', user);
   }
-
 }
