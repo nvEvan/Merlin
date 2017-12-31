@@ -28,7 +28,7 @@ export class SearchAdeptsComponent implements OnInit{
     * @params   Adept - JSON object containing adept information
     */
     navigateToAdeptPublicProfile(Adept) {
-        this.adeptIdService.changeId(Adept.user.userId);
+        this.adeptIdService.changeId(Adept.info.user.userId);
         this.router.navigate(['adept-public-profile']);
       };
 
@@ -46,10 +46,12 @@ export class SearchAdeptsComponent implements OnInit{
         .subscribe(
             (res: Response) => {
                 this.Adepts = res.json();
+                console.log(this.Adepts);
             }
         )
 
         //Store data in service
         this.adeptIdService.adeptId.subscribe(adeptID => this.adeptId = adeptID)
+        console.log(this.Adepts);
     }
 }

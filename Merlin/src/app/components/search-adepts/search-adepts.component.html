@@ -10,7 +10,7 @@
         </thead>
         <tbody>
             <tr *ngFor="let adept of Adepts">
-                <td>{{adept.firstName}} {{adept.lastName}}</td>
+                <td>{{adept.info.firstName}} {{adept.info.lastName}}</td>
                 <td><button (click)="navigateToAdeptPublicProfile(adept)">View</button></td>
             </tr>
         </tbody>
