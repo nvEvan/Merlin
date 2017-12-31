@@ -105,31 +105,6 @@ public class TokenService {
 		
 		return result;
 	}
-
-	/**
-	 * Update this user's token expiration date.
-	 * The expiration date will be 30 mins from the current time
-	 * @param user to be updated
-	 */
-	public static void updateToken(final MagicalUser user) {
-		final TokenDao td = new TokenDao();
-		Token token = null;
-		java.util.Date date = null;
-		java.sql.Date expDate = null;
-		long newExpDate;
-
-		date = new java.util.Date();
-		expDate = DateUtil.toDate(date.toString());
-		
-		newExpDate = expDate.getTime() + TOKEN_DURATION; //set the user's new expiration date to current time + 30 minutes
-		expDate.setTime(newExpDate);
-		
-		td.open();
-		token = td.getTokenByUser(user);
-		token.setExpDate(expDate);
-		td.updateToken(token); //update the token
-		td.close();
-	}
 	
 	/**
 	 * Update this user's token expiration date.
@@ -144,7 +119,7 @@ public class TokenService {
 		long newExpDate;
 
 		date = new java.util.Date();
-		expDate = DateUtil.toDate(date.toString());
+		expDate = new java.sql.Date(date.getTime());
 		
 		newExpDate = expDate.getTime() + TOKEN_DURATION; //set the user's new expiration date to current time + 30 minutes
 		expDate.setTime(newExpDate);
