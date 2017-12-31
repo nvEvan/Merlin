@@ -113,7 +113,7 @@ public class PrivateInfoDao extends MerlinSessionDao<PrivateUserInfo> {
 			Query q = null;
 			unverifiedAdepts = new ArrayList<>();
 			final int pendingId = 424; //id of codelist pending status
-			final int adeptId = 430; //id of codelist adept role
+			final int adeptId = 434; //id of codelist adept role
 			CodeList pendingStatus = null;
 			CodeList roleStatus = null;
 
@@ -128,7 +128,7 @@ public class PrivateInfoDao extends MerlinSessionDao<PrivateUserInfo> {
 			roleStatus = (CodeList) q.uniqueResult();
 
 			//get all adepts that are pending
-			q = session.createQuery("FROM PrivateUserInfo WHERE status = ? && role = ?");
+			q = session.createQuery("FROM PrivateUserInfo WHERE status = ? AND role = ?");
 			q.setParameter(0, pendingStatus);
 			q.setParameter(1, roleStatus);
 
