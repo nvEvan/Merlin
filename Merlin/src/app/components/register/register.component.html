@@ -1,12 +1,13 @@
 <div class="register">
 
   <div>
-    <div>
+    <div *ngIf="!loading">
       <span>Role</span>
-      <select id="roleInput" name="Role" [(ngModel)]="privateUserInfo.role" (change)="roleChange()">
-        <option [ngValue]="role" *ngFor="let role of roles">{{role.value}}</option>
+      <select (change)="roleChange()" [(ngModel)]="privateUserInfo.role" class="form-control">
+        <option id="roleInput" [ngValue]="role" *ngFor="let role of roles">{{role.value}}</option>
       </select>
     </div>
+    <img *ngIf="loading" src="../../../../assets/animations/loading.gif" height="42" height="42">
   </div>
   <!-- user's email -->
   <div>
@@ -80,10 +81,11 @@
       <input id="phoneNumberInput" type="text" [(ngModel)]="privateUserInfo.phoneNumber">
     </div>
 
-    <div>
+    <div *ngIf="adeptAccount">
       <!--File upload for adepts -->
-
-      <input (change)="fileChange($event)" type="file">
+      <form action='{{url + "merlinserver/rest/register/upload"}}' method="post" enctype="multipart/form-data">
+        <input type="file" accept=".txt,.pdf,.doc,.docx" (change)="fileChange($event)">
+      </form>
     </div>
 
     <div>
