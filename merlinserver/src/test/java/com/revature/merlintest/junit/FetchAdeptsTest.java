@@ -16,9 +16,14 @@ import com.revature.merlinserver.dao.MagicalUserDao;
 import com.revature.merlinserver.dao.PublicInfoDao;
 import com.revature.merlinserver.rest.FetchAdepts;
 
+/**
+ * Test the FetchAdept rest service
+ * @author Evan
+ *
+ */
 public class FetchAdeptsTest {
 	private static final String testUsernamePrefix = "FetchAdeptTest_";
-	private static final String testUsername = testUsernamePrefix + "user1";
+	private static final String testUsername = testUsernamePrefix + "userA";
 	private PublicUserInfo pui;
 	private MagicalUser user;
 	private FetchAdepts fa;
@@ -53,33 +58,6 @@ public class FetchAdeptsTest {
 		mud.close();
 	}
 	
-//	@Before
-//	public void insert_permanent_test_users() { 
-//		//pull adept role code from code list
-//		CodeListDao cd = new CodeListDao();
-//		cd.open();
-//		CodeList role = cd.getCodeListById(425); //Active
-//		cd.close();
-//		
-//		MagicalUserDao mud = new MagicalUserDao();
-//		PublicInfoDao pid = new PublicInfoDao();
-//		mud.open();
-//		for(int i = 0; i < 8; i++) {
-//			String permanent_test_username = "AdeptTestUser_" + i;
-//			String firstName = "firstname_" + i; 
-//			String lastName = "lastname_" + i;
-//			user = new MagicalUser(permanent_test_username, "123");
-//			pui = new PublicUserInfo(user, role, firstName, lastName, "email@notAnEmail.com", "123-1234", "Address Placeholder", "A Description!!!", null);
-//			
-//			pid.setSession(mud.getSession());
-//			mud.insertUser(user); //insert the new user
-//			pid.insert(pui); //insert the user's public info
-//		}
-//		mud.close();
-//		
-//		Assert.assertTrue(true);
-//	}
-	
 	/**
 	 * Fetch all adepts and check that expected users are there
 	 * And that other user roles are not present
@@ -91,9 +69,16 @@ public class FetchAdeptsTest {
 		
 		//Check that the test users are among those fetched
 		//To-Do: Implement multiple test user functionality
-		int actual_id = pui_list.get(0).getUser().getUserId();
+		//Note: Not the most elegant way to run this test, but it works. 
+		boolean user_exists = false; 
 		int expected_id = user.getUserId();
-		Assert.assertEquals(actual_id, expected_id);
+		for(PublicUserInfo fetched_pui : pui_list) {
+			int actual_id = fetched_pui.getUser().getUserId();
+			if(expected_id == actual_id) {
+				user_exists = true;
+			}
+		}
+		Assert.assertTrue(user_exists);
 		
 		//Check that all roles in the fetched results are Adept
 		for(PublicUserInfo a_pui : pui_list) {
@@ -101,12 +86,6 @@ public class FetchAdeptsTest {
 			Assert.assertEquals(actaul_role_id, role_id);
 		}
 	}
-	
-	/*
-	 * To-Do: 
-	 * Test with no users in table
-	 * Can we do this on the actual database?
-	 */
 	
 	/**
 	 * Clean the database after the test. Delete test users
@@ -118,7 +97,7 @@ public class FetchAdeptsTest {
 		mud.open();
 		pid.setSession(mud.getSession());
 		pid.deletePublicInfoByObject(pui);
-//		pid.commit(); //This caused a unique constraints error on 2nd run. The user is not deleted from Magical User
+//		pid.commit(); //This caused a unique constraints error on 2nd run. The user is not deleted from Magical User table
 		mud.deleteUserByUsername(user);
 		mud.close();
 	}

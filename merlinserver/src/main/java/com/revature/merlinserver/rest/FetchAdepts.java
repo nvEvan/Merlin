@@ -17,25 +17,28 @@ import com.revature.merlinserver.dao.CodeListDao;
 import com.revature.merlinserver.dao.MagicalUserDao;
 import com.revature.merlinserver.paramwrapper.RegisterParams;
 
-/*
- * FetchAdepts --- Class to facilicate the fetching of adepts
+/**
+ * FetchAdepts --- Rest services for fetching data related to adepts
  * @author Evan West
  */
 @Path("/fetch/adepts")
 public class FetchAdepts {	
+	
+	/**
+	 * Fetch public information for all adepts from the database
+	 * @return List of PublicUserInfo objects
+	 */
 	@GET
 	@Path("/all")
 	@Produces(MediaType.APPLICATION_JSON)
 	public List<PublicUserInfo> fetchAllAdepts() {
-		// pull some code lists for the private user info
+		//Get code list from database
 		CodeListDao cld = new CodeListDao();
-		System.out.println("opening codelist session");
 		cld.open();
-		System.out.println("codelist session opened");
-//		CodeList role = cld.getCodeListById(429); //Admins
-		CodeList role = cld.getCodeListById(430); //Tutors
+		CodeList role = cld.getCodeListById(434); //Adepts
 		cld.close();
-
+		
+		//Fetch users from the database
 		MagicalUserDao mod = new MagicalUserDao();
 		mod.open();
 		List<PublicUserInfo> users = mod.loadUsersByRole(role);
