@@ -1,9 +1,9 @@
-import { UserData } from "./composite/user-data.composite";
-
 /**
  * Base definition for Instant Message 
  * @author Antony Lulciuc
  */
+import { UserData } from "./composite/user-data.composite";
+
 export class ChatMessage{
     $key?: string;
     email?: string;
