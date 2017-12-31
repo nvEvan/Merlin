@@ -11,6 +11,6 @@ export class IMThread {
     status: CodeList;
     name: string;
     link: string;
-    threadCreationDate: Date;
+    threadCreationDate: string;
 };
 

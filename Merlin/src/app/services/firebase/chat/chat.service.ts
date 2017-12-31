@@ -9,8 +9,7 @@ import { Observable } from 'rxjs/Observable';
 //  FIREBASE
 ///
 
-import { AngularFireDatabase } from 'angularfire2/database-deprecated';
-import { FirebaseListObservable } from 'angularfire2/database-deprecated';
+import { AngularFireDatabase, AngularFireList } from 'angularfire2/database';
 import { AngularFireAuth } from 'angularfire2/auth';
 
 import * as firebase from 'firebase/app';
@@ -33,7 +32,7 @@ import { UserData } from '../../../models/composite/user-data.composite';
 @Injectable()
 export class ChatService {
   user: any;
-  chatMessages: FirebaseListObservable<ChatMessage[]>;
+  chatMessages: AngularFireList<ChatMessage>;
   chatMessage: ChatMessage;
   userName: Observable<string>;
 
@@ -66,13 +65,8 @@ export class ChatService {
    * @param imthread - used to tie message to thread 
    * @returns List of messages 
    */
-  getMessages(imthread: IMThread): FirebaseListObservable<ChatMessage[]>{
-    return this.db.list(imthread.link, {
-      query: {
-        limitToLast: 20,
-        orderByKey: true
-      }
-    });
+  getMessages(imthread: IMThread): AngularFireList<ChatMessage>{
+    return this.db.list(imthread.link);
   }
 
   /**

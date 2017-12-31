@@ -13,7 +13,7 @@ export class ChatMessage{
 
     constructor(data: UserData, message: string) {
         this.email = data.privateInfo.email;
-        this.userName = data.general.username;
+        this.userName = data.user.username;
         this.message = message;
     }
 }

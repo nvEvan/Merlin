@@ -17,6 +17,9 @@ import { NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import { AngularFireModule } from 'angularfire2';
 import { AngularFireDatabaseModule } from 'angularfire2/database';
 import { AngularFireAuthModule, AngularFireAuth } from 'angularfire2/auth';
+import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
+import { TooltipModule } from 'ngx-bootstrap/tooltip';
+import { ModalModule } from 'ngx-bootstrap/modal';
 
 ///
 //  ROUTING
@@ -52,6 +55,13 @@ import { LoginService } from './services/login/login.service';
 import { UserPrivateInfoService } from './services/user-private-info/user-private-info.service';
 import { ChatService } from './services/firebase/chat/chat.service';
 import { AuthService } from './services/firebase/authenticate/auth.service';
+import { SimpleNgbModal } from "./services/modals/simple.ngb.modal"
+
+///
+//  MODALS 
+///
+
+import { NewThreadModal } from './components/modals/threads/newthread.modal'
 
 ///
 //  VARIABLES
@@ -69,7 +79,8 @@ import { environment } from './../environments/environment'
     HomeComponent,
     BadgesComponent,
     ThreadsComponent,
-    DropdownDirective
+    DropdownDirective,
+    NewThreadModal
   ],
   imports: [
     BrowserModule,
@@ -77,19 +88,26 @@ import { environment } from './../environments/environment'
     HttpClientModule,
     HttpModule,
     JsonpModule,
+    BsDropdownModule.forRoot(),
+    TooltipModule.forRoot(),
+    ModalModule.forRoot(),
+    AngularFireModule.initializeApp(environment.firebase),
     AngularFireAuthModule,
     AngularFireDatabaseModule,
     AngularFireModule,
-    AngularFireModule.initializeApp(environment.firebase),
     NgbModule.forRoot(),
     RouterModule.forRoot(appRoute)
+  ],
+  entryComponents: [
+    NewThreadModal
   ],
   providers: [
     GetUserService, 
     LoginService,
     UserPrivateInfoService, 
     AuthService, 
-    ChatService
+    ChatService,
+    SimpleNgbModal
   ],
   bootstrap: [AppComponent]
 })

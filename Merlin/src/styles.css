@@ -1,5 +1,6 @@
 /**
  *	CSS used throughout the application
+ *  @author Antony Lulciuc
  */
  
  html, body {
@@ -28,7 +29,7 @@
 /* Secondary button color */
  .btn-secondary {
     background-color: #aa3453!important;
-    color: white;
+    color: white!important;
 }
 
  button[disabled].btn-secondary {
@@ -80,6 +81,9 @@
    padding-right: 2px;
 }
   
+/**
+ * Allows input fields to have fa-icons embedded in them
+ */
  .input-fa-wrapper input {
     position: relative; 
     font-family: 'FontAwesome';
@@ -91,8 +95,33 @@
 
 
 /**
-    Adjust header block according to viewport height 
-                                                        **/ 
+ *  For lists
+ */
+
+ .list {
+    list-style: none;
+    margin-left: 0px;
+    padding-left: 0px;
+    width: 100%;
+ }
+
+ .list > li {
+    border: 1px solid rgba(0, 0, 0, 0.3);
+    display: inline-grid;
+    width: 100%;
+ }
+
+ .list > li[class="active"] {
+    border: 2px solid rgba(37, 0, 250, 0.507);
+ }
+
+ .list > li:hover {
+    border: 1px solid rgba(36, 0, 243, 0.507);
+ }
+
+/**
+ * Adjust header block according to viewport height 
+ */ 
 
 @media screen and (min-height: 50px) {
     .header-block {
