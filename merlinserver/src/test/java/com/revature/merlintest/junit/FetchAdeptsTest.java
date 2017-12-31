@@ -42,7 +42,7 @@ public class FetchAdeptsTest {
 		String lastName = "One";
 		user = new MagicalUser(testUsername, "123");
 		CodeListDao cd = new CodeListDao();
-		
+		System.out.println("hello!");
 		//pull some code lists for the private user info
 		//To-Do: Refactor to open and close a single hibernate session
 		cd.open();
@@ -51,15 +51,26 @@ public class FetchAdeptsTest {
 		role_id = role.getId();
 		
 		pui = new PublicUserInfo(user, role, firstName, lastName, "merlintest@mail.com", "123-1234", "Address Placeholder", "A Description!!!", null);
+		System.out.println(pui);
+		System.out.println(pui.getUser().getUserId());
 		
 		MagicalUserDao mud = new MagicalUserDao();
 		PublicInfoDao pid = new PublicInfoDao();
 		
 		mud.open();
 		pid.setSession(mud.getSession());
-		mud.insertUser(user); //insert the new user
-		pid.insert(pui); //insert the user's public info
-		mud.close();
+		int temp_id = pui.getUser().getUserId();
+		System.out.println(temp_id);
+		MagicalUser temp_user = mud.getMagicalUserById(pui.getUser().getUserId());
+		System.out.println(user);
+		if(temp_user == null) {
+			System.out.println("user did not exist");
+			mud.insertUser(user); //insert the new user
+			pid.insert(pui); //insert the user's public info
+			mud.close();
+		}
+		System.out.println("Done with test");
+		
 	}
 	
 	/**
