@@ -7,7 +7,8 @@ import { PrivateUserInfo } from "../private-user-info.model";
 import { PublicUserInfo } from "../public-user-info.model";
 
 export class UserData {
-    general: MagicalUser;
+    token: string;
+    user: MagicalUser;
     privateInfo: PrivateUserInfo;
     publicInfo: PublicUserInfo;
 }

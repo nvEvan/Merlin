@@ -1,5 +1,5 @@
-import { MagicalUser } from "./magicaluser.model";
-import { CodeList } from "./codelist.model";
+import { MagicalUser } from "./magical-user.model";
+import { CodeList } from "./code-list.model";
 
 /**
  * Defines container for IMThread Bean
@@ -11,6 +11,6 @@ export class IMThread {
     status: CodeList;
     name: string;
     link: string;
-    threadCreationDate: Date;
+    threadCreationDate: string;
 };
 

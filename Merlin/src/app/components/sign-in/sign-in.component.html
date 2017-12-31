@@ -1,8 +1,37 @@
-<div>
-  <table>
-    <tr><td><input [(ngModel)]="username" name="username" type="text" placeholder="Username"></td></tr>
-    <tr><td><input [(ngModel)]="password" name="password" type="password" placeholder="Password"></td></tr>
-    <tr><td><input type="button" value="Login" (click)=userLogin()></td></tr>
-  </table>
+<div class="container">
+  <div class="row">
+      <div class="col-xs-12 header-block">
+					<img src="./../../../assets/images/logo.png" class="img-responsive center-block">
+				</div>
+  </div>
+  <div class="row">
+    <div class="col-md-7">
+      <div class="col-md-12">
+        <div class="col-md-6"></div>
+        <div class="input-fa-wrapper col-md-6">
+            <input [(ngModel)]="user.username" class="form-control " type="text" name="username" placeholder="&#xf2bd; Username">
+            <div style="height: 5px;"></div>
+            <input [(ngModel)]="user.password" class="form-control" type="password" name="password" placeholder="&#xf023; Password">
+        </div>
+      </div>
+      <div class="col-md-12" style="padding-top:5px;">
+        <div class="col-md-6"></div>
+        <div class="col-md-6">
+          <button class="btn-primary form-control" (click)=userLogin()>
+            <span class="fa fa-chevron-right"></span>&nbsp;Sign-in
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-3">
+        <div class="col-md-12">
+          <div class="col-md-12">
+              <label>New user? Click here to create a new account.</label>
+              <a href="register" style="text-decoration: none !important;">
+                <button class="form-control"><span class="fa fa-plus"></span>&nbsp;Create an account</button>
+              </a>
+          </div>
+        </div>
+    </div>
+  </div>
 </div>
-<p><a href="home">Back</a></p>

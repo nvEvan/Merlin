@@ -14,6 +14,12 @@ import { HttpClientModule } from '@angular/common/http';
 ///
 
 import { NgbModule} from '@ng-bootstrap/ng-bootstrap';
+import { AngularFireModule } from 'angularfire2';
+import { AngularFireDatabaseModule } from 'angularfire2/database';
+import { AngularFireAuthModule, AngularFireAuth } from 'angularfire2/auth';
+import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
+import { TooltipModule } from 'ngx-bootstrap/tooltip';
+import { ModalModule } from 'ngx-bootstrap/modal';
 
 ///
 //  ROUTING
@@ -33,6 +39,14 @@ import { SignInComponent } from './components/sign-in/sign-in.component';
 import { HomeComponent } from './components/home/home.component';
 import { BadgesComponent } from './components/badges/badges.component';
 import { ThreadsComponent } from './components/threads/threads.component';
+import { StateComponent } from './components/codelist/state/state.component'
+import { CityComponent } from './components/codelist/city/city.component';
+
+///
+//  DIRECTIVES
+///
+
+import { DropdownDirective } from './directives/dropdown/dropdown.directive';
 
 ///
 //  SERVICES
@@ -41,6 +55,23 @@ import { ThreadsComponent } from './components/threads/threads.component';
 import { GetUserService } from './services/get-user/get-user.service';
 import { LoginService } from './services/login/login.service';
 import { UserPrivateInfoService } from './services/user-private-info/user-private-info.service';
+import { ChatService } from './services/firebase/chat/chat.service';
+import { AuthService } from './services/firebase/authenticate/auth.service';
+import { SimpleNgbModal } from "./services/modals/simple.ngb.modal"
+import { CodeListService } from './services/codelist/codelist.service';
+import { RegistrationService } from './services/registration/registration.service';
+
+///
+//  MODALS 
+///
+
+import { FailNewThreadModal } from './components/modals/threads/failnewthread.modal'
+
+///
+//  VARIABLES
+///
+
+import { environment } from './../environments/environment'
 
 @NgModule({
   declarations: [
@@ -51,7 +82,11 @@ import { UserPrivateInfoService } from './services/user-private-info/user-privat
     SignInComponent,
     HomeComponent,
     BadgesComponent,
-    ThreadsComponent
+    ThreadsComponent,
+    DropdownDirective,
+    FailNewThreadModal,
+    StateComponent,
+    CityComponent
   ],
   imports: [
     BrowserModule,
@@ -59,10 +94,29 @@ import { UserPrivateInfoService } from './services/user-private-info/user-privat
     HttpClientModule,
     HttpModule,
     JsonpModule,
+    BsDropdownModule.forRoot(),
+    TooltipModule.forRoot(),
+    ModalModule.forRoot(),
+    AngularFireModule.initializeApp(environment.firebase),
+    AngularFireAuthModule,
+    AngularFireDatabaseModule,
+    AngularFireModule,
     NgbModule.forRoot(),
     RouterModule.forRoot(appRoute)
   ],
-  providers: [GetUserService, LoginService, UserPrivateInfoService],
+  entryComponents: [
+    FailNewThreadModal
+  ],
+  providers: [
+    GetUserService, 
+    LoginService,
+    UserPrivateInfoService, 
+    AuthService, 
+    ChatService,
+    CodeListService,
+    RegistrationService,
+    SimpleNgbModal
+  ],
   bootstrap: [AppComponent]
 })
   

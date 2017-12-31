@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { LoginService } from '../../services/login/login.service';
-import { GetUserService } from '../../services/get-user/get-user.service';
-import { UserPrivateInfoService } from '../../services/user-private-info/user-private-info.service';
-
+import { UserPrivateData } from '../../models/composite/user-private-data.composite';
+import { UserData } from '../../models/composite/user-data.composite';
 
 @Component({
   selector: 'app-profile',
@@ -10,39 +9,12 @@ import { UserPrivateInfoService } from '../../services/user-private-info/user-pr
   styleUrls: ['./profile.component.css']
 })
 export class ProfileComponent implements OnInit {
-  user = {
-    'username':  '',
-    'firstName': '',
-    'lastName': ''
-  };
+  userData: UserData;
   
-  privateInfo = {
-    'email': '',
-    'phone': '',
-    'address': '',
-    'city': '',
-    'state': ''
-  };
-  
-  isPublicInfo = true;
-  isPrivateInfo = false;
-  
-  username: string;
-  constructor(private getUserService: GetUserService, private getPrivateService: UserPrivateInfoService, private login: LoginService) { 
-    
-  }
+  constructor(private loginService: LoginService){  }
 
   ngOnInit() {
-    this.username = this.login.getUsername();
-  }
+    this.userData = this.loginService.getUserData();
+   }
 
-  viewPublicPrivate() {
-    if (this.isPublicInfo) {
-      this.isPublicInfo = false;
-      this.isPrivateInfo = true;
-    } else {
-      this.isPublicInfo = true;
-      this.isPrivateInfo = false;
-    }
-  }
 }

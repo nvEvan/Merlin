@@ -28,7 +28,7 @@ export const appRoute: Routes =  [
     },
     {
        path: 'home', 
-       component: HomeComponent
+       component: SignInComponent
     },
     {
       path: 'threads',
@@ -38,7 +38,7 @@ export const appRoute: Routes =  [
     // Default screen is ThreadsComponent
     {
        path: '**',
-       component: HomeComponent
+       component: SignInComponent
     }
 ];
 

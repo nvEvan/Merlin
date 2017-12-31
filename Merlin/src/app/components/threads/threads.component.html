@@ -1,6 +1,48 @@
 <app-navbar></app-navbar>
 <div class="container-fluid">
-	<div class="row">
-		{{threads.length}}
+	<div class="row" style="padding-top:10px;">
+		<div class="col-lg-4">
+		    <div class="input-group">
+				<span class="input-group-btn">
+				  <button class="btn" type="button" (click)="onNewThread()"><span class="fa fa-plus"></span></button>
+				</span>
+				<input [(ngModel)]="threadName" class="form-control" placeholder="Thread Name...">
+				<span class="input-group-btn">
+					<button class="btn btn-secondary" type="button" (click)="onSearchThread()">
+						<span class="fa fa-search"></span>&nbsp;Search
+					</button>
+				</span>
+		    </div>
+		</div>
+	</div>
+
+	<!-- DISPLAY ALL THREADS -->
+	<div class="row" style="padding-top:10px;">
+		<div class="col-xs-12">
+			<ul class="list" *ngIf="listReady; else loadingCircle">
+				<li class="list-item" *ngFor="let thread of threads" (click)="onListItemClick()">
+					<div style="position:relative;">
+						<div style="display: inline-block; padding-top: 5px;">
+							<label><font color="#004aff">Thread Name</font>: <span>{{thread.name}}</span></label>,
+							<label><font color="#004aff">Created By</font>: <span>{{thread.creator.username}}</span></label>,
+							<label><font color="#004aff">Creation Date</font>: <span>{{thread.threadCreationDate}}</span></label>
+							<label><font color="#004aff">Status</font>: <span>{{thread.status.value}}</span></label>
+						</div>
+
+						<div class="col-xs-2" style="float: right; padding: 0px;">
+							<button class="btn-secondary form-control">
+								<span class="fa fa fa-commenting"></span>&nbsp;Open Thread</button>
+						</div>
+					</div>
+				</li>
+			</ul>
+			<ng-template #loadingCircle>
+				<div class="header-block">
+					<img src="../../../assets/animation/loading.gif" class="img-responsive center-block">
+				</div>
+			</ng-template>
+		</div>
 	</div>
 </div>
+
+
