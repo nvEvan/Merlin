@@ -7,5 +7,5 @@ import { PrivateUserInfo } from "../private-user-info.model";
  */
 export class UserPrivateData {
     user: MagicalUser;
-    privateInfo: PrivateUserInfo;
+    privateUserInfo: PrivateUserInfo;
 }

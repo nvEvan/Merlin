@@ -1,28 +1,27 @@
 import { Injectable } from '@angular/core';
 import { AppComponent } from '../../app.component';
 import { Http } from '@angular/http';
-import { UserPrivateData } from '../../models/composite/user-private-data.composite';
+import { UserData } from '../../models/composite/user-data.composite';
 
 @Injectable()
 export class LoginService {
-  user: UserPrivateData;
+  private userData: UserData;
 
   constructor(private http: Http) { }
 
   // Returns the current user's name
-  getUser() {
-    return this.user;
+  getUserData() {
+    return this.userData;
   }
 
   // Set the username 
-  setUser(user: UserPrivateData) {
-    this.user = user;
+  setUserData(data: UserData) {
+    this.userData = data;
   }
 
   // Sets the username to be undefined so that profile component will not
   // be able to see/interact with user data
   logout(){
-    this.setUser(undefined);
+    this.setUserData(undefined);
   }
-  
 }

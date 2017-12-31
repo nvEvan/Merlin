@@ -11,6 +11,7 @@ import { HomeComponent } from './../components/home/home.component';
 import { ThreadsComponent } from './../components/threads/threads.component';
 import { SearchAdeptsComponent } from '../components/search-adepts/search-adepts.component';
 import { AdeptPublicProfileComponent } from '../components/adept-public-profile/adept-public-profile.component';
+import { ChatRoom } from '../components/chatroom/chatroom.component';
 
 /**
  * Place all routes here (used for navigating our application).
@@ -43,6 +44,10 @@ export const appRoute: Routes =  [
     {
       path: 'adept-public-profile',
       component: AdeptPublicProfileComponent
+    },
+    {
+      path: 'chatroom',
+      component: ChatRoom
     },
     
     // Default screen is ThreadsComponent

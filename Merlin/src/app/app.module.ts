@@ -15,8 +15,11 @@ import { HttpClientModule } from '@angular/common/http';
 
 import { NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import { AngularFireModule } from 'angularfire2';
-import { AngularFireDatabaseModule } from 'angularfire2/database';
+import { AngularFireDatabaseModule } from 'angularfire2/database-deprecated';
 import { AngularFireAuthModule, AngularFireAuth } from 'angularfire2/auth';
+import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
+import { TooltipModule } from 'ngx-bootstrap/tooltip';
+import { ModalModule } from 'ngx-bootstrap/modal';
 
 ///
 //  ROUTING
@@ -38,6 +41,16 @@ import { BadgesComponent } from './components/badges/badges.component';
 import { ThreadsComponent } from './components/threads/threads.component';
 import { SearchAdeptsComponent } from './components/search-adepts/search-adepts.component';
 import { AdeptPublicProfileComponent } from './components/adept-public-profile/adept-public-profile.component'
+import { StateComponent } from './components/codelist/state/state.component'
+import { CityComponent } from './components/codelist/city/city.component';
+import { ChatRoom } from './components/chatroom/chatroom.component';
+
+///
+//  DIRECTIVES
+///
+
+import { DropdownDirective } from './directives/dropdown/dropdown.directive';
+>>>>>>> 59e92f76a617b3cd40b1a653c55faf5edf8eb8f0
 
 ///
 //  SERVICES
@@ -47,6 +60,17 @@ import { GetUserService } from './services/get-user/get-user.service';
 import { LoginService } from './services/login/login.service';
 import { UserPrivateInfoService } from './services/user-private-info/user-private-info.service';
 import { AdeptIdService } from './services/adept-id/adept-id.service';
+import { ChatService } from './services/firebase/chat/chat.service';
+import { AuthService } from './services/firebase/authenticate/auth.service';
+import { SimpleNgbModal } from "./services/modals/simple.ngb.modal"
+import { CodeListService } from './services/codelist/codelist.service';
+import { RegistrationService } from './services/registration/registration.service';
+
+///
+//  MODALS 
+///
+
+import { FailNewThreadModal } from './components/modals/threads/failnewthread.modal'
 
 ///
 //  VARIABLES
@@ -65,7 +89,12 @@ import { environment } from './../environments/environment';
     BadgesComponent,
     ThreadsComponent,
     SearchAdeptsComponent,
-    AdeptPublicProfileComponent
+    AdeptPublicProfileComponent,
+    DropdownDirective,
+    FailNewThreadModal,
+    StateComponent,
+    CityComponent,
+    ChatRoom
   ],
   imports: [
     BrowserModule,
@@ -73,14 +102,30 @@ import { environment } from './../environments/environment';
     HttpClientModule,
     HttpModule,
     JsonpModule,
+    BsDropdownModule.forRoot(),
+    TooltipModule.forRoot(),
+    ModalModule.forRoot(),
+    AngularFireModule.initializeApp(environment.firebase),
     AngularFireAuthModule,
     AngularFireDatabaseModule,
     AngularFireModule,
-    AngularFireModule.initializeApp(environment.firebase),
     NgbModule.forRoot(),
     RouterModule.forRoot(appRoute)
   ],
-  providers: [GetUserService, LoginService, UserPrivateInfoService, AdeptIdService],
+  entryComponents: [
+    FailNewThreadModal
+  ],
+  providers: [
+    GetUserService, 
+    LoginService,
+    UserPrivateInfoService, 
+    AdeptIdService,
+    AuthService, 
+    ChatService,
+    CodeListService,
+    RegistrationService,
+    SimpleNgbModal
+  ],
   bootstrap: [AppComponent]
 })
   
