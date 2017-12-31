@@ -7,7 +7,7 @@
         <option id="roleInput" [ngValue]="role" *ngFor="let role of roles">{{role.value}}</option>
       </select>
     </div>
-    <img *ngIf="loading" src="../../../../assets/images/loading.gif" height="42" height="42">
+    <img *ngIf="loading" src="../../../../assets/animations/loading.gif" height="42" height="42">
   </div>
   <!-- user's email -->
   <div>
@@ -83,14 +83,9 @@
 
     <div *ngIf="adeptAccount">
       <!--File upload for adepts -->
-<<<<<<< HEAD
       <form enctype="multipart/form-data">
         <input type="file" (change)="fileChange($event)" accept=".txt,.pdf,.doc,.docx">
       </form>
-=======
-
-      <input (change)="fileChange($event)" type="file">
->>>>>>> 59e92f76a617b3cd40b1a653c55faf5edf8eb8f0
     </div>
 
     <div>
