@@ -1,5 +1,6 @@
 package com.revature.merlinserver.rest;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.ws.rs.Consumes;
@@ -10,10 +11,12 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
 import com.revature.merlinserver.beans.CodeList;
+import com.revature.merlinserver.beans.MagicalUser;
 import com.revature.merlinserver.beans.PublicUserInfo;
 import com.revature.merlinserver.beans.Review;
 import com.revature.merlinserver.dao.CodeListDao;
 import com.revature.merlinserver.dao.MagicalUserDao;
+import com.revature.merlinserver.dao.PublicInfoDao;
 import com.revature.merlinserver.dao.ReviewDoa;
 import com.revature.merlinserver.paramwrapper.FetchAdeptsParams;
 
@@ -71,17 +74,14 @@ public class FetchAdepts {
 	@Path("/byId")
 	@Consumes(MediaType.TEXT_PLAIN)
 	@Produces(MediaType.APPLICATION_JSON)
-	public String fetchById(String adeptId) {
-
-		System.out.println("Hello There!");
-		System.out.println(Integer.parseInt(adeptId));
-		
+	public PublicUserInfo fetchAdeptById(String adeptId) {				
 		MagicalUserDao mod = new MagicalUserDao();
+		PublicInfoDao pid = new PublicInfoDao();
 		mod.open();
-		PublicUserInfo pui = mod.loadUsersByRole(role);
-		mod.close();
-		
-		return "Hello There!";
+		pid.setSession(mod.getSession());
+		MagicalUser myUser = mod.getMagicalUserById(Integer.parseInt(adeptId));
+		PublicUserInfo pui = pid.getPublicUserInfoByUser(myUser);
+		pid.close();
+		return pui;
 	}
-
 }

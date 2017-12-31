@@ -43,22 +43,25 @@ public class PublicInfoDao extends MerlinSessionDao<PublicUserInfo> {
 	}
 
 	/**
-	 * Fetch public user info by id
-	 * @param id - integer containing id of adept to fetch from the database
+	 * Fetch public user info by User
+	 * @param user - MagicalUser object for which to fetch PublicInfo
 	 */
-	public PublicUserInfo getPublicUserInfoById(final int id) {
+	public PublicUserInfo getPublicUserInfoByUser(final MagicalUser user) {
 		PublicUserInfo pui = null;
 
 		if (isReady()) {
 			Query q = null;
 
-			q = session.createQuery("FROM PublicUserInfo WHERE id = ?");
-			q.setParameter(0, id);
+			q = session.createQuery("FROM PublicUserInfo WHERE user = ?");
+			q.setParameter(0, user);
 
 			pui = (PublicUserInfo) q.uniqueResult();
 		}
-
+		
+		System.out.println("returning pui");
+		System.out.println(pui);
 		return pui;
+		
 	}
 
 	/**
