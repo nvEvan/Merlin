@@ -65,7 +65,7 @@ import { RegistrationService } from './services/registration/registration.servic
 //  MODALS 
 ///
 
-import { NewThreadModal } from './components/modals/threads/newthread.modal'
+import { FailNewThreadModal } from './components/modals/threads/failnewthread.modal'
 
 ///
 //  VARIABLES
@@ -84,7 +84,7 @@ import { environment } from './../environments/environment'
     BadgesComponent,
     ThreadsComponent,
     DropdownDirective,
-    NewThreadModal,
+    FailNewThreadModal,
     StateComponent,
     CityComponent
   ],
@@ -105,7 +105,7 @@ import { environment } from './../environments/environment'
     RouterModule.forRoot(appRoute)
   ],
   entryComponents: [
-    NewThreadModal
+    FailNewThreadModal
   ],
   providers: [
     GetUserService, 

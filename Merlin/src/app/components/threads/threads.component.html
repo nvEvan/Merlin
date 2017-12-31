@@ -1,5 +1,5 @@
 <app-navbar></app-navbar>
-<div class="container-fluid content">
+<div class="container-fluid">
 	<div class="row" style="padding-top:10px;">
 		<div class="col-lg-4">
 		    <div class="input-group">
@@ -19,7 +19,7 @@
 	<!-- DISPLAY ALL THREADS -->
 	<div class="row" style="padding-top:10px;">
 		<div class="col-xs-12">
-			<ul class="list">
+			<ul class="list" *ngIf="listReady; else loadingCircle">
 				<li class="list-item" *ngFor="let thread of threads" (click)="onListItemClick()">
 					<div style="position:relative;">
 						<div style="display: inline-block; padding-top: 5px;">
@@ -36,6 +36,11 @@
 					</div>
 				</li>
 			</ul>
+			<ng-template #loadingCircle>
+				<div class="header-block">
+					<img src="../../../assets/animation/loading.gif" class="img-responsive center-block">
+				</div>
+			</ng-template>
 		</div>
 	</div>
 </div>
