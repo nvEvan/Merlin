@@ -9,6 +9,6 @@ import { PublicUserInfo } from "../public-user-info.model";
 export class UserData {
     token: string;
     user: MagicalUser;
-    privateInfo: PrivateUserInfo;
-    publicInfo: PublicUserInfo;
+    privateUserInfo: PrivateUserInfo;
+    publicUserInfo: PublicUserInfo;
 }

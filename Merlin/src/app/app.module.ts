@@ -15,7 +15,7 @@ import { HttpClientModule } from '@angular/common/http';
 
 import { NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import { AngularFireModule } from 'angularfire2';
-import { AngularFireDatabaseModule } from 'angularfire2/database';
+import { AngularFireDatabaseModule } from 'angularfire2/database-deprecated';
 import { AngularFireAuthModule, AngularFireAuth } from 'angularfire2/auth';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
@@ -41,6 +41,7 @@ import { BadgesComponent } from './components/badges/badges.component';
 import { ThreadsComponent } from './components/threads/threads.component';
 import { StateComponent } from './components/codelist/state/state.component'
 import { CityComponent } from './components/codelist/city/city.component';
+import { ChatRoom } from './components/chatroom/chatroom.component';
 
 ///
 //  DIRECTIVES
@@ -86,7 +87,8 @@ import { environment } from './../environments/environment'
     DropdownDirective,
     FailNewThreadModal,
     StateComponent,
-    CityComponent
+    CityComponent,
+    ChatRoom
   ],
   imports: [
     BrowserModule,

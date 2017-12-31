@@ -1,0 +1,40 @@
+<app-navbar></app-navbar>
+<div class="container-fluid">
+    <div #form class="row message-form" (window:resize)="onResize($event, form)">
+        <div class="col-xs-12" *ngFor="let msg of messages; let i = index" [attr.data-index]="i">
+                <div *ngIf="userData.user.username == msg.userName; else notMe">
+                        <label><font color="grey">[{{msg.timeSent}}]</font></label>
+                        <label>{{msg.email}}::<b><font color="blue">{{msg.userName}}</font></b>:&gt;{{msg.message}}</label>
+                </div>
+                <ng-template #notMe>
+                    <div *ngIf="(i % 2) == 0; else odd">
+                        <label><font color="grey">[{{msg.timeSent}}]</font></label>
+                        <label>{{msg.email}}::<b><font color="green">{{msg.userName}}</font></b>:&gt;{{msg.message}}</label>
+                    </div>
+                    <ng-template #odd>
+                        <label><font color="grey">[{{msg.timeSent}}]</font></label>
+                        <label>{{msg.email}}::<b><font color="red">{{msg.userName}}</font></b>:&gt;{{msg.message}}</label>
+                    </ng-template>
+                </ng-template>
+        </div>
+    </div>
+    <div class="row col-xs-12 message-area">
+        <hr class="hr-divider">	
+        <div class="col-xs-12">
+            <label>Message:</label>
+            <textarea [(ngModel)]="message" class="form-control"></textarea>
+        </div>
+        <div class="col-xs-12" style="height:5px;padding-bottom:5px;"></div>
+        <div class="col-md-3">
+            <button class="btn btn-primary form-control" (click)="onSubmit()">
+                <span class="fa fa-send"></span>&nbsp;Submit
+            </button>
+        </div>
+        <div class="col-md-3">
+            <button class="form-control" (click)="onClear()">
+                <span class="fa fa-times"></span>&nbsp;Clear
+            </button>
+        </div>
+        <div class="col-xs-12" style="height:10px;padding-bottom:10px;"></div>
+    </div>
+</div>

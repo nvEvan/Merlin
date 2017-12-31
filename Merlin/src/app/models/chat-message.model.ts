@@ -9,11 +9,12 @@ export class ChatMessage{
     email?: string;
     userName?: string;
     message?: string;
-    timeSent?: Date = new Date();
+    timeSent?: string;
 
-    constructor(data: UserData, message: string) {
-        this.email = data.privateInfo.email;
+    constructor(data: UserData, message: string, date: string) {
+        this.email = data.privateUserInfo.email;
         this.userName = data.user.username;
         this.message = message;
+        this.timeSent = date;
     }
 }
