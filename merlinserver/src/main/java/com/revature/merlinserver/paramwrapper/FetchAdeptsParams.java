@@ -9,7 +9,7 @@ import com.revature.merlinserver.beans.PublicUserInfo;
  */
 public class FetchAdeptsParams {
 	private PublicUserInfo info; 
-	private double avg_review;
+	private float avg_review;
 	
 	/**
 	 * Getter for info member variable
@@ -31,7 +31,7 @@ public class FetchAdeptsParams {
 	 * Getter for avg_review
 	 * @return double containing the average review
 	 */
-	public double getAvg_review() {
+	public float getAvg_review() {
 		return avg_review;
 	}
 	
@@ -39,7 +39,7 @@ public class FetchAdeptsParams {
 	 * setter for avg_review
 	 * @param avg_review - double to be stored
 	 */
-	public void setAvg_review(double avg_review) {
+	public void setAvg_review(float avg_review) {
 		this.avg_review = avg_review;
 	}
 	
@@ -48,7 +48,7 @@ public class FetchAdeptsParams {
 	 * @param info - PublicUserInfo object
 	 * @param avg_review - double
 	 */
-	public FetchAdeptsParams(PublicUserInfo info, double avg_review) {
+	public FetchAdeptsParams(PublicUserInfo info, float avg_review) {
 		super();
 		this.info = info;
 		this.avg_review = avg_review;
