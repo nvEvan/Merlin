@@ -1,0 +1,18 @@
+<app-navbar></app-navbar>
+<div>
+    <hr>
+    <p>Hello From search-adepts!</p>
+</div>
+<div>
+    <table>
+        <thead>
+            <th>Name</th>
+        </thead>
+        <tbody>
+            <tr *ngFor="let adept of Adepts">
+                <td>{{adept.firstName}} {{adept.lastName}}</td>
+                <td><button (click)="navigateToAdeptPublicProfile(adept)">View</button></td>
+            </tr>
+        </tbody>
+    </table>
+</div>

@@ -38,6 +38,8 @@ import { SignInComponent } from './components/sign-in/sign-in.component';
 import { HomeComponent } from './components/home/home.component';
 import { BadgesComponent } from './components/badges/badges.component';
 import { ThreadsComponent } from './components/threads/threads.component';
+import { SearchAdeptsComponent } from './components/search-adepts/search-adepts.component';
+import { AdeptPublicProfileComponent } from './components/adept-public-profile/adept-public-profile.component'
 import { StateComponent } from './components/codelist/state/state.component'
 import { CityComponent } from './components/codelist/city/city.component';
 import { ChatRoom } from './components/chatroom/chatroom.component';
@@ -55,6 +57,7 @@ import { DropdownDirective } from './directives/dropdown/dropdown.directive';
 import { GetUserService } from './services/get-user/get-user.service';
 import { LoginService } from './services/login/login.service';
 import { UserPrivateInfoService } from './services/user-private-info/user-private-info.service';
+import { AdeptIdService } from './services/adept-id/adept-id.service';
 import { ChatService } from './services/firebase/chat/chat.service';
 import { AuthService } from './services/firebase/authenticate/auth.service';
 import { SimpleNgbModal } from "./services/modals/simple.ngb.modal"
@@ -84,6 +87,8 @@ import { VerifyAdepts } from './components/verifyAdepts/verifyAdepts.component';
     HomeComponent,
     BadgesComponent,
     ThreadsComponent,
+    SearchAdeptsComponent,
+    AdeptPublicProfileComponent,
     DropdownDirective,
     FailNewThreadModal,
     StateComponent,
@@ -114,6 +119,7 @@ import { VerifyAdepts } from './components/verifyAdepts/verifyAdepts.component';
     GetUserService, 
     LoginService,
     UserPrivateInfoService, 
+    AdeptIdService,
     AuthService, 
     ChatService,
     CodeListService,

@@ -1,0 +1,22 @@
+import { Component, OnInit } from '@angular/core';
+import { AdeptIdService } from '../../services/adept-id/adept-id.service';
+
+
+@Component({
+  selector: 'app-adept-public-profile',
+  templateUrl: './adept-public-profile.component.html',
+  styleUrls: ['./adept-public-profile.component.css'],
+  inputs: ['Adept']
+})
+
+//Display the public profile for an adept
+export class AdeptPublicProfileComponent implements OnInit {
+  adeptId : number; 
+
+  constructor(private adeptIdService : AdeptIdService ) { }
+
+  ngOnInit() {
+    this.adeptIdService.adeptId.subscribe(adeptID => this.adeptId = adeptID);
+    console.log("The Adept ID: " + this.adeptId);
+  }
+}
