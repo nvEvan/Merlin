@@ -50,7 +50,6 @@ import { ChatRoom } from './components/chatroom/chatroom.component';
 ///
 
 import { DropdownDirective } from './directives/dropdown/dropdown.directive';
->>>>>>> 59e92f76a617b3cd40b1a653c55faf5edf8eb8f0
 
 ///
 //  SERVICES
