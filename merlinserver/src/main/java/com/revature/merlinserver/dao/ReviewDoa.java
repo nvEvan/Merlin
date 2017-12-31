@@ -1,7 +1,12 @@
 package com.revature.merlinserver.dao;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import org.hibernate.Query;
 import org.hibernate.Session;
 
+import com.revature.merlinserver.beans.MagicalUser;
 import com.revature.merlinserver.beans.PublicUserInfo;
 import com.revature.merlinserver.beans.Review;
 
@@ -27,8 +32,8 @@ public class ReviewDoa extends MerlinSessionDao<PublicUserInfo> {
 	}
 	
 	/**
-	 * Insert a new PublicUserInfo object to the database
-	 * @param pui - object to be inserted
+	 * Insert a new Review object to the database
+	 * @param rev - object to be inserted
 	 */
 	public void insert(Review rev) {
 		if(isReady()) {
@@ -37,12 +42,32 @@ public class ReviewDoa extends MerlinSessionDao<PublicUserInfo> {
 	}
 	
 	/**
-	 * Delete a PublicUserInfo object from the database
-	 * @param pui - object to be deleted
+	 * Delete a Review object from the database
+	 * @param rev - object to be deleted
 	 */
 	public void deletePublicInfoByObject(Review rev) {
 		if(isReady()) {
 			session.delete(rev);
 		}
 	}
+	
+	/**
+	 * Fetch all reviews from the database
+	 * @return List of reviews
+	 */
+	public List<Review> fetchAllReviews() {
+		List<Review> revs = null;
+
+		if (isReady()) {
+			Query query = session.createQuery("FROM Review");
+			revs = new ArrayList<>();
+
+			for (Object rev : query.list()) {
+				revs.add((Review) rev);
+			}
+		}
+
+		return revs;
+	}
+	
 }

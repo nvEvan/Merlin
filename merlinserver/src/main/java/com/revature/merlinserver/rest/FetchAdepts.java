@@ -8,13 +8,13 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
-import com.revature.merlinserver.beans.AdeptInfo;
 import com.revature.merlinserver.beans.CodeList;
-import com.revature.merlinserver.beans.MagicalUser;
-import com.revature.merlinserver.beans.PrivateUserInfo;
 import com.revature.merlinserver.beans.PublicUserInfo;
+import com.revature.merlinserver.beans.Review;
 import com.revature.merlinserver.dao.CodeListDao;
 import com.revature.merlinserver.dao.MagicalUserDao;
+import com.revature.merlinserver.dao.ReviewDoa;
+import com.revature.merlinserver.paramwrapper.FetchAdeptsParams;
 
 /**
  * FetchAdepts --- Rest services for fetching data related to adepts
@@ -30,7 +30,7 @@ public class FetchAdepts {
 	@GET
 	@Path("/all")
 	@Produces(MediaType.APPLICATION_JSON)
-	public List<PublicUserInfo> fetchAllAdepts() {
+	public List<FetchAdeptsParams> fetchAllAdepts() {
 		//Get code list from database
 		CodeListDao cld = new CodeListDao();
 		cld.open();
@@ -42,9 +42,20 @@ public class FetchAdepts {
 		mod.open();
 		List<PublicUserInfo> users = mod.loadUsersByRole(role);
 		mod.close();
+		
+		ReviewDoa revd = new ReviewDoa(); 
+		revd.open(); 
+		List<Review> reviews = revd.fetchAllReviews();
+		
+		List<FetchAdeptsParams> return_list = new ArrayList<FetchAdeptsParams>();
+		for(PublicUserInfo user : users) {
+			System.out.println(user.getUser().getUserId());
+			
+			return_list.add(new FetchAdeptsParams(user, 0));
+		}
 
-		System.out.println(users);
-		return users;
+		System.out.println(return_list);
+		return return_list;
 	}
 
 }
