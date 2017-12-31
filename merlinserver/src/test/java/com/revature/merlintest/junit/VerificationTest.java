@@ -17,7 +17,7 @@ public class VerificationTest {
 	public void sendEmailTest() {
 		String token = UUID.randomUUID().toString();		
 		try {
-			boolean success = UserVerificationService.sendVerification("merlintest@mail.com", token);
+			boolean success = UserVerificationService.sendVerification("merlintest@mail.com", "username", token);
 			Assert.assertTrue(success);
 		} catch (InterruptedException e) {
 			e.printStackTrace();

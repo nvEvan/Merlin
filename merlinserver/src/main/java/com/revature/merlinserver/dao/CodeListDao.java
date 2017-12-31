@@ -14,7 +14,7 @@ import com.revature.merlinserver.beans.MagicalUser;
  * @author Alex
  */
 public class CodeListDao extends MerlinSessionDao<MagicalUser> {
-	
+
 	/**
 	 * No-args constructor
 	 */
@@ -36,37 +36,60 @@ public class CodeListDao extends MerlinSessionDao<MagicalUser> {
 	 */
 	public CodeList getCodeListById(final int id)  {
 		CodeList cl = null;
-		
+
 		if (isReady()) {
 			Query q = null;
-			
+
 			q = session.createQuery("FROM CodeList WHERE id = ?");
 			q.setParameter(0, id);
 			cl = (CodeList) q.uniqueResult();
 		}
-		
+
 		return cl;
 	}
-	
+
 	/**
 	 * Return all of the codelists of a given code
 	 * @return the list of codelists of that code
 	 */
-	public List<com.revature.merlinserver.beans.CodeList> getCodeListsByCode(final String code) {
+	public List<CodeList> getCodeListsByCode(final String code) {
 		List<CodeList> states = null;
-		
+
 		if (isReady()) {
 			Query q = null;
-			states = new ArrayList<com.revature.merlinserver.beans.CodeList>();
-			
+			states = new ArrayList<CodeList>();
+
 			q = session.createQuery("FROM CodeList WHERE code = ?"); //grab codelists by certain code
 			q.setParameter(0, code);
-			
+
 			for (Object state : q.list()) {
 				states.add((CodeList) state);
 			}
 		}
-		
+
 		return states;
+	}
+
+	/**
+	 * Grab the stateCity code based off of the state and city combination if it exists.
+	 * The description of the stateCity will be the city's value, and the value of the stateCity will be the state's value
+	 * @param stateId
+	 * @param cityId
+	 * @return the stateCity
+	 */
+	public CodeList getStateCity(String stateId, String cityId) {
+		CodeList stateCityCode = null;
+
+		if (isReady()) {
+			Query q = null;
+			stateCityCode = new CodeList();
+
+			q = session.createQuery("FROM CodeList WHERE description = ? AND value = ?");
+			q.setParameter(0, cityId);
+			q.setParameter(1, stateId);
+			stateCityCode = (CodeList) q.uniqueResult();
+		}
+
+		return stateCityCode;
 	}
 }
