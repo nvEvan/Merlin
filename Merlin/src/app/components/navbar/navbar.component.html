@@ -11,11 +11,10 @@
 			</div>
 			<div id="navbarCollapse" class="collapse navbar-collapse">
 				<ul class="nav navbar-nav">
-					<li><a (click)=signout() id="logout">Logout</a></li>
 				</ul>
 				<ul class="nav navbar-nav navbar-right">
 					<li class="readonly"><a id="username"
-						class="fa fa-user-circle readonly"> {{username}}</a></li>
+						class="fa fa-user-circle readonly">&nbsp;{{username}}</a></li>
 					<li class="dropdown" navdropdown>
 					<a class="dropdown-toggle" data-toggle="dropdown">
 					 <span class="fa fa-cog"></span>&nbsp;Settings
@@ -26,7 +25,7 @@
 								<a>Account</a>
 								<hr class="hr-divider">		
 							</li>
-							<li><a>Sign out</a></li>		
+							<li><a (click)=signout() id="logout">Sign out</a></li>		
 						</ul>
 					</li>
 				</ul>

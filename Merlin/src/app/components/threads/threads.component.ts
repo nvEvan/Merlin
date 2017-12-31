@@ -138,6 +138,11 @@ export class ThreadsComponent  {
     }
   }
 
+  // Opens selected thread
+  onOpenThread() {
+
+  }
+
   ///
   //  HELPER METHODS
   ///

@@ -20,7 +20,7 @@
 	<div class="row" style="padding-top:10px;">
 		<div class="col-xs-12">
 			<ul class="list" *ngIf="listReady; else loadingCircle">
-				<li class="list-item" *ngFor="let thread of threads" (click)="onListItemClick()">
+				<li class="list-item" *ngFor="let thread of threads">
 					<div style="position:relative;">
 						<div style="display: inline-block; padding-top: 5px;">
 							<label><font color="#004aff">Thread Name</font>: <span>{{thread.name}}</span></label>,
@@ -30,7 +30,7 @@
 						</div>
 
 						<div class="col-xs-2" style="float: right; padding: 0px;">
-							<button class="btn-secondary form-control">
+							<button value={{thread.link}} class="btn-secondary form-control"(click)="onOpenThread()">
 								<span class="fa fa fa-commenting"></span>&nbsp;Open Thread</button>
 						</div>
 					</div>

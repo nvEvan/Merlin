@@ -10,10 +10,11 @@ import { DropdownDirective } from '../../directives/dropdown/dropdown.directive'
 })
   
 export class NavbarComponent implements OnInit {
+  username: string;
 
-  username:string;
-
-  constructor(private router: Router, private login: LoginService){}
+  constructor(private router: Router, private login: LoginService){
+    this.username = this.login.getUserData().user.username;
+  }
 
   ngOnInit(){  }
 
