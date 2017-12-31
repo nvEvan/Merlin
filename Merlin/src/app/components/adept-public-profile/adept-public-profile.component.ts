@@ -8,6 +8,8 @@ import { AdeptIdService } from '../../services/adept-id/adept-id.service';
   styleUrls: ['./adept-public-profile.component.css'],
   inputs: ['Adept']
 })
+
+//Display the public profile for an adept
 export class AdeptPublicProfileComponent implements OnInit {
   adeptId : number; 
   message : string;

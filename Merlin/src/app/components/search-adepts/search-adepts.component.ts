@@ -5,6 +5,7 @@ import { Http, Response } from '@angular/http';
 import { Router } from '@angular/router';
 import { AdeptIdService } from '../../services/adept-id/adept-id.service';
 import { OnInit } from '@angular/core/src/metadata/lifecycle_hooks';
+import { environment } from '../../../environments/environment'
 
 @Component({
     selector:'app-search-adepts',
@@ -32,6 +33,9 @@ export class SearchAdeptsComponent implements OnInit{
         this.router.navigate(['adept-public-profile']);
       };
 
+    /*
+    * navigateToHomePage - Navigates to the application's home page
+    */ 
     navigateToHomePage() {
     console.log("Navigating to current user profile");
     this.router.navigate(['profile']);
@@ -39,16 +43,13 @@ export class SearchAdeptsComponent implements OnInit{
 
     ngOnInit() {
         //Fetch all adepts from the database
-        this.http.get("http://localhost:8085/merlinserver/rest/fetch/adepts/all")
+        this.http.get(environment.url + "merlinserver/rest/fetch/adepts/all")
         .subscribe(
             (res: Response) => {
                 this.Adepts = res.json();
             }
         )
 
-        this.adeptIdService.currentMessage.subscribe(message => this.message = message)
         this.adeptIdService.adeptId.subscribe(adeptID => this.adeptId = adeptID)
-        this.adeptIdService.changeMessage("Changing the message!!! In SearchAdeptsComponent");
-        this.adeptIdService.changeId(-58);
     }
 }
