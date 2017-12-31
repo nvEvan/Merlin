@@ -20,7 +20,6 @@ import { environment } from '../../../environments/environment'
 export class SearchAdeptsComponent implements OnInit{
     Adepts : any;
     adeptId : number; 
-    message : string;
     
     constructor(private http: Http, private router: Router, private adeptIdService : AdeptIdService){};
 
@@ -50,6 +49,7 @@ export class SearchAdeptsComponent implements OnInit{
             }
         )
 
+        //Store data in service
         this.adeptIdService.adeptId.subscribe(adeptID => this.adeptId = adeptID)
     }
 }
