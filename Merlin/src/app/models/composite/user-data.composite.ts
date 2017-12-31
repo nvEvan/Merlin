@@ -10,5 +10,5 @@ export class UserData {
     token: string;
     user: MagicalUser;
     privateUserInfo: PrivateUserInfo;
-    publicUserInfo: PublicUserInfo;
+    publicInfo: PublicUserInfo;
 }
