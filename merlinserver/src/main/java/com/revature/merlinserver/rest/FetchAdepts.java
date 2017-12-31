@@ -15,7 +15,6 @@ import com.revature.merlinserver.beans.PrivateUserInfo;
 import com.revature.merlinserver.beans.PublicUserInfo;
 import com.revature.merlinserver.dao.CodeListDao;
 import com.revature.merlinserver.dao.MagicalUserDao;
-import com.revature.merlinserver.paramwrapper.RegisterParams;
 
 /**
  * FetchAdepts --- Rest services for fetching data related to adepts
