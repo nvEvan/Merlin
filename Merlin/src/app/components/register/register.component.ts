@@ -12,7 +12,10 @@ import { Router } from '@angular/router';
 import { OnInit, OnChanges } from '@angular/core/src/metadata/lifecycle_hooks';
 import { CodeListService } from '../../services/codelist/codelist.service';
 import { MagicalFileUpload } from '../../models/magical-file-upload.model';
-import { RequestOptions } from '@angular/http/src/base_request_options';
+import { environment } from '../../../environments/environment';
+import { Http, Headers, RequestOptions } from '@angular/http/';
+
+
 /**
  * Component for user registration
  * @author Alex
@@ -30,15 +33,17 @@ import { RequestOptions } from '@angular/http/src/base_request_options';
 export class RegisterComponent implements OnInit, OnChanges {
   @ViewChild("citydiv") citySelect: ElementRef
   @ViewChild("statediv") stateSelect: ElementRef
+  @ViewChild('uploadForm') form: ElementRef;
 
   private magicalUser: MagicalUser
   private privateUserInfo: PrivateUserInfo
   private apprenticeData: UserPrivateData
   private adeptData: AdeptData
+  private formData: FormData;
 
   confirmPassword: string = ""
   loading: boolean = true
-
+  url: string;
   showPasswordAlert: boolean = false
   showUsernameAlert: boolean = false
   showStateCityAlert: boolean = false
@@ -64,7 +69,7 @@ export class RegisterComponent implements OnInit, OnChanges {
     let state = this.stateSelect.nativeElement.children[0].children[0].value
   }
 
-  constructor(private registerService: RegistrationService, private router: Router,
+  constructor(private registerService: RegistrationService, private router: Router, private http: Http,
     private codeListService: CodeListService) {
     this.apprenticeData = new UserPrivateData()
     this.adeptData = new AdeptData()
@@ -82,6 +87,8 @@ export class RegisterComponent implements OnInit, OnChanges {
     this.adeptData.privateUserInfo = this.privateUserInfo
     this.adeptData.user = this.magicalUser
     this.adeptData.magicalFileUpload.user = this.magicalUser
+
+    this.url = environment.url;
   }
 
   /**
@@ -94,7 +101,7 @@ export class RegisterComponent implements OnInit, OnChanges {
         this.registerService.registerApprentice(this.apprenticeData);
       } else {
         console.log(JSON.stringify(this.adeptData))
-        this.registerService.registerAdept(this.adeptData)
+        this.registerService.registerAdept(this.adeptData, this.formData);
       }
       this.router.navigate(['home'])
     }
@@ -176,15 +183,16 @@ export class RegisterComponent implements OnInit, OnChanges {
    * React to the adept uploading a file
    */
   fileChange(event): void {
-    let file = event.target.files[0]
+    let file = event.target.files[0];
+    let headers = new Headers();
+    let options = new RequestOptions({ headers: headers });
+
     if (file == null)
-      return
+      return;
 
-    let reader = new FileReader();
-    reader.readAsDataURL(file);
-
-    this.adeptData.magicalFileUpload.file = reader.result
-    this.adeptData.magicalFileUpload.fileName = file.name
-    debugger;
+    this.formData = new FormData();
+    this.formData.append("form[]", file, file.name);
   }
+
+
 }

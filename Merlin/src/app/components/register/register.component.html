@@ -83,8 +83,8 @@
 
     <div *ngIf="adeptAccount">
       <!--File upload for adepts -->
-      <form enctype="multipart/form-data">
-        <input type="file" (change)="fileChange($event)" accept=".txt,.pdf,.doc,.docx">
+      <form action='{{url + "merlinserver/rest/register/upload"}}' method="post" enctype="multipart/form-data">
+        <input type="file" accept=".txt,.pdf,.doc,.docx" (change)="fileChange($event)">
       </form>
     </div>
 
