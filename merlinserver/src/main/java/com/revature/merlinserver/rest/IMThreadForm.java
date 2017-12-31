@@ -2,6 +2,7 @@ package com.revature.merlinserver.rest;
 
 import java.sql.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
@@ -9,12 +10,14 @@ import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 
 import com.revature.merlinserver.beans.IMThread;
+import com.revature.merlinserver.dao.CodeListDao;
 import com.revature.merlinserver.dao.IMThreadDao;
 import com.revature.merlinserver.paramwrapper.InsertIMThreadParams;
 import com.revature.merlinserver.service.TokenService;
-import com.revature.util.DateUtil;
+import com.revature.util.ServiceUtil;
 
 /**
  * Handles all Instant Messaging Thread requests
@@ -30,7 +33,7 @@ public class IMThreadForm {
 	@GET
 	@Path("get/all")
 	@Produces(MediaType.APPLICATION_JSON)
-	public List<IMThread> getAllThreads() {
+	public String getAllThreads() {
 		IMThreadDao dao = new IMThreadDao();
 		List<IMThread> threads;
 		
@@ -43,9 +46,7 @@ public class IMThreadForm {
 		// close connection
 		dao.close();
 		
-		Date d = DateUtil.toDate("10/10/2017");
-		
-		return threads;
+		return ServiceUtil.toJson(threads);
 	}
 	
 	/**
@@ -56,18 +57,31 @@ public class IMThreadForm {
 	@POST
 	@Path("/insert")
 	@Consumes(MediaType.APPLICATION_JSON)
-	@Produces(MediaType.TEXT_PLAIN)
+	@Produces(MediaType.APPLICATION_JSON)
 	public String insertIMThread(InsertIMThreadParams params) {
 		IMThreadDao dao = new IMThreadDao();
-		String response = "invalid token";
+		CodeListDao cd = new CodeListDao();
+		com.revature.merlinserver.beans.CodeList status = null;
+		IMThread thread = null;
 		
 		// if has valid token
 		if (TokenService.isTokenValid(params.getToken())) {
 			// open connection
 			dao.open();
 			
-			// insert data
-			response = dao.insertIMThread(params.getThread()) == 1 ? "ok" : "Failed to insert IMThread, where IMThread=[" + params.getThread() + "]";
+			// If thread name is unique ONLY
+			if (dao.findIMThreadByName(params.getThread().getName()) == null) {
+				cd.setSession(dao.getSession());
+				
+				// get new status 
+				status = cd.getCodeListsByCode("STATUS").stream().filter((item) -> item.getValue().equals("NEW")).collect(Collectors.toList()).get(0);
+				thread = params.getThread();
+				thread.setStatus(status);
+				thread.setThreadCreationDate(new Date(new java.util.Date().getTime()));
+				
+				// insert data
+				dao.insertIMThread(params.getThread());
+			} 
 			
 			// close connection
 			dao.close();
@@ -76,7 +90,7 @@ public class IMThreadForm {
 			TokenService.updateTokenByToken(params.getToken());
 		}
 		
-		return response;
+		return thread == null ? null : ServiceUtil.toJson(params);
 	}
 	
 }
