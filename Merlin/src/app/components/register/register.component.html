@@ -1,16 +1,104 @@
 <div class="register">
-  <table>
-      <tr><td id="label">Username</td> <td><input name="username" type="text" required></td></tr>
-      <tr><td id="label">Password</td> <td><input name="password" type="text" required></td></tr>
-      <tr><td id="label">First Name</td> <td><input name="fname" type="text" required></td></tr>
-      <tr><td id="label">Last Name</td> <td><input name="lname" type="text" required></td></tr>
-      <tr><td id="label">Phone</td> <td><input name="phone" type="text" required></td></tr>
-      <tr><td id="label">E-mail</td> <td><input name="email"  type="email" required></td></tr>
-      <tr><td id="label">Address</td> <td><input name="address" type="text" required></td></tr>
-      <tr><td id="label">City</td> <td><input name="city" type="text" required></td></tr>
-      <tr><td id="label">State</td> <td><input name="state" type="text" required></td></tr>
-  </table>       
-  <input type="button" value="Login">
+
+  <div>
+    <div>
+      <span>Role</span>
+      <select id="roleInput" name="Role" [(ngModel)]="privateUserInfo.role" (change)="roleChange()">
+        <option [ngValue]="role" *ngFor="let role of roles">{{role.value}}</option>
+      </select>
+    </div>
+  </div>
+  <!-- user's email -->
+  <div>
+    <div>
+      <span>Email</span>
+    </div>
+    <input id="emailInput" type="text" [(ngModel)]="privateUserInfo.email">
+  </div>
+
+  <!--Username MUST be unique-->
+  <div>
+    <span id="usernameAlert" style="color:red"></span>
+    <div>
+      <span>Username</span>
+    </div>
+    <input id="usernameInput" type="text" [(ngModel)]="magicalUser.username" (blur)="usernameIsUnique()">
+    <span *ngIf="showUsernameAlert" style="color:red">This username is not available.</span>
+  </div>
+
+  <!-- Password -->
+  <div>
+    <div>
+      <span>Password</span>
+      <span>Confirm Password</span>
+    </div>
+    <input id="password1Input" type="password" [(ngModel)]="magicalUser.password" (keyup)="!passwordsMatch()">
+    <input id="password2Input" type="password" [(ngModel)]="confirmPassword" (keyup)="!passwordsMatch()">
+    <span *ngIf="showPasswordAlert" style="color:red">These passwords do not match.</span>
+  </div>
+
+  <div>
+    <div>
+      <span>First Name</span>
+    </div>
+    <input id="firstNameInput" type="text" [(ngModel)]="privateUserInfo.firstName">
+    <div>
+      <span>Last Name</span>
+    </div>
+    <input id="lastNameInput" type="text" [(ngModel)]="privateUserInfo.lastName">
+  </div>
+
+  <div>
+    <div>
+      <span>Address</span>
+    </div>
+    <input id="addressInput" type="text" [(ngModel)]="privateUserInfo.address">
+  </div>
+
+  <div>
+    <div>
+      <span>State City</span>
+    </div>
+    <div>
+      <div #statediv>
+        <app-state (change)="checkCityState()"></app-state>
+      </div>
+      <div #citydiv>
+        <app-city (change)="checkCityState()"></app-city>
+      </div>
+      <!-- Tell the user they did not select a valid state/city combination -->
+      <div>
+        <span *ngIf="showStateCityAlert" style="color:red">
+          You must select a city belonging to the correct state.
+        </span>
+      </div>
+
+    </div>
+
+    <div>
+      <span>Phone Number</span>
+      <input id="phoneNumberInput" type="text" [(ngModel)]="privateUserInfo.phoneNumber">
+    </div>
+
+    <div>
+      <!--File upload for adepts -->
+
+      <input (change)="fileChange($event)" type="file">
+    </div>
+
+    <div>
+      <!-- register the account -->
+      <input id="registerInput" type="button" value="Register" (click)="register()">
+    </div>
+
+    <!-- Tell the user they have fields that are unfilled -->
+    <div>
+      <span *ngIf="fieldsAreBlank" style="color:red">
+        You must fill out all information.
+      </span>
+    </div>
+  </div>
+
 </div>
 
 <a href="home">Back</a>

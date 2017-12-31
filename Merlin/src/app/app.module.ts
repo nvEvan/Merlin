@@ -39,6 +39,8 @@ import { SignInComponent } from './components/sign-in/sign-in.component';
 import { HomeComponent } from './components/home/home.component';
 import { BadgesComponent } from './components/badges/badges.component';
 import { ThreadsComponent } from './components/threads/threads.component';
+import { StateComponent } from './components/codelist/state/state.component'
+import { CityComponent } from './components/codelist/city/city.component';
 
 ///
 //  DIRECTIVES
@@ -56,6 +58,8 @@ import { UserPrivateInfoService } from './services/user-private-info/user-privat
 import { ChatService } from './services/firebase/chat/chat.service';
 import { AuthService } from './services/firebase/authenticate/auth.service';
 import { SimpleNgbModal } from "./services/modals/simple.ngb.modal"
+import { CodeListService } from './services/codelist/codelist.service';
+import { RegistrationService } from './services/registration/registration.service';
 
 ///
 //  MODALS 
@@ -80,7 +84,9 @@ import { environment } from './../environments/environment'
     BadgesComponent,
     ThreadsComponent,
     DropdownDirective,
-    NewThreadModal
+    NewThreadModal,
+    StateComponent,
+    CityComponent
   ],
   imports: [
     BrowserModule,
@@ -107,6 +113,8 @@ import { environment } from './../environments/environment'
     UserPrivateInfoService, 
     AuthService, 
     ChatService,
+    CodeListService,
+    RegistrationService,
     SimpleNgbModal
   ],
   bootstrap: [AppComponent]
