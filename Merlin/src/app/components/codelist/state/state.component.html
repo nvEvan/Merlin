@@ -1,5 +1,6 @@
-<select id="stateInput" name="states" [value]="state" class="form-control">
+<select id="stateInput" name="states" class="form-control">
     <option [value]="state.value" *ngFor="let state of states">
         {{state.description}}
     </option>
+    <img src="../../resources/loading.gif" height="42" width="42">
 </select>

@@ -3,8 +3,9 @@
   <div>
     <div>
       <span>Role</span>
-      <select id="roleInput" name="Role" [(ngModel)]="privateUserInfo.role" (change)="roleChange()">
-        <option [ngValue]="role" *ngFor="let role of roles">{{role.value}}</option>
+      <select id="roleInput" name="Role" [value]="privateUserInfo.role" (change)="roleChange()"
+      class="form-control">
+        <option [value]="role" *ngFor="let role of roles">{{role.value}}</option>
       </select>
     </div>
   </div>
@@ -80,12 +81,10 @@
       <input id="phoneNumberInput" type="text" [(ngModel)]="privateUserInfo.phoneNumber">
     </div>
 
-    <div>
+    <div *ngIf="adeptAccount">
       <!--File upload for adepts -->
-      <ng4-files-click id="fileUpload" *ngIf="adeptAccount" (filesSelect)="filesSelect($event)" accept=".txt,.pdf,.doc,.docx">
-        <span>Submit Certification</span>
-      </ng4-files-click>
-      <input (change)="fileChange($event)" type="file">
+     <input #fileUpload type="file" (change)="fileChange($event)" accept=".txt,.pdf,.doc,.docx">
+        
     </div>
 
     <div>
