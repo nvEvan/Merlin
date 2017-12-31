@@ -1,6 +1,7 @@
 /**
- * @author: Antony
- * @description Populates screen with open threads for user
+ * @author: Antony Lulciuc
+ * @description Populates screen with open threads for user. Allows the creation and search of threads for user to 
+ * use.
  */
 
 import { Component, ViewEncapsulation, ViewContainerRef, ComponentFactoryResolver } from '@angular/core';
@@ -8,8 +9,6 @@ import { HttpClient } from '@angular/common/http';
 import { environment } from "../../../environments/environment";
 import { shared } from "../../../shared/shared";
 import { IMThread } from '../../models/im-thread.model';
-import { ChatService } from '../../services/firebase/chat/chat.service';
-import { PrivateUserInfo } from '../../models/private-user-info.model';
 import { UserData } from '../../models/composite/user-data.composite';
 import { LoginService } from '../../services/login/login.service';
 import { FailNewThreadModal } from '../modals/threads/failnewthread.modal';
@@ -31,8 +30,8 @@ export class ThreadsComponent  {
   threadName: string;
   
   // Pull IM-Threads for user to interact with 
-  constructor(private login: LoginService, private http: HttpClient, private chat: ChatService,
-      private viewContainerRef: ViewContainerRef, private componentFactoryResolver: ComponentFactoryResolver) {
+  constructor(private login: LoginService, private http: HttpClient, private viewContainerRef: ViewContainerRef, 
+      private componentFactoryResolver: ComponentFactoryResolver) {
     this.userData = this.login.getUserData();
     
     // Add modal
@@ -71,6 +70,9 @@ export class ThreadsComponent  {
     });
   }
 
+  /**
+   * Injects a FailNewThreadModal  so we have access to component methods
+   */
   injectModal() {
     const componentFactory = this.componentFactoryResolver.resolveComponentFactory(FailNewThreadModal);
     const containerRef = this.viewContainerRef;
@@ -86,27 +88,34 @@ export class ThreadsComponent  {
   //  EVENT HANDLERS
   ///
 
+  /**
+   * Handles new thread event
+   */
   onNewThread() {
     var self = this;
     var thread = new IMThread();
     var params = new IMThreadParams();
 
+    // Set thread information
     thread.creator = this.userData.user;
     thread.link = "message_" + this.threadName;
     thread.name = this.threadName;
 
+    // Build request params 
     params.thread = thread;
     params.token = this.userData.token;
 
+    // Attempt to create new thread
     this.http.post(environment.url + "merlinserver/rest/threads/insert", params).subscribe(
       data => {
+        // If falsey then failed to create new thread
         if (!data)
           this.failModal.openModal();
         else
           self.loadAllThreads();
       },
       error => {
-        debugger;
+        console.log(error);
       }
     );
   }
@@ -128,19 +137,6 @@ export class ThreadsComponent  {
         this.threads.push(thread);
     }
   }
-
-  onSubmit() {
-    var imthread = new IMThread();
-
-    debugger;
-
-    imthread.link="message_" + this.threadName;
-    imthread.name= this.threadName;
-    imthread.creator = this.userData.user;
-
-    this.chat.sendMessage(imthread, this.userData, "this is a test");
-  }
-
 
   ///
   //  HELPER METHODS

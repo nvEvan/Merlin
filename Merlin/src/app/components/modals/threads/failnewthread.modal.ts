@@ -1,6 +1,8 @@
+/**
+ * @description Defines modal used to display failed attempt to create a new thread
+ * @author Antony Lulciuc
+ */
 import { Component, TemplateRef, ViewChild } from '@angular/core';
-import { SimpleNgbModal } from '../../../services/modals/simple.ngb.modal';
-import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 
 @Component({
@@ -15,8 +17,10 @@ export class FailNewThreadModal {
 
   constructor(private modalService: BsModalService) {} // {2}
 
+  /**
+   * Dispplays modal on screen
+   */
   public openModal() {
     this.modalRef = this.modalService.show(this.template); 
-    
   }
 }
