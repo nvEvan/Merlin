@@ -53,31 +53,31 @@ public class CodeListDao extends MerlinSessionDao<MagicalUser> {
 	 * @return the list of codelists of that code
 	 */
 	public List<CodeList> getCodeListsByCode(final String code) {
-		List<CodeList> states = null;
+		List<CodeList> codelists = null;
 
 		if (isReady()) {
 			Query q = null;
-			states = new ArrayList<CodeList>();
+			codelists = new ArrayList<CodeList>();
 
 			q = session.createQuery("FROM CodeList WHERE code = ?"); //grab codelists by certain code
 			q.setParameter(0, code);
 
-			for (Object state : q.list()) {
-				states.add((CodeList) state);
+			for (Object c : q.list()) {
+				codelists.add((CodeList) c);
 			}
 		}
 
-		return states;
+		return codelists;
 	}
 
 	/**
 	 * Grab the stateCity code based off of the state and city combination if it exists.
 	 * The description of the stateCity will be the city's value, and the value of the stateCity will be the state's value
-	 * @param stateId
-	 * @param cityId
+	 * @param stateValue
+	 * @param cityValue
 	 * @return the stateCity
 	 */
-	public CodeList getStateCity(String stateId, String cityId) {
+	public CodeList getStateCity(String stateValue, String cityValue) {
 		CodeList stateCityCode = null;
 
 		if (isReady()) {
@@ -85,8 +85,8 @@ public class CodeListDao extends MerlinSessionDao<MagicalUser> {
 			stateCityCode = new CodeList();
 
 			q = session.createQuery("FROM CodeList WHERE description = ? AND value = ?");
-			q.setParameter(0, cityId);
-			q.setParameter(1, stateId);
+			q.setParameter(0, cityValue);
+			q.setParameter(1, stateValue);
 			stateCityCode = (CodeList) q.uniqueResult();
 		}
 

@@ -1,7 +1,5 @@
 package com.revature.merlinserver.beans;
 
-import java.sql.Blob;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -38,7 +36,7 @@ public class MagicalFileUpload implements BusinessObject {
 	
 	@Lob
 	@Column(name="content", nullable=false)
-	private Blob file;
+	private byte[] file;
 
 	/**
 	 * No-args constructor
@@ -54,7 +52,7 @@ public class MagicalFileUpload implements BusinessObject {
 	 * @param fileName - name of the file
 	 * @param file - the actual file
 	 */
-	public MagicalFileUpload(MagicalUser user, CodeList fileType, String fileName, Blob file) {
+	public MagicalFileUpload(MagicalUser user, CodeList fileType, String fileName, byte[] file) {
 		super();
 		this.user = user;
 		this.fileType = fileType;
@@ -70,7 +68,7 @@ public class MagicalFileUpload implements BusinessObject {
 	 * @param fileName - name of the file
 	 * @param file - the actual file
 	 */
-	public MagicalFileUpload(Integer id, MagicalUser user, CodeList fileType, String fileName, Blob file) {
+	public MagicalFileUpload(Integer id, MagicalUser user, CodeList fileType, String fileName, byte[] file) {
 		super();
 		this.id = id;
 		this.user = user;
@@ -111,11 +109,11 @@ public class MagicalFileUpload implements BusinessObject {
 		this.fileName = fileName;
 	}
 
-	public Blob getFile() {
+	public byte[] getFile() {
 		return file;
 	}
 
-	public void setFile(Blob file) {
+	public void setFile(byte[] file) {
 		this.file = file;
 	}
 }
