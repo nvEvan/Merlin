@@ -72,6 +72,7 @@ import { FailNewThreadModal } from './components/modals/threads/failnewthread.mo
 ///
 
 import { environment } from './../environments/environment'
+import { VerifyAdepts } from './components/verifyAdepts/verifyAdepts.component';
 
 @NgModule({
   declarations: [
@@ -87,7 +88,8 @@ import { environment } from './../environments/environment'
     FailNewThreadModal,
     StateComponent,
     CityComponent,
-    ChatRoom
+    ChatRoom,
+    VerifyAdepts
   ],
   imports: [
     BrowserModule,
