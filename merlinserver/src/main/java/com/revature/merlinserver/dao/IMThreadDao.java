@@ -30,6 +30,27 @@ public class IMThreadDao extends MerlinSessionDao<IMThread> {
 	}
 	
 	/**
+	 * Attempts to locate thread by name
+	 * @param name - title of thread
+	 * @return IMThread if found else null
+	 */
+	public IMThread findIMThreadByName(String name) {
+		IMThread thread = null;
+		
+		if (isReady()) {
+			Query query = session.createQuery("FROM IMThread WHERE name = ?");
+			
+			// set thread data 
+			query.setParameter(0, name);
+			
+			// atempt to get threead
+			thread = (IMThread)query.uniqueResult();
+		}
+		
+		return thread;
+	}
+	
+	/**
 	 * Inserts a instant message thread if session opened 
 	 * @param thread - what to insert
 	 * @returns 1 on successful insert else 0 
@@ -44,13 +65,17 @@ public class IMThreadDao extends MerlinSessionDao<IMThread> {
 		return 0;
 	}
 	
-	
 	///
 	//	PRIVATE METHODS
 	///
 	
+	/**
+	 * Determines if thread has all data needed before inserted
+	 * @param thread - what to check
+	 * @return true if valid else false
+	 */
 	private boolean hasValidData(IMThread thread) {
-		boolean result = thread == null;
+		boolean result = thread != null;
 		
 		// Validate new IMThread instance data
 		result = result && thread.getCreator() != null;
