@@ -14,6 +14,7 @@ import { Observable } from "rxjs/Observable";
  */
 export class StateComponent implements OnInit {
     states: CodeList[]
+    loading : boolean = true;
 
     constructor(private codeListService : CodeListService) { }
 
@@ -21,6 +22,7 @@ export class StateComponent implements OnInit {
         this.codeListService.getCodeListsByCode("US-STATE")
         .subscribe(response => {
           this.states = response;
+          this.loading = false;
         })
     }
 }

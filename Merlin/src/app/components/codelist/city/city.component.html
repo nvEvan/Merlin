@@ -1,5 +1,6 @@
-<select id="cityInput" name="city" class="form-control">
+<select *ngIf="!loading" id="cityInput" name="city" class="form-control">
     <option [value]="city.value" *ngFor="let city of cities">
         {{city.description}}
     </option>
 </select>
+<img *ngIf="loading" src="../../../../assets/images/loading.gif" height="42" height="42">

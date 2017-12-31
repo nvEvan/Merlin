@@ -1,13 +1,13 @@
 <div class="register">
 
   <div>
-    <div>
+    <div *ngIf="!loading">
       <span>Role</span>
-      <select id="roleInput" name="Role" [value]="privateUserInfo.role" (change)="roleChange()"
-      class="form-control">
-        <option [value]="role" *ngFor="let role of roles">{{role.value}}</option>
+      <select (change)="roleChange()" [(ngModel)]="privateUserInfo.role" class="form-control">
+        <option id="roleInput" [ngValue]="role" *ngFor="let role of roles">{{role.value}}</option>
       </select>
     </div>
+    <img *ngIf="loading" src="../../../../assets/images/loading.gif" height="42" height="42">
   </div>
   <!-- user's email -->
   <div>
@@ -83,8 +83,9 @@
 
     <div *ngIf="adeptAccount">
       <!--File upload for adepts -->
-     <input #fileUpload type="file" (change)="fileChange($event)" accept=".txt,.pdf,.doc,.docx">
-        
+      <form enctype="multipart/form-data">
+        <input type="file" (change)="fileChange($event)" accept=".txt,.pdf,.doc,.docx">
+      </form>
     </div>
 
     <div>

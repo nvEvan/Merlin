@@ -35,7 +35,9 @@ export class RegisterComponent implements OnInit, OnChanges {
   private privateUserInfo: PrivateUserInfo
   private apprenticeData: UserPrivateData
   private adeptData: AdeptData
+
   confirmPassword: string = ""
+  loading: boolean = true
 
   showPasswordAlert: boolean = false
   showUsernameAlert: boolean = false
@@ -51,16 +53,15 @@ export class RegisterComponent implements OnInit, OnChanges {
   ngOnInit() {
     this.codeListService.getCodeListsByCode("USER-ROLE")
       .subscribe(response => {
-        this.roles = response;
-        this.roles.shift();
+        this.roles = response
+        this.roles.shift() //removes the wizard role
+        this.loading = false
       })
   }
 
   ngOnChanges(changes) {
     let city = this.citySelect.nativeElement.children[0].children[0].value
     let state = this.stateSelect.nativeElement.children[0].children[0].value
-
-    debugger;
   }
 
   constructor(private registerService: RegistrationService, private router: Router,
@@ -73,14 +74,14 @@ export class RegisterComponent implements OnInit, OnChanges {
     this.privateUserInfo = new PrivateUserInfo()
     this.privateUserInfo.user = this.magicalUser
 
+    //for registering apprentices
     this.apprenticeData.privateUserInfo = this.privateUserInfo
     this.apprenticeData.user = this.magicalUser
 
+    //for registering adepts
     this.adeptData.privateUserInfo = this.privateUserInfo
     this.adeptData.user = this.magicalUser
     this.adeptData.magicalFileUpload.user = this.magicalUser
-
-  
   }
 
   /**
@@ -93,8 +94,7 @@ export class RegisterComponent implements OnInit, OnChanges {
         this.registerService.registerApprentice(this.apprenticeData);
       } else {
         console.log(JSON.stringify(this.adeptData))
-        this.registerService.registerAdept(this.adeptData);
-
+        this.registerService.registerAdept(this.adeptData)
       }
       this.router.navigate(['home'])
     }
@@ -133,6 +133,7 @@ export class RegisterComponent implements OnInit, OnChanges {
       this.privateUserInfo.role != null && this.privateUserInfo.stateCity != null &&
       this.magicalUser.password != null
 
+    if (!allFieldsAreEntered) return false
     //if the user registering is an adept they must provide a file of certification
     if (this.privateUserInfo.role.id = 434)
       allFieldsAreEntered = allFieldsAreEntered && this.adeptData.magicalFileUpload != null
@@ -142,10 +143,13 @@ export class RegisterComponent implements OnInit, OnChanges {
     return allFieldsAreEntered
   }
 
+  /**
+   * Confirm that the city and state selected are a match.
+   */
   checkCityState(): void {
     let city = this.citySelect.nativeElement.children[0].children[0].value
     let state = this.stateSelect.nativeElement.children[0].children[0].value
-    debugger;
+
     if (city == null || state == null)
       return
 
@@ -158,22 +162,29 @@ export class RegisterComponent implements OnInit, OnChanges {
     )
   }
 
+  /**
+   * Listens for a user selecting their role.
+   */
   roleChange(): void {
-    if (this.privateUserInfo.role != null)
+    let role = this.privateUserInfo.role
+    if (role != null) {
       this.adeptAccount = this.privateUserInfo.role.id == 434
-
-      debugger;
+    }
   }
 
   /**
    * React to the adept uploading a file
    */
   fileChange(event): void {
-    debugger; let file = event.target.files[0]
-    let formData = new FormData()
+    let file = event.target.files[0]
     if (file == null)
       return
-    // this.adeptData.magicalFileUpload.file = file
-    // this.adeptData.magicalFileUpload.fileName = fileInput.value
+
+    let reader = new FileReader();
+    reader.readAsDataURL(file);
+
+    this.adeptData.magicalFileUpload.file = reader.result
+    this.adeptData.magicalFileUpload.fileName = file.name
+    debugger;
   }
 }
