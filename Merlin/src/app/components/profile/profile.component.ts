@@ -3,6 +3,8 @@ import { LoginService } from '../../services/login/login.service';
 import { UserPrivateData } from '../../models/composite/user-private-data.composite';
 import { UserData } from '../../models/composite/user-data.composite';
 import { EditUserInfoService } from '../../services/edit-user-info/edit-user-info.service';
+import { PublicUserInfo } from '../../models/public-user-info.model';
+import { PrivateUserInfo } from '../../models/private-user-info.model';
 
 @Component({
   selector: 'app-profile',
@@ -18,6 +20,13 @@ export class ProfileComponent implements OnInit {
   ngOnInit() {
     this.userData = this.loginService.getUserData();
     this.edit = false;
+    this.userData.publicInfo.role = this.userData.privateUserInfo.role;
+    
+    if(!this.userData.publicInfo){
+      this.userData.publicInfo = new PublicUserInfo(); 
+      this.userData.publicInfo.user = this.userData.user;
+      this.userData.publicInfo.role = this.userData.privateUserInfo.role;
+    }
    }
 
    editView(){
