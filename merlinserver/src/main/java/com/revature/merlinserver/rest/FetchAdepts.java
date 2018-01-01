@@ -55,13 +55,13 @@ public class FetchAdepts {
 		
 		List<FetchAdeptsParams> return_list = new ArrayList<FetchAdeptsParams>();
 		for(PublicUserInfo user : users) {
-			System.out.println(user.getUser().getUserId());
-			float avg_review = 0;
-			for(Review rev : reviews) {
-				if(rev.getAdept().getUserId() == user.getUser().getUserId()) {
-					avg_review += rev.getScore();
-				}
-			}
+			float avg_review = 0; //initialize average to 0
+			//Untested Review averaging code
+//			for(Review rev : reviews) {
+//				if(rev.getAdept().getUserId() == user.getUser().getUserId()) {
+//					avg_review += rev.getScore();
+//				}
+//			}
 			
 			return_list.add(new FetchAdeptsParams(user, avg_review));
 		}
@@ -82,6 +82,7 @@ public class FetchAdepts {
 		MagicalUser myUser = mod.getMagicalUserById(Integer.parseInt(adeptId));
 		PublicUserInfo pui = pid.getPublicUserInfoByUser(myUser);
 		pid.close();
+		
 		return pui;
 	}
 }
