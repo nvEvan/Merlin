@@ -1,13 +1,9 @@
 <app-navbar></app-navbar>
 <div>
-  <div>
-    <h1>Welcome to your page {{userData.privateUserInfo.firstName}}!</h1>
-  </div>
-
   <!-- Block one of visible -->
 
   <div *ngIf="!edit" class="container">
-    <h3>Your View</h3>
+    <h3>Information only you can see</h3>
     <div class=row>
       <div class="col-md-3"><b>First Name</b></div>
       <div class="col-md-3"><b>Last Name</b></div>
@@ -45,7 +41,7 @@
 
   <!-- Public view -->
 
-    <h3>Public View</h3>
+    <h3>Stuff everyone can see</h3>
     <div class=row>
       <div class="col-md-3"><b>First Name</b></div>
       <div class="col-md-3"><b>Last Name</b></div>
