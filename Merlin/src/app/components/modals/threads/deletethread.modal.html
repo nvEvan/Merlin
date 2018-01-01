@@ -1,0 +1,13 @@
+<ng-template #template>
+        <div class="modal-header">
+            <h4 class="modal-title pull-left" *ngIf="pass"><font color="green">Deleted</font> thread!</h4>
+            <h4 class="modal-title pull-left" *ngIf="!pass"><font color="red">Failed</font> to deleted thread!</h4>
+            <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        </div>
+        <div class="modal-body">
+            <label *ngIf="pass"> Thread was deleted. </label>
+            <label *ngIf="!pass"> Failed to delete thread. </label>
+        </div>
+</ng-template>

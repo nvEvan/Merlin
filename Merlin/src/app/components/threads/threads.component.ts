@@ -14,6 +14,7 @@ import { LoginService } from '../../services/login/login.service';
 import { FailNewThreadModal } from '../modals/threads/failnewthread.modal';
 import { IMThreadParams } from '../../models/composite/threads/imthread.composite';
 import { Router } from '@angular/router';
+import { DeleteThreadModal } from '../modals/threads/deletethread.modal';
 
 @Component({
   selector: 'app-threads',
@@ -24,6 +25,7 @@ import { Router } from '@angular/router';
 
 export class ThreadsComponent implements AfterViewInit {
   failModal: FailNewThreadModal;
+  deleteModal: DeleteThreadModal;
   listReady: boolean;
   threads: IMThread[];
   response: IMThread[];
@@ -82,14 +84,8 @@ export class ThreadsComponent implements AfterViewInit {
    * Injects a FailNewThreadModal  so we have access to component methods
    */
   injectModal() {
-    const componentFactory = this.componentFactoryResolver.resolveComponentFactory(FailNewThreadModal);
-    const containerRef = this.viewContainerRef;
-
-    // Remove previous gens.
-    containerRef.clear();
-
-    // Inject component
-    this.failModal = containerRef.createComponent(componentFactory).instance;
+    this.injectFailCreateModal();
+    this.injectDeleteModal();
   }
 
   ///
@@ -163,9 +159,41 @@ export class ThreadsComponent implements AfterViewInit {
     threadContainer.style.height = height + "px";
   }
 
+
+  onDeleteThread(id) {
+    var self = this;
+
+    self.http.delete(environment.url + "merlinserver/rest/threads/delete/" + id).subscribe(data => {
+      self.deleteModal.openModalPass();
+      self.loadAllThreads();
+    })
+  }
+
   ///
   //  HELPER METHODS
   ///
  
+  private injectFailCreateModal() {
+    const componentFactory = this.componentFactoryResolver.resolveComponentFactory(FailNewThreadModal);
+    const containerRef = this.viewContainerRef;
+
+    // Remove previous gens.
+    containerRef.clear();
+
+    // Inject component
+    this.failModal = containerRef.createComponent(componentFactory).instance;
+  }
+
+  private injectDeleteModal() {
+    const componentFactory = this.componentFactoryResolver.resolveComponentFactory(DeleteThreadModal);
+    const containerRef = this.viewContainerRef;
+
+    // Remove previous gens.
+    containerRef.clear();
+
+    // Inject component
+    this.deleteModal = containerRef.createComponent(componentFactory).instance;
+  }
+
 }
 

@@ -33,9 +33,24 @@
 							<label><font color="#004aff">Status</font>: <span>{{thread.status.value}}</span></label>
 						</div>
 
-						<div class="col-xs-2" style="float: right; padding: 0px;">
-							<button class="btn-secondary form-control"(click)="onOpenThread(thread.link, thread.name)">
-								<span class="fa fa fa-commenting"></span>&nbsp;Open Thread</button>
+						<div class="col-xs-3" style="float: right; padding: 0px;">
+							<div *ngIf="userData.privateUserInfo.role.value === 'WIZARD'; else normal">
+								<div class="col-xs-4">
+									<button class="form-control"(click)="onDeleteThread(thread.id)">
+										<span class="fa fa fa-times"></span>&nbsp;Delete
+									</button>
+								</div>
+								<div class="col-xs-8">
+									<button class="btn-secondary form-control"(click)="onOpenThread(thread.link, thread.name)">
+										<span class="fa fa fa-commenting"></span>&nbsp;Open Thread
+									</button>	
+								</div>
+							</div>
+							<ng-template #normal>
+								<button class="btn-secondary form-control"(click)="onOpenThread(thread.link, thread.name)">
+									<span class="fa fa fa-commenting"></span>&nbsp;Open Thread
+								</button>
+							</ng-template>
 						</div>
 					</div>
 				</li>

@@ -70,6 +70,8 @@ import { EditUserInfoService } from './services/edit-user-info/edit-user-info.se
 ///
 
 import { FailNewThreadModal } from './components/modals/threads/failnewthread.modal'
+import { DeleteThreadModal } from './components/modals/threads/deletethread.modal'
+
 
 ///
 //  VARIABLES
@@ -95,7 +97,8 @@ import { VerifyAdepts } from './components/verifyAdepts/verifyAdepts.component';
     StateComponent,
     CityComponent,
     ChatRoom,
-    VerifyAdepts
+    VerifyAdepts,
+    DeleteThreadModal
   ],
   imports: [
     BrowserModule,
@@ -114,7 +117,8 @@ import { VerifyAdepts } from './components/verifyAdepts/verifyAdepts.component';
     RouterModule.forRoot(appRoute)
   ],
   entryComponents: [
-    FailNewThreadModal
+    FailNewThreadModal,
+    DeleteThreadModal
   ],
   providers: [
     GetUserService, 
