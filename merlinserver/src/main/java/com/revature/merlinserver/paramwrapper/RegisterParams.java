@@ -7,14 +7,14 @@ import com.revature.merlinserver.beans.PrivateUserInfo;
  * Wrapper for user registration request arguments
  * @author Antony Lulciuc
  */
-public class RegisterApprenticeParams extends TokenParam {
+public class RegisterParams extends TokenParam {
 	private MagicalUser user;
 	private PrivateUserInfo privateUserInfo;
 	
 	/**
 	 * No-args Constructor
 	 */
-	public RegisterApprenticeParams() {
+	public RegisterParams() {
 		// do nothing
 	}
 	
@@ -23,7 +23,7 @@ public class RegisterApprenticeParams extends TokenParam {
 	 * @param user
 	 * @param privateUserInfo
 	 */
-	public RegisterApprenticeParams(MagicalUser user, PrivateUserInfo privateUserInfo) {
+	public RegisterParams(MagicalUser user, PrivateUserInfo privateUserInfo) {
 		super();
 		this.user = user;
 		this.privateUserInfo = privateUserInfo;

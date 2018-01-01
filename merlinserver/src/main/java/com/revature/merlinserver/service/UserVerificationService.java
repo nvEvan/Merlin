@@ -36,7 +36,7 @@ public class UserVerificationService {
 		final String password =  System.getenv("MerlinEmail"), gmail = "xarxes.merlin@gmail.com", host = System.getenv("merlinhost");
 		Properties props = new Properties();
 		Session session = null;
-		
+
 		props.put("mail.smtp.auth", "true");
 		props.put("mail.smtp.starttls.enable", "true");
 		props.put("mail.smtp.host", "smtp.gmail.com");
@@ -53,12 +53,12 @@ public class UserVerificationService {
 		try {
 			String link = "", body = "";
 			Message message = null;
-			
+
 			link = host + "merlinserver/rest/register/authenticate/" + token;
 			body = 
-					  "<h3>Welcome to Merlin, " + userName + "!</h3>"
-					+ "<h4>Click the following link to activate your account:</h4>" 
-					+ "<h4><a href=" + link +">" + link + "</a></h4>";
+					"<h3>Welcome to Merlin, " + userName + "!</h3>"
+							+ "<h4>Click the following link to activate your account:</h4>" 
+							+ "<h4><a href=" + link +">" + link + "</a></h4>";
 
 			//form the message details
 			message = new MimeMessage(session);
@@ -78,29 +78,36 @@ public class UserVerificationService {
 	}
 
 	/**
-	 * Update the status of a magical user to active.
-	 * @param token
-	 * @param user
+	 * Update the status of a magical user.
+	 * Apprentice's status goes from 'NEW' to 'ACTIVE'
+	 * Adept's status goes from 'NEW' to 'PENDING', because they must next be verified by a wizard.
+	 * @param user to be updated
 	 */
 	public static void updateStatus(MagicalUser user) {
 		PrivateInfoDao pd = new PrivateInfoDao();
 		CodeListDao cd = new CodeListDao();
+		CodeList status = null;
+		PrivateUserInfo userinfo = null;
 		
 		//get the private info of the magical user
 		pd.open();
-		PrivateUserInfo userinfo = pd.getPrivateInfoByUser(user);
-		pd.close();
+		cd.setSession(pd.getSession());
+		userinfo = pd.getPrivateInfoByUser(user);
 		
-		//get the active status
-		cd.open();
-		CodeList status = cd.getCodeListById(425); //id 425 = active status
-		cd.close();
-		
+		//is it an adept or apprentice updating their account
+		if (userinfo.getRole().getId() == 434) {
+			status = cd.getCodeListById(424); //pending status
+			userinfo.setStatus(status);
+			
+		} else {
+			status = cd.getCodeListById(425); //active status
+			userinfo.setStatus(status);
+		}
+
 		//set the user's status to active
 		userinfo.setStatus(status);
-		
+
 		//update the user's status
-		pd.open();
 		pd.update(userinfo);
 		pd.close();
 	}
@@ -113,11 +120,11 @@ public class UserVerificationService {
 	public static boolean userIsNew(final MagicalUser user) {
 		PrivateInfoDao pd = new PrivateInfoDao();
 		boolean userIsNew;
-		
+
 		pd.open();
 		userIsNew = pd.isUserNew(user);
 		pd.close();
-		
+
 		return userIsNew;
 	}
 }
