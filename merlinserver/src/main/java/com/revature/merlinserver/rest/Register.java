@@ -73,13 +73,13 @@ public class Register {
 		if (pi.getRole().getId() == 434) { //add adept info
 			AdeptInfo adeptInfo = new AdeptInfo();
 			AdeptInfoDao adeptInfoDao = new AdeptInfoDao();
-			cd.open();
-			adeptInfoDao.setSession(cd.getSession());
-			adeptInfo.setPaymentInfo(cd.getCodeListById(425));
+			
+			adeptInfoDao.open();
+			adeptInfo.setPaymentInfo(status);
 			adeptInfo.setPrice((float) 25.60);
 			adeptInfo.setAdept(user);
 			adeptInfoDao.insert(adeptInfo);
-			cd.close();
+			adeptInfoDao.close();
 		}
 
 		//Send verification email to user
