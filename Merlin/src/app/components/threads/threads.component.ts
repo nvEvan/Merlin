@@ -161,7 +161,7 @@ export class ThreadsComponent implements AfterViewInit {
     var height = target.innerHeight - 100;
     
     threadContainer.style.height = height + "px";
-}
+  }
 
   ///
   //  HELPER METHODS

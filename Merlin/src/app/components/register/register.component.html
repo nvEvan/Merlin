@@ -1,4 +1,4 @@
-<div class="container-fluid register">
+<div  #box class="container-fluid register" (window:resize)="onResize($event, box)" style="overflow-y:auto;">
   <div class="row header-block">
     <div class="center-block input-max-width">
       <div>

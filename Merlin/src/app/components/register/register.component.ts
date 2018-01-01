@@ -58,7 +58,9 @@ export class RegisterComponent implements OnInit, OnChanges {
         this.roles = response
         this.roles.shift() //removes the wizard role
         this.loading = false
-      })
+      });
+
+      window.dispatchEvent(new Event('resize'));
   }
 
   ngOnChanges(changes) {
@@ -183,5 +185,11 @@ export class RegisterComponent implements OnInit, OnChanges {
     this.formData.append("form[]", file, file.name);
   }
 
+  onResize(event, box) {
+    var target = event.target;
+    var height = target.innerHeight;
+    
+    box.style.height = height + "px";
+  }
 
 }
