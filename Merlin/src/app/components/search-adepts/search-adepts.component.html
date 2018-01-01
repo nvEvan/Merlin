@@ -1,0 +1,24 @@
+<app-navbar></app-navbar>
+<div>
+    <hr>
+    <h3>Adepts</h3>
+</div>
+<div>
+    <table>
+        <thead>
+            <th>Name</th>
+            <th>Average Rating</th>
+            <th>Description</th>
+            <th>Phone Number</th>
+        </thead>
+        <tbody>
+            <tr *ngFor="let adept of Adepts">
+                <td>{{adept.info.firstName}} {{adept.info.lastName}}</td>
+                <td>{{adept.avg_review}}</td>
+                <td>{{adept.info.description}}</td>
+                <td>{{adept.info.phoneNumber}}</td>
+                <td><button (click)="navigateToAdeptPublicProfile(adept)">View</button></td>
+            </tr>
+        </tbody>
+    </table>
+</div>

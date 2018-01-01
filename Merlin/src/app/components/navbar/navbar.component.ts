@@ -10,15 +10,21 @@ import { DropdownDirective } from '../../directives/dropdown/dropdown.directive'
 })
   
 export class NavbarComponent implements OnInit {
+  username: string;
+  isWizard: boolean;
 
-  username:string;
-
-  constructor(private router: Router, private login: LoginService){}
+  constructor(private router: Router, private login: LoginService) {
+    this.username = this.login.getUserData().user.username;
+    this.isWizard = this.login.getUserData().privateUserInfo.role.id == 433;
+  }
 
   ngOnInit(){  }
 
   signout(){
     this.login.logout();
     this.router.navigateByUrl('home');
+  }
+  adeptSearch() {
+    this.router.navigateByUrl('');
   }
 }

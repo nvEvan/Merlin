@@ -1,0 +1,22 @@
+/**
+ *  @author Antony Lulciuc
+ *  Defines css for chat room
+ */
+ 
+
+ .message-form {
+     overflow-y: auto;
+ }
+
+ .message-area {
+    position:absolute;
+    bottom:0px;
+    left:0px;
+    height: 200px;
+ }
+
+ .message-area textarea {
+     height: 100px;
+     padding-bottom: 5px;
+     resize: none;
+ } 

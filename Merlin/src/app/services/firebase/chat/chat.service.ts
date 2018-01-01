@@ -9,7 +9,7 @@ import { Observable } from 'rxjs/Observable';
 //  FIREBASE
 ///
 
-import { AngularFireDatabase, AngularFireList } from 'angularfire2/database';
+import { AngularFireDatabase, FirebaseListObservable } from 'angularfire2/database-deprecated';
 import { AngularFireAuth } from 'angularfire2/auth';
 
 import * as firebase from 'firebase/app';
@@ -32,7 +32,7 @@ import { UserData } from '../../../models/composite/user-data.composite';
 @Injectable()
 export class ChatService {
   user: any;
-  chatMessages: AngularFireList<ChatMessage>;
+  chatMessages: FirebaseListObservable<ChatMessage[]>;
   chatMessage: ChatMessage;
   userName: Observable<string>;
 
@@ -54,19 +54,24 @@ export class ChatService {
     const timestamp = this.getTimeStamp();
 
     // Get lastest messages for DB
-    this.chatMessages = this.getMessages(imthread);
+    this.chatMessages = this.getMessages(imthread.link);
 
     // Create new message and broadcast to users
-    this.chatMessages.push(new ChatMessage(info, msg));
+    this.chatMessages.push(new ChatMessage(info, msg, this.getTimeStamp()));
   }
 
   /**
    * @description Acquires thread data from Firebase database 
-   * @param imthread - used to tie message to thread 
+   * @param link - used to tie message to thread 
    * @returns List of messages 
    */
-  getMessages(imthread: IMThread): AngularFireList<ChatMessage>{
-    return this.db.list(imthread.link);
+  getMessages(link: string): FirebaseListObservable<ChatMessage[]>{
+    return this.db.list(link, {
+      query:{
+        limitToLast: 200,
+        orderByKey:true
+      }
+    });
   }
 
   /**

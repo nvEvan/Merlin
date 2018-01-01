@@ -1,13 +1,150 @@
 <app-navbar></app-navbar>
 <div>
-  <div>
-    <h1>Welcome to your page {{userData.user.username}}!</h1>
+  <!-- Block one of visible -->
+
+  <div *ngIf="!edit" class="container">
+    <h3>Information only you can see</h3>
+    <div class=row>
+      <div class="col-md-3"><b>First Name</b></div>
+      <div class="col-md-3"><b>Last Name</b></div>
+    </div>
+    <div class=row>
+      <div class="col-md-3">{{userData.privateUserInfo.firstName}}</div>
+      <div class="col-md-3">{{userData.privateUserInfo.lastname}}</div>
+    </div>
+
+    <div class=row>
+      <div class="col-md-3"><b>Username</b></div>
+      <div class="col-md-3"><b>Password</b></div>
+    </div>
+    <div class=row>
+      <div class="col-md-3">{{userData.user.username}}</div>
+      <div class="col-md-3">{{userData.user.password}}</div>
+    </div>
+    
+    <div class=row>
+      <div class="col-md-3"><b>Phone</b></div>
+      <div class="col-md-3"><b>E-mail</b></div>
+    </div>
+    <div class=row>
+      <div class="col-md-3">{{userData.privateUserInfo.phoneNumber}}</div>
+      <div class="col-md-3">{{userData.privateUserInfo.email}}</div>
+    </div>
+
+    <div class=row>
+      <div class="col-md-6"><b>Address</b></div>
+    </div>
+
+    <div class=row>
+      <div class="col-md-6">{{userData.privateUserInfo.address}}</div>
+    </div>
+
+  <!-- Public view -->
+
+    <h3>Stuff everyone can see</h3>
+    <div class=row>
+      <div class="col-md-3"><b>First Name</b></div>
+      <div class="col-md-3"><b>Last Name</b></div>
+    </div>
+    <div class=row>
+      <div class="col-md-3" *ngIf="userData.publicInfo.firstName">{{userData.publicInfo.firstName}}</div>
+      <div class="col-md-3" *ngIf="userData.publicInfo.lastName">{{userData.publicInfo.lastName}}</div>
+    </div>
+  
+    <div class=row>
+      <div class="col-md-3"><b>Phone</b></div>
+      <div class="col-md-3"><b>E-mail</b></div>
+    </div>
+    <div class=row>
+      <div class="col-md-3" *ngIf="userData.publicInfo.phoneNumber">{{userData.publicInfo.phoneNumber}}</div>
+      <div class="col-md-3" *ngIf="userData.publicInfo.email">{{userData.publicInfo.email}}</div>
+    </div>
+  
+    <div class=row>
+      <div class="col-md-6"><b>Address</b></div>
+    </div>
+  
+    <div class=row>
+      <div class="col-md-6" *ngIf="userData.publicInfo.address">{{userData.publicInfo.address}}</div>
+    </div>
+    
+
+    <div class=row>
+      <div class="col-md-6"><input type="button" value="Edit" (click)=editView()></div>
+    </div>
   </div>
-  <div>
-    <p>First Name: {{userData.privateUserInfo.firstName}}</p>
-    <p>Last Name: {{userData.privateUserInfo.lastname}}</p>
-    <p>Phone: {{userData.privateUserInfo.phoneNumber}}</p>
-    <p>Address: {{userData.privateUserInfo.address}}</p>
-    <p>E-mail: {{userData.privateUserInfo.email}}</p>
+  <!-- End of block one -->
+
+  <div *ngIf="edit" class="container">
+
+    <div class=row>
+      <div class="col-md-3"><b>First Name</b></div>
+      <div class="col-md-3"><b>Last Name</b></div>
+    </div>
+    <div class=row>
+      <div class="col-md-3"><input type="text" [(ngModel)]="userData.privateUserInfo.firstName"></div>
+      <div class="col-md-3"><input type="text" [(ngModel)]="userData.privateUserInfo.lastname"></div>
+    </div>
+    
+    <div class=row>
+      <div class="col-md-3"><b>Username</b></div>
+      <div class="col-md-3"><b>Password</b></div>
+    </div>
+    <div class=row>
+      <div class="col-md-3"><input type="text" [(ngModel)]="userData.user.username"></div>
+      <div class="col-md-3"><input type="text" [(ngModel)]="userData.user.password"></div>
+    </div>
+        
+    <div class=row>
+      <div class="col-md-3"><b>Phone</b></div>
+      <div class="col-md-3"><b>E-mail</b></div>
+    </div>
+    <div class=row>
+      <div class="col-md-3"><input type="text" [(ngModel)]="userData.privateUserInfo.phoneNumber"></div>
+      <div class="col-md-3"><input type="text" [(ngModel)]="userData.privateUserInfo.email"></div>
+    </div>
+    
+    <div class=row>
+      <div class="col-md-6"><b>Address</b></div>
+    </div>
+    
+    <div class=row>
+      <div class="col-md-6"><input type="text" [(ngModel)]="userData.privateUserInfo.address"></div>
+    </div>
+
+    <!-- public view choice -->
+
+    <h3>Public View</h3>
+    <div class=row>
+      <div class="col-md-3"><b>First Name</b></div>
+      <div class="col-md-3"><b>Last Name</b></div>
+    </div>
+    <div class=row>
+      <div class="col-md-3"><input type="text" [(ngModel)]="userData.publicInfo.firstName"></div>
+      <div class="col-md-3"><input type="text" [(ngModel)]="userData.publicInfo.lastName"></div>
+    </div>
+  
+    <div class=row>
+      <div class="col-md-3"><b>Phone</b></div>
+      <div class="col-md-3"><b>E-mail</b></div>
+    </div>
+    <div class=row>
+      <div class="col-md-3"><input type="text" [(ngModel)]="userData.publicInfo.phoneNumber"></div>
+      <div class="col-md-3"><input type="text" [(ngModel)]="userData.publicInfo.email"></div>
+    </div>
+  
+    <div class=row>
+      <div class="col-md-6"><b>Address</b></div>
+    </div>
+  
+    <div class=row>
+      <div class="col-md-6"><input type="text" [(ngModel)]="userData.publicInfo.address"></div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-3"><input type="button" value="Save" (click)=save()></div>
+      <div class="col-md-3"><input type="button" value="Back" (click)="editView()"></div>
+    </div>
   </div>
+
 </div>
