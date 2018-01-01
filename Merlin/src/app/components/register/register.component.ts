@@ -6,7 +6,6 @@ import { CodeList } from '../../models/code-list.model';
 import { StateComponent } from '../codelist/state/state.component'
 import { CityComponent } from '../codelist/city/city.component'
 import { UserPrivateData } from '../../models/composite/user-private-data.composite';
-import { AdeptData } from '../../models/composite/registration/adept_data.composite';
 import { Observable } from "rxjs/Observable";
 import { Router } from '@angular/router';
 import { OnInit, OnChanges } from '@angular/core/src/metadata/lifecycle_hooks';
@@ -14,7 +13,6 @@ import { CodeListService } from '../../services/codelist/codelist.service';
 import { MagicalFileUpload } from '../../models/magical-file-upload.model';
 import { environment } from '../../../environments/environment';
 import { Http, Headers, RequestOptions } from '@angular/http/';
-
 
 /**
  * Component for user registration
@@ -37,8 +35,7 @@ export class RegisterComponent implements OnInit, OnChanges {
 
   private magicalUser: MagicalUser
   private privateUserInfo: PrivateUserInfo
-  private apprenticeData: UserPrivateData
-  private adeptData: AdeptData
+  private registerData: UserPrivateData
   private formData: FormData;
 
   confirmPassword: string = ""
@@ -71,22 +68,15 @@ export class RegisterComponent implements OnInit, OnChanges {
 
   constructor(private registerService: RegistrationService, private router: Router, private http: Http,
     private codeListService: CodeListService) {
-    this.apprenticeData = new UserPrivateData()
-    this.adeptData = new AdeptData()
-    this.adeptData.magicalFileUpload = new MagicalFileUpload()
+    this.registerData = new UserPrivateData()
 
     this.magicalUser = new MagicalUser()
     this.privateUserInfo = new PrivateUserInfo()
     this.privateUserInfo.user = this.magicalUser
 
     //for registering apprentices
-    this.apprenticeData.privateUserInfo = this.privateUserInfo
-    this.apprenticeData.user = this.magicalUser
-
-    //for registering adepts
-    this.adeptData.privateUserInfo = this.privateUserInfo
-    this.adeptData.user = this.magicalUser
-    this.adeptData.magicalFileUpload.user = this.magicalUser
+    this.registerData.privateUserInfo = this.privateUserInfo
+    this.registerData.user = this.magicalUser
 
     this.url = environment.url;
   }
@@ -98,10 +88,9 @@ export class RegisterComponent implements OnInit, OnChanges {
     //check the user's info is ready to be registered
     if (this.allFieldsAreEntered() && !this.showUsernameAlert && !this.showPasswordAlert) {
       if (this.privateUserInfo.role.value.toString() == "APPRENTICE") { //register an apprentice account
-        this.registerService.registerApprentice(this.apprenticeData);
+        this.registerService.registerApprentice(this.registerData);
       } else {
-        console.log(JSON.stringify(this.adeptData))
-        this.registerService.registerAdept(this.adeptData, this.formData);
+        this.registerService.registerAdept(this.registerData, this.formData);
       }
       this.router.navigate(['home'])
     }
@@ -139,14 +128,14 @@ export class RegisterComponent implements OnInit, OnChanges {
       this.privateUserInfo.phoneNumber != null && this.privateUserInfo.firstName != null &&
       this.privateUserInfo.role != null && this.privateUserInfo.stateCity != null &&
       this.magicalUser.password != null
-
+       
     if (!allFieldsAreEntered) return false
     //if the user registering is an adept they must provide a file of certification
-    if (this.privateUserInfo.role.id = 434)
-      allFieldsAreEntered = allFieldsAreEntered && this.adeptData.magicalFileUpload != null
+    if (this.privateUserInfo.role.id == 434)
+      allFieldsAreEntered = allFieldsAreEntered && this.formData != null
 
     this.fieldsAreBlank = !allFieldsAreEntered
-
+    
     return allFieldsAreEntered
   }
 

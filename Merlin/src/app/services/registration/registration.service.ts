@@ -3,7 +3,6 @@ import { Http } from "@angular/http";
 import { UserPrivateData } from "../../models/composite/user-private-data.composite";
 import { Observable } from "rxjs/Observable";
 import { Response } from "@angular/http/src/static_response";
-import { AdeptData } from "../../models/composite/registration/adept_data.composite";
 import { environment } from '../../../environments/environment'
 /**
  * Service class used for User registration.
@@ -19,7 +18,7 @@ export class RegistrationService {
      * @param Apprentice 
      */
     registerApprentice(apprenticeData: UserPrivateData) {
-        this.http.post(environment.url + "merlinserver/rest/register/apprentice", apprenticeData)
+       debugger; this.http.post(environment.url + "merlinserver/rest/register/create", apprenticeData)
             .subscribe(
             data => {
 
@@ -33,10 +32,10 @@ export class RegistrationService {
      * Register the adept
      * @param adeptData 
      */
-    registerAdept(adeptData: AdeptData, formData: FormData) {
+    registerAdept(adeptData: UserPrivateData, formData: FormData) {
         var self = this;
 
-        this.http.post(environment.url + "merlinserver/rest/register/adept", adeptData).subscribe(
+        this.http.post(environment.url + "merlinserver/rest/register/create", adeptData).subscribe(
             data => {
                 self.uploadCertificate(adeptData.user.username, formData);
             }, err => {
