@@ -1,3 +1,25 @@
+<app-navbar></app-navbar>
 <div>
     <h3>Verify Adepts</h3>
+    <div>
+        <tr>
+            <th>Username</th>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Verify</th>
+        </tr>
+
+        <div *ngIf="!loading">
+            <div *ngFor="let adept of unverifiedAdepts">
+                <label>{{adept.user.username}}</label>
+                <label>{{adept.firstName}}</label>
+                <label>{{adept.lastName}}</label>
+                <input type="button" value="Verify" (click)="verify(adept.user.username)">
+            </div>
+        </div>
+
+        <div *ngIf="loading">
+            <img src="../../../assets/animations/loading.gif">
+        </div>
+    </div>
 </div>
