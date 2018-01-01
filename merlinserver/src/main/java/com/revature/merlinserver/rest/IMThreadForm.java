@@ -5,12 +5,13 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
 
 import com.revature.merlinserver.beans.IMThread;
 import com.revature.merlinserver.dao.CodeListDao;
@@ -91,6 +92,25 @@ public class IMThreadForm {
 		}
 		
 		return thread == null ? null : ServiceUtil.toJson(params);
+	}
+	
+	/**
+	 * Attempts to delete IMThread
+	 * @param id
+	 * @return
+	 */
+	@DELETE 
+	@Path("/delete/{id}")
+	@Produces(MediaType.TEXT_PLAIN)
+	public String deleteIMThread(@PathParam("id") Integer id) {
+		IMThreadDao dao = new IMThreadDao();
+		boolean result = false;
+		
+		dao.open();
+		result = dao.deleteIMThreadById(id);
+		dao.close();
+		
+		return result ? "ok" : "fail";
 	}
 	
 }
