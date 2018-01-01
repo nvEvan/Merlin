@@ -2,9 +2,10 @@ package com.revature.merlinserver.rest;
 
 import java.util.List;
 
+import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
+import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
@@ -25,7 +26,7 @@ public class Wizard {
 	 * Return the private info of all adepts
 	 */
 	@GET
-	@Path("/unverified_adepts/")
+	@Path("/unverified_adepts")
 	@Produces(MediaType.APPLICATION_JSON)
 	public List<PrivateUserInfo> getUnverifiedAdepts() {
 		PrivateInfoDao privateInfoDao = new PrivateInfoDao();
@@ -42,12 +43,15 @@ public class Wizard {
 	 * A wizard approving an adept account.
 	 * This method will set the adept's status from 'PENDING' to 'ACTIVE'
 	 */
-	@GET
-	@Path("/approve_adept/{username}/")
-	public String approveAdept(@PathParam("username") String username) {
+	@PUT
+	@Path("/verify_adept")
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.TEXT_PLAIN)
+	public String approveAdept(MagicalUser user) {
 		MagicalUserDao magicDao = new MagicalUserDao();
 		PrivateInfoDao privateInfoDao = new PrivateInfoDao();
 		MagicalUser adept = null;
+		String username = user.getUsername();
 		
 		magicDao.open();
 		adept = magicDao.getMagicalUserByUsername(username);

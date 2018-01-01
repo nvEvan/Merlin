@@ -65,7 +65,7 @@ public class PrivateInfoDao extends MerlinSessionDao<PrivateUserInfo> {
 	 */
 	public boolean isUserNew(final MagicalUser user) {
 		boolean userIsNew = false;
-		final int codelistStatusIDPending = 424;
+		final int newStatus = 423;
 
 		if (isReady()) {
 			Query q = null;
@@ -77,7 +77,7 @@ public class PrivateInfoDao extends MerlinSessionDao<PrivateUserInfo> {
 			privateUserInfo = (PrivateUserInfo) q.uniqueResult();
 			userStatus = privateUserInfo.getStatus();
 			
-			userIsNew = userStatus.getId() == codelistStatusIDPending; //check if their account is PENDING
+			userIsNew = userStatus.getId() == newStatus; //check if their account is PENDING
 		}
 
 		return userIsNew;
@@ -113,7 +113,7 @@ public class PrivateInfoDao extends MerlinSessionDao<PrivateUserInfo> {
 			Query q = null;
 			unverifiedAdepts = new ArrayList<>();
 			final int pendingId = 424; //id of codelist pending status
-			final int adeptId = 430; //id of codelist adept role
+			final int adeptId = 434; //id of codelist adept role
 			CodeList pendingStatus = null;
 			CodeList roleStatus = null;
 
@@ -128,7 +128,7 @@ public class PrivateInfoDao extends MerlinSessionDao<PrivateUserInfo> {
 			roleStatus = (CodeList) q.uniqueResult();
 
 			//get all adepts that are pending
-			q = session.createQuery("FROM PrivateUserInfo WHERE status = ? && role = ?");
+			q = session.createQuery("FROM PrivateUserInfo WHERE status = ? AND role = ?");
 			q.setParameter(0, pendingStatus);
 			q.setParameter(1, roleStatus);
 
@@ -167,24 +167,5 @@ public class PrivateInfoDao extends MerlinSessionDao<PrivateUserInfo> {
 
 			session.update(privateUserInfo);
 		}
-	}
-
-	/**
-	 * Return the pending status code list
-	 * @param i
-	 * @return
-	 */
-	public CodeList getStatusById(int id) {
-		CodeList pendingStatus = null;
-
-		if (isReady()) {
-			Query q = null;
-
-			//get the pending status codelist
-			q = session.createQuery("FROM CodeList WHERE id = ?");
-			q.setParameter(0, id);
-			pendingStatus = (CodeList) q.uniqueResult();
-		}
-		return pendingStatus;
 	}
 }

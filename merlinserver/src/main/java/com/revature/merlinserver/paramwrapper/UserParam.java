@@ -1,5 +1,5 @@
 package com.revature.merlinserver.paramwrapper;
 
-public class UserParam extends RegisterApprenticeParams {
+public class UserParam extends RegisterParams {
 
 }

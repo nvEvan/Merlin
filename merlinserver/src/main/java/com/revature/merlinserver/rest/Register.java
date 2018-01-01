@@ -29,8 +29,7 @@ import com.revature.merlinserver.dao.MagicalFileDao;
 import com.revature.merlinserver.dao.MagicalUserDao;
 import com.revature.merlinserver.dao.PrivateInfoDao;
 import com.revature.merlinserver.dao.TokenDao;
-import com.revature.merlinserver.paramwrapper.RegisterAdeptParams;
-import com.revature.merlinserver.paramwrapper.RegisterApprenticeParams;
+import com.revature.merlinserver.paramwrapper.RegisterParams;
 import com.revature.merlinserver.service.TokenService;
 import com.revature.merlinserver.service.UserVerificationService;
 
@@ -47,58 +46,27 @@ public class Register {
 	 * @param token
 	 */
 	@POST
-	@Path("/apprentice") //this the path we want to use?
+	@Path("/create") //this the path we want to use?
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.TEXT_PLAIN)
-	public String registerApprentice(final RegisterApprenticeParams params) {
+	public String registerApprentice(final RegisterParams params) {
 		MagicalUser user = params.getUser();
 		PrivateUserInfo pi = params.getPrivateUserInfo();
-		CodeList pendingStatus = null;
+		CodeList status = null;
 
 		MagicalUserDao md = new MagicalUserDao();
 		PrivateInfoDao pd = new PrivateInfoDao();
+		CodeListDao cd = new CodeListDao();
 
 		md.open();
 		pd.setSession(md.getSession());
-		pendingStatus = pd.getStatusById(424);
-		pi.setStatus(pendingStatus); //set the newly registered status to 'PENDING'
+		cd.setSession(md.getSession());
+		status = cd.getCodeListById(423); //get the 'NEW' status code
+		pi.setStatus(status); //set the newly registered status to 'NEW''
 		md.insertUser(user); //insert the new user
 		pi.setUser(user);
 		pd.insert(pi); //insert the user's private info
 		md.close();
-
-		//Send verification email to user
-		sendEmailToUser(user, pi);
-
-		return "User has been registered, and awaiting verification";
-	}
-
-	/**
-	 * Rest call from angular to register a new apprentice.
-	 * @param token
-	 */
-	@POST
-	@Path("/adept") //this the path we want to use?
-	@Consumes(MediaType.APPLICATION_JSON)
-	@Produces(MediaType.TEXT_PLAIN)
-	public String registerAdept(final RegisterAdeptParams params) {
-		MagicalUser user = params.getUser();
-		PrivateUserInfo pi = params.getPrivateUserInfo();
-		CodeList pendingStatus = null;
-
-		MagicalUserDao magicalUserDao = new MagicalUserDao();
-		PrivateInfoDao privateInfoDao = new PrivateInfoDao();
-
-		//open our session
-		magicalUserDao.open();
-		privateInfoDao.setSession(magicalUserDao.getSession());
-
-		pendingStatus = privateInfoDao.getStatusById(424);
-		pi.setStatus(pendingStatus); //set the newly registered status to 'PENDING'
-		magicalUserDao.insertUser(user); //insert the new user
-		pi.setUser(user);
-		privateInfoDao.insert(pi); //insert the user's private info
-		magicalUserDao.close();
 
 		//Send verification email to user
 		sendEmailToUser(user, pi);
@@ -121,8 +89,8 @@ public class Register {
 
 		//update the user's status to 'active' status
 		if (UserVerificationService.userIsNew(user)) { //check the user is new and has not already been activated
-			UserVerificationService.updateStatus(user); //update their status to 'active'
-			TokenService.updateTokenByToken(token); //update their token to the current time
+			UserVerificationService.updateStatus(user); //update their status to 'active' if apprentice, and 'pending' if adept
+
 			return "Thank you for registering " + user.getUsername() + ", your account has been verified";
 		} else {
 			return "Your account has already been verified!";
@@ -170,7 +138,7 @@ public class Register {
 			FileItemFactory factory = new DiskFileItemFactory();
 			ServletFileUpload upload = new ServletFileUpload(factory);
 			List<FileItem> items = null;
-			
+
 			try {
 				items = upload.parseRequest(request);
 			} catch (FileUploadException e) {
@@ -181,16 +149,16 @@ public class Register {
 
 				while (iter.hasNext()) {
 					FileItem item = iter.next();
-					
+
 					if (!item.isFormField() && item.getSize() > 0) {
 						try {
 							CodeListDao codeListDao = new CodeListDao();
 							int fileTypeId = 431; //id for certification filetype codelist
 							CodeList fileType = null;
-							
+
 							codeListDao.open();
 							fileType = codeListDao.getCodeListById(fileTypeId); //get the code list
-							
+
 							magicalFileDao.setSession(codeListDao.getSession());
 							magicalFileDao.insertFile(user, item.get(), item.getName(), fileType); //insert our file
 							codeListDao.close();
