@@ -75,7 +75,6 @@ public class Register {
 			AdeptInfoDao adeptInfoDao = new AdeptInfoDao();
 			
 			adeptInfoDao.open();
-			adeptInfo.setPaymentInfo(status);
 			adeptInfo.setPrice((float) 25.60);
 			adeptInfo.setAdept(user);
 			adeptInfoDao.insert(adeptInfo);
