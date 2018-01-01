@@ -33,10 +33,10 @@ export class RegisterComponent implements OnInit, OnChanges {
   @ViewChild("statediv") stateSelect: ElementRef
   @ViewChild('uploadForm') form: ElementRef;
 
-  private magicalUser: MagicalUser
-  private privateUserInfo: PrivateUserInfo
-  private registerData: UserPrivateData
-  private formData: FormData;
+  magicalUser: MagicalUser
+  privateUserInfo: PrivateUserInfo
+  registerData: UserPrivateData
+  formData: FormData;
 
   confirmPassword: string = ""
   loading: boolean = true
