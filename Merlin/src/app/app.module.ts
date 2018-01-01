@@ -8,7 +8,6 @@ import { Routes, RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { HttpModule, JsonpModule } from '@angular/http';
 import { HttpClientModule } from '@angular/common/http';
-
 ///
 //  DEPENDENDICES
 ///
@@ -75,7 +74,8 @@ import { FailNewThreadModal } from './components/modals/threads/failnewthread.mo
 //  VARIABLES
 ///
 
-import { environment } from './../environments/environment';
+import { environment } from './../environments/environment'
+import { VerifyAdepts } from './components/verifyAdepts/verifyAdepts.component';
 
 @NgModule({
   declarations: [
@@ -93,7 +93,8 @@ import { environment } from './../environments/environment';
     FailNewThreadModal,
     StateComponent,
     CityComponent,
-    ChatRoom
+    ChatRoom,
+    VerifyAdepts
   ],
   imports: [
     BrowserModule,

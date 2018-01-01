@@ -16,8 +16,9 @@ import { Observable } from "rxjs/Observable";
 /**
  * City component that will hold the possible states for user registration.
  */
-export class CityComponent implements OnInit { 
+export class CityComponent implements OnInit {
     cities : CodeList[]
+    loading : boolean = true
 
     constructor(private codeListService : CodeListService) { }
     
@@ -25,6 +26,7 @@ export class CityComponent implements OnInit {
         this.codeListService.getCodeListsByCode("CITY-CODE") //grab the cities from the server
                 .subscribe(response => {
                 this.cities = response
+                this.loading = false
             })
         }
 }

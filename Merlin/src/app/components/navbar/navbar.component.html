@@ -13,6 +13,9 @@
 				<ul class="nav navbar-nav">
 					<li><a routerLink="/threads">Threads</a></li>
 				</ul>
+				<ul *ngIf="isWizard" class="nav navbar-nav">
+						<li><a routerLink="/verifyAdepts">Verify Adepts</a></li>
+					</ul>
 				<ul class="nav navbar-nav">
 					<li><a routerLink="/search-adepts">Search For Tutors</a></li>
 				</ul>
