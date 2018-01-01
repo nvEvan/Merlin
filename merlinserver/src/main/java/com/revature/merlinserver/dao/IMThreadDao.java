@@ -65,6 +65,33 @@ public class IMThreadDao extends MerlinSessionDao<IMThread> {
 		return 0;
 	}
 	
+	/**
+	 * Deletes thread by thread id
+	 * @param id - thread identifier
+	 * @return true if deleted else false
+	 */
+	public boolean deleteIMThreadById(Integer id) {
+		boolean result = false;
+		
+		if (isReady()) {
+			Query query = session.createQuery("FROM IMThread WHERE id = ?");
+			IMThread thread;
+			
+			// set params
+			query.setParameter(0, id);
+			
+			// get data
+			thread = (IMThread)query.uniqueResult();
+			result = thread != null;
+			
+			// if found
+			if (result)
+				session.delete(thread);
+		}
+		
+		return result;
+	}
+	
 	///
 	//	PRIVATE METHODS
 	///
