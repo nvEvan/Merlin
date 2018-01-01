@@ -1,8 +1,9 @@
 package com.revature.merlinserver.dao;
 
+import org.hibernate.Query;
 import org.hibernate.Session;
 
-import com.revature.merlinserver.beans.PrivateUserInfo;
+import com.revature.merlinserver.beans.MagicalUser;
 import com.revature.merlinserver.beans.PublicUserInfo;
 
 /*
@@ -45,4 +46,35 @@ public class PublicInfoDao extends MerlinSessionDao<PublicUserInfo> {
 			session.delete(pui);
 		}
 	}
+	
+	/**
+	 * The methods takes in a user object. If it is valid it will return the user's
+	 * public information, otherwise it will return null.
+	 * @param user
+	 * @return userInfo - users public information
+	 */
+	public PublicUserInfo getPublicInfoByUser(final MagicalUser user) {
+		PublicUserInfo userinfo = null;
+
+		if (isReady()) {
+			Query q = null;
+
+			q = session.createQuery("FROM PublicUserInfo WHERE user = ?");
+			q.setParameter(0, user);
+			userinfo = (PublicUserInfo) q.uniqueResult();
+		} 
+
+		return userinfo;
+	}
+	
+	/**
+	 * Takes in public information and updates the changes
+	 * @param info
+	 */
+	public void update(final PublicUserInfo info){
+		if(isReady()){
+			session.update(info);
+		}
+	}
+	
 }

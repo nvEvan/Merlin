@@ -12,6 +12,7 @@ import com.revature.merlinserver.beans.MagicalUser;
 import com.revature.merlinserver.beans.PrivateUserInfo;
 import com.revature.merlinserver.dao.MagicalUserDao;
 import com.revature.merlinserver.dao.PrivateInfoDao;
+import com.revature.merlinserver.dao.PublicInfoDao;
 import com.revature.merlinserver.paramwrapper.UserParam;
 import com.revature.merlinserver.service.TokenService;
 
@@ -37,11 +38,17 @@ public class Login {
 				
 		if(mUser != null){
 			PrivateInfoDao pd = new PrivateInfoDao();
+			PublicInfoDao pubDao = new PublicInfoDao();
 			UserParam up = new UserParam();
 			
 			up.setToken(TokenService.createTokenForUser(mUser).getToken());
 			pd.open();
+			pubDao.open();
+			
 			up.setPrivateUserInfo(pd.getPrivateInfoByUser(mUser));
+			up.setPublicInfo(pubDao.getPublicInfoByUser(mUser));
+			
+			pubDao.close();
 			pd.close();
 			up.setUser(mUser);
 			
