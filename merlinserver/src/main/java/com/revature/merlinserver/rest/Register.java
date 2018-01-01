@@ -20,10 +20,12 @@ import org.apache.commons.fileupload.FileUploadException;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
 
+import com.revature.merlinserver.beans.AdeptInfo;
 import com.revature.merlinserver.beans.CodeList;
 import com.revature.merlinserver.beans.MagicalUser;
 import com.revature.merlinserver.beans.PrivateUserInfo;
 import com.revature.merlinserver.beans.Token;
+import com.revature.merlinserver.dao.AdeptInfoDao;
 import com.revature.merlinserver.dao.CodeListDao;
 import com.revature.merlinserver.dao.MagicalFileDao;
 import com.revature.merlinserver.dao.MagicalUserDao;
@@ -67,6 +69,18 @@ public class Register {
 		pi.setUser(user);
 		pd.insert(pi); //insert the user's private info
 		md.close();
+		
+		if (pi.getRole().getId() == 434) { //add adept info
+			AdeptInfo adeptInfo = new AdeptInfo();
+			AdeptInfoDao adeptInfoDao = new AdeptInfoDao();
+			cd.open();
+			adeptInfoDao.setSession(cd.getSession());
+			adeptInfo.setPaymentInfo(cd.getCodeListById(425));
+			adeptInfo.setPrice((float) 25.60);
+			adeptInfo.setAdept(user);
+			adeptInfoDao.insert(adeptInfo);
+			cd.close();
+		}
 
 		//Send verification email to user
 		sendEmailToUser(user, pi);
