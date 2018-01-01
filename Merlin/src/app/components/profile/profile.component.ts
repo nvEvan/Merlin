@@ -20,12 +20,9 @@ export class ProfileComponent implements OnInit {
   ngOnInit() {
     this.userData = this.loginService.getUserData();
     this.edit = false;
-    this.userData.publicInfo.role = this.userData.privateUserInfo.role;
-    
+
     if(!this.userData.publicInfo){
-      this.userData.publicInfo = new PublicUserInfo(); 
-      this.userData.publicInfo.user = this.userData.user;
-      this.userData.publicInfo.role = this.userData.privateUserInfo.role;
+      this.userData.publicInfo = new PublicUserInfo();
     }
    }
 
