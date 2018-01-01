@@ -101,16 +101,12 @@ public class IMThreadForm {
 	 */
 	@DELETE 
 	@Path("/delete/{id}")
-	@Produces(MediaType.TEXT_PLAIN)
-	public String deleteIMThread(@PathParam("id") Integer id) {
+	public void deleteIMThread(@PathParam("id") Integer id) {
 		IMThreadDao dao = new IMThreadDao();
-		boolean result = false;
 		
 		dao.open();
-		result = dao.deleteIMThreadById(id);
+		dao.deleteIMThreadById(id);
 		dao.close();
-		
-		return result ? "ok" : "fail";
 	}
 	
 }
