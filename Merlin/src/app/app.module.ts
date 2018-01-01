@@ -63,6 +63,7 @@ import { AuthService } from './services/firebase/authenticate/auth.service';
 import { SimpleNgbModal } from "./services/modals/simple.ngb.modal"
 import { CodeListService } from './services/codelist/codelist.service';
 import { RegistrationService } from './services/registration/registration.service';
+import { EditUserInfoService } from './services/edit-user-info/edit-user-info.service';
 
 ///
 //  MODALS 
@@ -124,7 +125,8 @@ import { VerifyAdepts } from './components/verifyAdepts/verifyAdepts.component';
     ChatService,
     CodeListService,
     RegistrationService,
-    SimpleNgbModal
+    SimpleNgbModal,
+    EditUserInfoService
   ],
   bootstrap: [AppComponent]
 })
