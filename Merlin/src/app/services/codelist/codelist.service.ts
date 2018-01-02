@@ -15,14 +15,14 @@ export class CodeListService {
 
     //get all codelists by a code
     getCodeListsByCode(code: string): Observable<CodeList[]> {
-        let url: string = environment.url + "merlinserver/rest/codelist/getcodelist/" + code
+        let url: string = environment.url + "codelist/getcodelist/" + code
 
         return this.http.get(url).map((response: Response) => response.json());
     }
 
     //get the stateCity codelist from this state/city values combination
     getStateCityCode(stateValue: string, cityValue: string): Observable<CodeList> {
-        let url: string = environment.url + "merlinserver/rest/codelist/getstatecitycode/" + stateValue + "/" + cityValue;
+        let url: string = environment.url + "codelist/getstatecitycode/" + stateValue + "/" + cityValue;
 
         return this.http.get(url).map((response : Response) => response.json())
     }

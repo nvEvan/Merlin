@@ -22,7 +22,7 @@ export class AdeptPublicProfileComponent implements OnInit {
     this.adeptIdService.adeptId.subscribe(adeptID => this.adeptId = adeptID);
     console.log("The Adept ID: " + this.adeptId);
 
-    this.http.post(environment.url + "merlinserver/rest/fetch/adepts/byId", this.adeptId)
+    this.http.post(environment.url + "fetch/adepts/byId", this.adeptId)
     .subscribe(
         (res: Response) => {
             this.Adept = res.json();

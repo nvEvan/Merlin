@@ -18,7 +18,7 @@ export class RegistrationService {
      * @param Apprentice 
      */
     registerApprentice(apprenticeData: UserPrivateData) {
-       debugger; this.http.post(environment.url + "merlinserver/rest/register/create", apprenticeData)
+       debugger; this.http.post(environment.url + "register/create", apprenticeData)
             .subscribe(
             data => {
 
@@ -35,7 +35,7 @@ export class RegistrationService {
     registerAdept(adeptData: UserPrivateData, formData: FormData) {
         var self = this;
 
-        this.http.post(environment.url + "merlinserver/rest/register/create", adeptData).subscribe(
+        this.http.post(environment.url + "register/create", adeptData).subscribe(
             data => {
                 self.uploadCertificate(adeptData.user.username, formData);
             }, err => {
@@ -47,12 +47,12 @@ export class RegistrationService {
      * Check the user registering is using a new username
      */
     isUniqueUsername(username: string): Observable<boolean> {
-        let url: string = environment.url + "merlinserver/rest/register/unique/" + username
+        let url: string = environment.url + "register/unique/" + username
         return this.http.get(url).map((response: Response) => response.json());
     }
 
     uploadCertificate(username: string, formData: FormData) {
-        this.http.post(environment.url + "merlinserver/rest/register/upload/" + username, formData)
+        this.http.post(environment.url + "register/upload/" + username, formData)
         .subscribe(
             data => {
 

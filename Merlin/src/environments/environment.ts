@@ -6,7 +6,7 @@
 export const environment = {
   production: false,
   envName: 'dev',
-  url: "http://merlintest.us-east-1.elasticbeanstalk.com/",
+  url: "http://184.72.183.141:8085/merlinserver-0.0.1-SNAPSHOT/rest/",
   firebase:{
     apiKey: "AIzaSyD14JwBCjeTjUPxJrdIwpzI8sKfiKzXWTU",
     authDomain: "merlin-2a1ae.firebaseapp.com",

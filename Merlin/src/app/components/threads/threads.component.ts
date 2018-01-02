@@ -65,7 +65,7 @@ export class ThreadsComponent implements AfterViewInit {
     this.listReady = false;
     this.threads = new Array<IMThread>();
 
-    this.http.get(environment.url + "merlinserver/rest/threads/get/all/").subscribe(data => {
+    this.http.get(environment.url + "threads/get/all/").subscribe(data => {
       // Received content 
       self.listReady = true;
 
@@ -110,7 +110,7 @@ export class ThreadsComponent implements AfterViewInit {
     params.token = this.userData.token;
 
     // Attempt to create new thread
-    this.http.post(environment.url + "merlinserver/rest/threads/insert", params).subscribe(
+    this.http.post(environment.url + "threads/insert", params).subscribe(
       data => {
         // If falsey then failed to create new thread
         if (!data)
@@ -163,7 +163,7 @@ export class ThreadsComponent implements AfterViewInit {
   onDeleteThread(id) {
     var self = this;
 
-    self.http.delete(environment.url + "merlinserver/rest/threads/delete/" + id).subscribe(data => {
+    self.http.delete(environment.url + "threads/delete/" + id).subscribe(data => {
       self.deleteModal.openModalPass();
       self.loadAllThreads();
     })

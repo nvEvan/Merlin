@@ -10,7 +10,7 @@ export class UserPrivateInfoService {
   constructor(private http: Http) { }
 
   getPrivateInfo(username: string) {
-    return this.http.get(environment.url + 'merlinserver/rest/user/get/private/' + username).
+    return this.http.get(environment.url + 'user/get/private/' + username).
       map((response: Response) => response.json());
   }
 
@@ -18,7 +18,7 @@ export class UserPrivateInfoService {
    * Get all unverified adepts
    */
   getUnverifiedAdepts() {
-    return this.http.get(environment.url + 'merlinserver/rest/wizard/unverified_adepts').
+    return this.http.get(environment.url + 'wizard/unverified_adepts').
       map((response: Response) => response.json());
   }
 
@@ -30,6 +30,6 @@ export class UserPrivateInfoService {
     user.username = username
 
     //send the request
-    return this.http.put(environment.url + 'merlinserver/rest/wizard/verify_adept/', user)
+    return this.http.put(environment.url + 'wizard/verify_adept/', user)
   }
 }

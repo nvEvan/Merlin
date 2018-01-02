@@ -8,7 +8,7 @@ export class EditUserInfoService {
   constructor(private http: Http) { }
 
   save(userData: UserData){
-    this.http.post(environment.url + 'merlinserver/rest/Edit/MagicalPrivateInfo', userData).subscribe();
+    this.http.post(environment.url + 'Edit/MagicalPrivateInfo', userData).subscribe();
   }
 
 }

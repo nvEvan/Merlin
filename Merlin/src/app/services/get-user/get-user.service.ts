@@ -11,6 +11,6 @@ export class GetUserService {
 
   // Generates a registered user based on a username
   getLogin(user: MagicalUser) {
-    return this.http.post(environment.url + 'merlinserver/rest/login/MagicalUser', user);
+    return this.http.post(environment.url + 'login/MagicalUser', user);
   }
 }

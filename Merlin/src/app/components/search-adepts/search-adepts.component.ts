@@ -42,7 +42,7 @@ export class SearchAdeptsComponent implements OnInit{
 
     ngOnInit() {
         //Fetch all adepts from the database
-        this.http.get(environment.url + "merlinserver/rest/fetch/adepts/all")
+        this.http.get(environment.url + "fetch/adepts/all")
         .subscribe(
             (res: Response) => {
                 this.Adepts = res.json();
