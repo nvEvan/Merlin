@@ -18,7 +18,7 @@ export class RegistrationService {
      * @param Apprentice 
      */
     registerApprentice(apprenticeData: UserPrivateData) {
-       debugger; this.http.post(environment.url + "register/create", apprenticeData)
+       debugger; this.http.post("http://localhost:8085/merlinserver/rest/register/create", apprenticeData)
             .subscribe(
             data => {
 
@@ -35,7 +35,7 @@ export class RegistrationService {
     registerAdept(adeptData: UserPrivateData, formData: FormData) {
         var self = this;
 
-        this.http.post(environment.url + "register/create", adeptData).subscribe(
+        this.http.post("http://localhost:8085/merlinserver/rest/register/create", adeptData).subscribe(
             data => {
                 self.uploadCertificate(adeptData.user.username, formData);
             }, err => {
